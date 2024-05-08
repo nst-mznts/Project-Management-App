@@ -1,0 +1,20 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.login-page {
+	background-color: $color-background;
+}
+
+.login-content {
+    @include flex(row, center, center);
+    padding: 40px 0;
+}
+
+.login-form {
+	@include flex(column, space-between, center);
+	@extend %border-radius;
+    padding: 30px;
+    background-color: $color-light;
+}

@@ -1,0 +1,4 @@
+export const SCREEN_TYPES = {
+  START_PAGE: 'START_PAGE',
+  LOGIN_PAGE: 'LOGIN_PAGE',
+};

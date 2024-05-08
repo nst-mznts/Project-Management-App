@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Logo from '../Logo/Logo';
 import SymbolToggle from '../SymbolToggle/SymbolToggle';
 
-function Header() {
+function Header({ openStartPage, openLoginPage }) {
   const [language, setLanguage] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -15,10 +15,10 @@ function Header() {
 
   return (
     <header className="header">
-      <Logo />
+      <Logo openStartPage={openStartPage}/>
       <SymbolToggle firstSymbol='EN' secondSymbol='RU' selectedSymbol={language} setSelectedSymbol={changeLanguage} />
       <div className="buttons-wrapper">
-        <button className='button rectangular-button colored'>{t("login")}</button>
+        <button className='button rectangular-button colored' onClick={openLoginPage}>{t("login")}</button>
         <button className='button rectangular-button bordered'>{t("signup")}</button>
       </div>
     </header>

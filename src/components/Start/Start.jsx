@@ -10,7 +10,9 @@ function Start() {
         <div className="start-page-content">
             <h2>{t("start-page-title")}</h2>
             <p>{t("start-page-description")}</p>
-            <button className='button rectangular-button colored start-button'>{t("start-page-button")}</button>
+            <div className='start-button'>
+              <button className='button rectangular-button colored'>{t("start-page-button")}</button>
+            </div>
         </div>
       <img src={main_img} className='start-page-image' alt='people'/>
     </main>
