@@ -4,6 +4,8 @@
     "start-page-title": "Manage your daily tasks",
     "start-page-description": "Bring your teammates to optimize the work process, improve efficiency and bring your results to the new level!",
     "start-page-button": "Get started",
-    "login-page-login": "Log in",
-    "login-page-description": "Don't have an account?"
+    "login-page-title": "Log in",
+    "login-page-description": "Don't have an account?",
+    "login-page-login": "Login",
+    "login-page-password": "Password"
 }

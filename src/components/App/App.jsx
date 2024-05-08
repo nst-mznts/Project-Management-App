@@ -13,7 +13,7 @@ function App() {
     <>
       <Header openStartPage={openStartPage} openLoginPage={openLoginPage} />
       {screenType === SCREEN_TYPES.START_PAGE && (
-        <Start/>
+        <Start openLoginPage={openLoginPage}/>
       )}
       {screenType === SCREEN_TYPES.LOGIN_PAGE && (
         <Login openLoginPage={openLoginPage}/>

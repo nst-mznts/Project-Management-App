@@ -8,8 +8,25 @@ function Login () {
         <main className='login-page'>
             <section className='login-content'>
                 <form className='login-form' action="/">
-                    <h2>{t("login-page-login")}</h2>
-                    <p>{t("login-page-description")}</p>
+                    <h2 className='login-header'>{t("login-page-title")}</h2>
+                    <div className='form-subtitle'>
+                        <p>{t("login-page-description")}</p>
+                        <span className='form-link'>{t("signup")}</span>
+                    </div>
+                    
+                    <div className='input-wrapper'>
+                        <input required id="login" name='login' className="form-input" type="text" placeholder=" " />
+                        <label className='input-label' htmlFor="login">{t("login-page-login")}</label>
+                    </div>
+
+                    <div className='input-wrapper'>
+                        <input required id="password" name='password' className="form-input" type="password" placeholder=" "/>
+                        <label className='input-label' htmlFor="password">{t("login-page-password")}</label>
+                    </div>
+
+                    <div className='login-button'>
+                        <button disabled={true} type="submit" className='button rectangular-button colored'>{t("login")}</button>
+                    </div>
                 </form>
             </section>
         </main>

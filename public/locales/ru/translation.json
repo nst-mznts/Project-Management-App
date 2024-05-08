@@ -4,6 +4,8 @@
     "start-page-title": "Управляйте своими ежедневными задачами",
     "start-page-description": "Совместно с командой вы сможете оптимизировать рабочий процесс, повысить эффективность и вывести свои результаты совершенно на новый уровень!",
     "start-page-button": "Начать",
-    "login-page-login": "Вход",
-    "login-page-description": "Нет аккаунта?"
+    "login-page-title": "Вход",
+    "login-page-description": "Нет аккаунта?",
+    "login-page-login": "Логин",
+    "login-page-password": "Пароль"
 }

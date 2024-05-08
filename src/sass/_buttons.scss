@@ -21,6 +21,11 @@
 .colored {
     background-color: $color-secondary;
     color: $color-header;
+    &:disabled {
+        background-color: $color-additional-dark;
+        color: $color-dark;
+        cursor: default;
+    }
 }
 
 .bordered {

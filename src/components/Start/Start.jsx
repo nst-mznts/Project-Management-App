@@ -2,7 +2,7 @@ import './Start.scss';
 import { useTranslation } from 'react-i18next';
 import main_img from './main.svg';
 
-function Start() {
+function Start({ openLoginPage }) {
   const { t } = useTranslation();
 
   return (
@@ -11,7 +11,7 @@ function Start() {
             <h2>{t("start-page-title")}</h2>
             <p>{t("start-page-description")}</p>
             <div className='start-button'>
-              <button className='button rectangular-button colored'>{t("start-page-button")}</button>
+              <button className='button rectangular-button colored' onClick={openLoginPage}>{t("start-page-button")}</button>
             </div>
         </div>
       <img src={main_img} className='start-page-image' alt='people'/>
