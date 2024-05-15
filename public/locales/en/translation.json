@@ -7,5 +7,9 @@
     "login-page-title": "Log in",
     "login-page-description": "Don't have an account?",
     "login-page-login": "Login",
-    "login-page-password": "Password"
+    "login-page-password": "Password",
+    "signup-page-title": "Registration",
+    "signup-page-description": "Already have an account?",
+    "signup-page-name": "Name",
+    "signup-page-confirm-password": "Confirm password"
 }

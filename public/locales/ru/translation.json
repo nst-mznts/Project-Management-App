@@ -7,5 +7,9 @@
     "login-page-title": "Вход",
     "login-page-description": "Нет аккаунта?",
     "login-page-login": "Логин",
-    "login-page-password": "Пароль"
+    "login-page-password": "Пароль",
+    "signup-page-title": "Регистрация",
+    "signup-page-description": "Уже есть аккаунт?",
+    "signup-page-name": "Имя",
+    "signup-page-confirm-password": "Подтвердите пароль"
 }

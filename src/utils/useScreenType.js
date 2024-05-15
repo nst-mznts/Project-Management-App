@@ -12,9 +12,14 @@ export default function useScreenType() {
     setScreenType(SCREEN_TYPES.LOGIN_PAGE);
   };
 
+  const openSignupPage = () => {
+    setScreenType(SCREEN_TYPES.SIGNUP_PAGE);
+  };
+
   return {
     screenType,
     openStartPage,
     openLoginPage,
+    openSignupPage,
   };
 }
