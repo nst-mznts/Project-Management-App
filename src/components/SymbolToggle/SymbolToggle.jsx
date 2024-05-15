@@ -1,4 +1,5 @@
 import './SymbolToggle.scss';
+import PropTypes from 'prop-types';
 
 function SymbolToggle({ firstSymbol, secondSymbol, selectedSymbol, setSelectedSymbol }) {
   return (
@@ -11,5 +12,12 @@ function SymbolToggle({ firstSymbol, secondSymbol, selectedSymbol, setSelectedSy
     </div>
   );
 }
+
+SymbolToggle.propTypes = {
+  firstSymbol: PropTypes.node.isRequired,
+  secondSymbol: PropTypes.node.isRequired,
+  selectedSymbol: PropTypes.bool.isRequired,
+  setSelectedSymbol: PropTypes.func.isRequired,
+};
 
 export default SymbolToggle;

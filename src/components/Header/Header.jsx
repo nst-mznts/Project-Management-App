@@ -1,4 +1,5 @@
 import './Header.scss';
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Logo from '../Logo/Logo';
@@ -24,5 +25,11 @@ function Header({ openStartPage, openLoginPage, openSignupPage }) {
     </header>
   );
 }
+
+Header.propTypes = {
+  openStartPage: PropTypes.func.isRequired,
+  openLoginPage: PropTypes.func.isRequired,
+  openSignupPage: PropTypes.func.isRequired,
+};
 
 export default Header;

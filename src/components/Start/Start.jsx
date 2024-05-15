@@ -1,4 +1,5 @@
 import './Start.scss';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import main_img from './main.svg';
 
@@ -18,5 +19,9 @@ function Start({ openLoginPage }) {
     </main>
   );
 }
+
+Start.propTypes = {
+  openLoginPage: PropTypes.func.isRequired,
+};
 
 export default Start;

@@ -1,4 +1,5 @@
 import './Logo.scss';
+import PropTypes from 'prop-types';
 import { PiStarFourFill } from "react-icons/pi";
 
 function Logo({ openStartPage }) {
@@ -9,5 +10,9 @@ function Logo({ openStartPage }) {
     </div>
   );
 }
+
+Logo.propTypes = {
+  openStartPage: PropTypes.func.isRequired,
+};
 
 export default Logo;

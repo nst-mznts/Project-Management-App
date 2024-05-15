@@ -1,4 +1,5 @@
 import './Signup.scss';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 function Signup ({ openLoginPage }) {
@@ -43,5 +44,9 @@ function Signup ({ openLoginPage }) {
         </main>
     )
 }
+
+Signup.propTypes = {
+    openLoginPage: PropTypes.func.isRequired,
+};
 
 export default Signup;
