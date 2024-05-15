@@ -37,41 +37,6 @@
     @extend %pointer;
 }
 
-.input-wrapper {
-	@include flex(row, center, flex-start);
-	flex-direction: column-reverse;
-	width: 100%;
-	margin: 0 auto;
-}
-
-.form-input {
-	border: none;
-    width: 100%;
-	padding: 10px;
-	margin: 20px 0;
-	@include font(normal, 400, 1.6rem);
-	border-bottom: 1px solid $color-additional;
-	outline: none;
-	&:focus, &:not(:placeholder-shown) {
-		border-bottom: 2px solid $color-primary;
-  	};
-	&:focus ~ label, &:not(:placeholder-shown) ~ label {
-		padding: 0;
-		color: $color-dark;
-		transform: translateY(20px) scale(0.8);
-	};
-}
-
-.input-label {
-	@include font(normal, 400, 1.6rem);
-	padding-left: 10px;
-	color: $color-additional;
-	transform: translateY(30px);
-	transform-origin: left top;
-	cursor: text;
-	transition: all 0.3s ease;
-}
-
 .login-button {
     width: 160px;
 }

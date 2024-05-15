@@ -1,5 +1,7 @@
 import './Login.scss';
 import PropTypes from 'prop-types';
+import { LOGIN_FORM_INPUTS } from '../../utils/constants';
+import FormInputs from '../FormInputs/FormInputs';
 import { useTranslation } from 'react-i18next';
 
 function Login ({ openSignupPage }) {
@@ -14,17 +16,7 @@ function Login ({ openSignupPage }) {
                         <p>{t("login-page-description")}</p>
                         <span className='form-link' onClick={openSignupPage}>{t("signup")}</span>
                     </div>
-                    
-                    <div className='input-wrapper'>
-                        <input required id="login" name='login' className="form-input" type="text" placeholder=" " />
-                        <label className='input-label' htmlFor="login">{t("login-page-login")}</label>
-                    </div>
-
-                    <div className='input-wrapper'>
-                        <input required id="password" name='password' className="form-input" type="password" placeholder=" "/>
-                        <label className='input-label' htmlFor="password">{t("login-page-password")}</label>
-                    </div>
-
+                    <FormInputs listOfInputs={LOGIN_FORM_INPUTS} />
                     <div className='login-button'>
                         <button disabled={true} type="submit" className='button rectangular-button colored'>{t("login")}</button>
                     </div>
