@@ -11,5 +11,9 @@
     "signup-page-title": "Registration",
     "signup-page-description": "Already have an account?",
     "signup-page-name": "Name",
-    "signup-page-confirm-password": "Confirm password"
+    "signup-page-confirm-password": "Confirm password",
+    "login-page-login-empty": "Please enter your login",
+    "login-page-login-error": "Min length of login - 4 chars",
+    "login-page-password-empty": "Please enter your password",
+    "login-page-password-error": "Min length of password - 8 chars"
 }

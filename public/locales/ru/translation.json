@@ -11,5 +11,9 @@
     "signup-page-title": "Регистрация",
     "signup-page-description": "Уже есть аккаунт?",
     "signup-page-name": "Имя",
-    "signup-page-confirm-password": "Подтвердите пароль"
+    "signup-page-confirm-password": "Подтвердите пароль",
+    "login-page-login-empty": "Пожалуйста, введите ваш логин",
+    "login-page-login-error": "Минимальная длина логина - 4 символа",
+    "login-page-password-empty": "Пожалуйста, введите ваш пароль",
+    "login-page-password-error": "Минимальная длина пароля - 8 символов"
 }

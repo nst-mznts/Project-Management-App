@@ -37,3 +37,12 @@
 	cursor: text;
 	transition: all 0.3s ease;
 }
+
+.message-invalid {
+	color: $color-error;
+	@include font(normal, 400, 1.4rem);
+	opacity: 0;
+	&.active {
+		opacity: 1;
+	};
+}
