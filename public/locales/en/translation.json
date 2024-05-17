@@ -21,5 +21,7 @@
     "login-page-confirm-password-error": "Password do not match",
     "add-board-button": "New board",
     "logout": "Log out",
-    "edit-profile": "Edit profile"
+    "title-profile": "Hi",
+    "edit-profile": "Edit profile",
+    "delete-profile": "Delete profile"
 }

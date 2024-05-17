@@ -7,9 +7,15 @@ import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
 import Boards from '../Boards/Boards';
+import { useState } from 'react';
 
 function App() {
   const { screenType, openStartPage, openLoginPage, openSignupPage, openBoardsPage } = useScreenType();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const openSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <>
@@ -18,6 +24,7 @@ function App() {
         openStartPage={openStartPage}
         openLoginPage={openLoginPage}
         openSignupPage={openSignupPage}
+        openSidebar={openSidebar}
       />
       {screenType === SCREEN_TYPES.START_PAGE && (
         <Start openLoginPage={openLoginPage}/>
@@ -29,7 +36,7 @@ function App() {
         <Signup openLoginPage={openLoginPage}  openBoardsPage={openBoardsPage}/>
       )}
       {screenType === SCREEN_TYPES.BOARDS_PAGE && (
-        <Boards />
+        <Boards isSidebarOpen={isSidebarOpen} openSidebar={openSidebar} openStartPage={openStartPage}/>
       )}
       <Footer/>
     </>

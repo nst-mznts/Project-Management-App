@@ -9,7 +9,9 @@
 }
 
 .boards-page-content {
+    width: 100%;
     padding: 40px 0;
-    @include flex(column, center, center);
+    @include flex(column, flex-start, center);
     row-gap: 30px;
+    position: relative;
 }

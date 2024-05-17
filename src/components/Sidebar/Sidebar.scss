@@ -1,0 +1,41 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+@keyframes showSidenav {
+    0% {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+.sidenav {
+    width: 300px;
+    height: 100vh;
+    position: absolute;
+    padding: 40px 20px 0 20px;
+    z-index: 5;
+    top: 40px;
+    right: 0;
+    bottom: 60px;
+    background-color: $color-primary;
+    @include flex(column, flex-start, center);
+    row-gap: 10px;
+    transition: all .5s;
+    animation: showSidenav .3s ease-out;
+}
+
+.sidenav-header {
+    @extend %width100;
+    @include flex(row, space-between, center);
+    margin-bottom: 20px;
+    & h2 {
+        color: $color-light;
+    }
+}

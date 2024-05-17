@@ -4,6 +4,7 @@
 
 footer {
     @include flex(row, space-between, center);
+    padding-top: 10px;
 }
 
 .git-profile {

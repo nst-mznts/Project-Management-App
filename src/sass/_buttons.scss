@@ -4,7 +4,6 @@
 
 .button {
     border: none;
-    @extend %border-radius;
     padding: 12px 10px;
     @extend %pointer;
     @include flex(row, center, center);
@@ -13,9 +12,26 @@
 
 .rectangular-button {
     @extend %width100;
+    @extend %border-radius;
     height: 40px;
     @extend %font-primary;
     @include font(normal, $font-weight-middle, $font-size-standart);
+}
+
+.round-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.profile-links {
+    @include flex(row, flex-start, center);
+    column-gap: 8px;
+    padding: 0 10px;
+    @extend %width100;
+    height: 40px;
+    padding: 12px 10px;
+    @extend %pointer;
 }
 
 .colored {
@@ -26,6 +42,13 @@
         color: $color-dark;
         cursor: default;
     }
+}
+
+.additional-colored {
+    background-color: $color-additional;
+    color: $color-light;
+    @extend %font-primary;
+    @include font(normal, 400, $font-size-standart);
 }
 
 .bordered {

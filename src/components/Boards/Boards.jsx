@@ -2,10 +2,11 @@ import './Boards.scss';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { MdAdd } from "react-icons/md";
+import Sidebar from '../Sidebar/Sidebar';
 
-function Boards() {
+function Boards({ isSidebarOpen, openSidebar, openStartPage }) {
     const { t } = useTranslation();
-  
+
     return (
         <main className="boards-page">
             <div className="boards-page-content">
@@ -15,12 +16,16 @@ function Boards() {
                         {t("add-board-button")}
                     </button>
                 </div>
+                {isSidebarOpen && <Sidebar openStartPage={openStartPage} openSidebar={openSidebar}/>}
             </div>
         </main>
     );
 }
   
 Boards.propTypes = {
+    isSidebarOpen: PropTypes.bool.isRequired,
+    openSidebar: PropTypes.func.isRequired,
+    openStartPage: PropTypes.func.isRequired,
 };
   
 export default Boards;

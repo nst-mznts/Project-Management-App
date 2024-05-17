@@ -21,5 +21,7 @@
     "login-page-confirm-password-error": "Пароль не совпадает",
     "add-board-button": "Новая доска",
     "logout": "Выйти",
-    "edit-profile": "Редактировать профиль"
+    "title-profile": "Привет",
+    "edit-profile": "Редактировать профиль",
+    "delete-profile": "Удалить профиль"
 }
