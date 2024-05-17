@@ -3,6 +3,31 @@
 @import '../../sass/abstract/placeholders';
 @import '../../sass/buttons';
 
+.login-form {
+	@include flex(column, space-between, center);
+	@extend %border-radius;
+    width: 400px;
+    padding: 30px;
+    background-color: $color-light;
+}
+
+.login-header {
+    @extend %font-primary;
+    @include font(normal, 600, 2.6rem);
+    color: $color-header;
+}
+
+.form-subtitle {
+    @include flex(row, space-between, center);
+	column-gap: 8px;
+	margin-bottom: 10px;
+}
+
+.form-link {
+    color: $color-primary;
+    @extend %pointer;
+}
+
 .input-wrapper {
 	@include flex(row, center, flex-start);
 	flex-direction: column-reverse;
@@ -41,8 +66,9 @@
 .message-invalid {
 	color: $color-error;
 	@include font(normal, 400, 1.4rem);
-	opacity: 0;
-	&.active {
-		opacity: 1;
-	};
+}
+
+.login-button {
+    width: 160px;
+    margin-top: 20px;
 }

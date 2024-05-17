@@ -9,25 +9,25 @@ export const SIGNUP_FORM_INPUTS = [
     id: "name",
     value: "signup-page-name",
     type: "text",
-    error: ""
+    minLength: 1
   },
   {
     id: "login",
     value: "login-page-login",
     type: "text",
-    error: ""
+    minLength: 4
   },
   {
     id: "password",
     value: "login-page-password",
     type: "password",
-    error: ""
+    minLength: 8
   },
   {
     id: "confirm-password",
     value: "signup-page-confirm-password",
     type: "password",
-    error: ""
+    minLength: 8
   },
 ];
 
@@ -36,12 +36,12 @@ export const LOGIN_FORM_INPUTS = [
     id: "login",
     value: "login-page-login",
     type: "text",
-    error: ""
+    minLength: 4
   },
   {
     id: "password",
     value: "login-page-password",
     type: "password",
-    error: ""
+    minLength: 8
   },
 ];
