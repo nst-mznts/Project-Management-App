@@ -16,10 +16,15 @@ export default function useScreenType() {
     setScreenType(SCREEN_TYPES.SIGNUP_PAGE);
   };
 
+  const openBoardsPage = () => {
+    setScreenType(SCREEN_TYPES.BOARDS_PAGE);
+  };
+
   return {
     screenType,
     openStartPage,
     openLoginPage,
     openSignupPage,
+    openBoardsPage,
   };
 }

@@ -6,13 +6,15 @@ import Start from '../Start/Start';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
+import Boards from '../Boards/Boards';
 
 function App() {
-  const { screenType, openStartPage, openLoginPage, openSignupPage } = useScreenType();
+  const { screenType, openStartPage, openLoginPage, openSignupPage, openBoardsPage } = useScreenType();
 
   return (
     <>
       <Header
+        screenType ={screenType}
         openStartPage={openStartPage}
         openLoginPage={openLoginPage}
         openSignupPage={openSignupPage}
@@ -21,10 +23,13 @@ function App() {
         <Start openLoginPage={openLoginPage}/>
       )}
       {screenType === SCREEN_TYPES.LOGIN_PAGE && (
-        <Login openSignupPage={openSignupPage}/>
+        <Login openSignupPage={openSignupPage} openBoardsPage={openBoardsPage}/>
       )}
       {screenType === SCREEN_TYPES.SIGNUP_PAGE && (
-        <Signup openLoginPage={openLoginPage}/>
+        <Signup openLoginPage={openLoginPage}  openBoardsPage={openBoardsPage}/>
+      )}
+      {screenType === SCREEN_TYPES.BOARDS_PAGE && (
+        <Boards />
       )}
       <Footer/>
     </>

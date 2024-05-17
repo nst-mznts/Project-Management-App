@@ -18,5 +18,8 @@
     "login-page-password-error": "Минимальная длина пароля - 8 символов",
     "login-page-name-empty": "Пожалуйста, введите ваше имя",
     "login-page-confirm-password-empty": "Пожалуйста, подтвердите ваш пароль",
-    "login-page-confirm-password-error": "Пароль не совпадает"
+    "login-page-confirm-password-error": "Пароль не совпадает",
+    "add-board-button": "Новая доска",
+    "logout": "Выйти",
+    "edit-profile": "Редактировать профиль"
 }

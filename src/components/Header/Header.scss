@@ -10,5 +10,5 @@
 .buttons-wrapper {
     @include flex(row, space-between, center);
     column-gap: 6px;
-    width: 200px;
+    width: 250px;
 }

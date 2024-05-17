@@ -1,0 +1,15 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+@import '../Login/Login.scss';
+
+.boards-page {
+    @include flex(row, center, flex-start);
+}
+
+.boards-page-content {
+    padding: 40px 0;
+    @include flex(column, center, center);
+    row-gap: 30px;
+}
