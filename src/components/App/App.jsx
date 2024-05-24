@@ -12,10 +12,15 @@ import { useState } from 'react';
 function App() {
   const { screenType, openStartPage, openLoginPage, openSignupPage, openBoardsPage } = useScreenType();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const openSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const getUserName = (name) => {
+    setUserName(name);
+  }
 
   return (
     <>
@@ -30,13 +35,13 @@ function App() {
         <Start openLoginPage={openLoginPage}/>
       )}
       {screenType === SCREEN_TYPES.LOGIN_PAGE && (
-        <Login openSignupPage={openSignupPage} openBoardsPage={openBoardsPage}/>
+        <Login openSignupPage={openSignupPage} openBoardsPage={openBoardsPage} getUserName={getUserName}/>
       )}
       {screenType === SCREEN_TYPES.SIGNUP_PAGE && (
         <Signup openLoginPage={openLoginPage}  openBoardsPage={openBoardsPage}/>
       )}
       {screenType === SCREEN_TYPES.BOARDS_PAGE && (
-        <Boards isSidebarOpen={isSidebarOpen} openSidebar={openSidebar} openStartPage={openStartPage}/>
+        <Boards isSidebarOpen={isSidebarOpen} openSidebar={openSidebar} openStartPage={openStartPage} userName={userName}/>
       )}
       <Footer/>
     </>

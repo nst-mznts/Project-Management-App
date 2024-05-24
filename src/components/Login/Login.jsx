@@ -10,10 +10,10 @@ const loginPageFormContent = {
     button: "login",
 }
 
-function Login ({ openSignupPage, openBoardsPage }) {
-    const onSubmit = () => {
-        // alert(JSON.stringify(data));
+function Login ({ openSignupPage, openBoardsPage, getUserName }) {
+    const onSubmit = (data) => {
         openBoardsPage();
+        getUserName(data.login);
     }
 
     return (
@@ -33,6 +33,7 @@ function Login ({ openSignupPage, openBoardsPage }) {
 Login.propTypes = {
     openSignupPage: PropTypes.func.isRequired,
     openBoardsPage: PropTypes.func.isRequired,
+    getUserName: PropTypes.func.isRequired,
 };
 
 export default Login;
