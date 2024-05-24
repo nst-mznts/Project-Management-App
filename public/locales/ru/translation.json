@@ -22,6 +22,9 @@
     "add-board-button": "Новая доска",
     "logout": "Выйти",
     "title-profile": "Привет",
-    "edit-profile": "Редактировать профиль",
-    "delete-profile": "Удалить профиль"
+    "edit-profile": "Профиль",
+    "delete-profile": "Удалить профиль",
+    "delete-confirmation": "Вы действительно хотите удалить свой профиль?",
+    "delete-button": "Удалить",
+    "cancel-button": "Отменить"
 }

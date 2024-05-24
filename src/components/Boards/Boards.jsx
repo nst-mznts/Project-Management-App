@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { MdAdd } from "react-icons/md";
 import Sidebar from '../Sidebar/Sidebar';
+import { useState } from 'react';
+import ModalWindow from '../ModalWindow/ModalWindow';
 
 function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
+    const [isModalWindowOpened, setIsModalWindowOpened] = useState(false);
     const { t } = useTranslation();
 
     return (
@@ -16,7 +19,22 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
                         {t("add-board-button")}
                     </button>
                 </div>
-                {isSidebarOpen && <Sidebar openStartPage={openStartPage} openSidebar={openSidebar} userName={userName}/>}
+                {isModalWindowOpened && (
+                    <ModalWindow
+                        message="delete-confirmation"
+                        buttonText="delete-button"
+                        onCancel={setIsModalWindowOpened}
+                        onReset={openStartPage}
+                    />
+                )}
+                {isSidebarOpen && (
+                    <Sidebar
+                        openStartPage={openStartPage}
+                        openSidebar={openSidebar}
+                        userName={userName}
+                        onOpen={setIsModalWindowOpened}
+                    />
+                )}
             </div>
         </main>
     );

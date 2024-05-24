@@ -22,6 +22,9 @@
     "add-board-button": "New board",
     "logout": "Log out",
     "title-profile": "Hi",
-    "edit-profile": "Edit profile",
-    "delete-profile": "Delete profile"
+    "edit-profile": "Profile",
+    "delete-profile": "Delete profile",
+    "delete-confirmation": "Do you really want to delete your profile?",
+    "delete-button": "Delete",
+    "cancel-button": "Cancel"
 }

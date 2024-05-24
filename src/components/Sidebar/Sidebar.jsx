@@ -5,7 +5,7 @@ import { MdLogout } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
-function Sidebar({ openStartPage, openSidebar, userName }) {
+function Sidebar({ openStartPage, openSidebar, userName, onOpen }) {
     const { t } = useTranslation();
 
     return (
@@ -25,6 +25,7 @@ function Sidebar({ openStartPage, openSidebar, userName }) {
             </div>
             <div
                 className='profile-links additional-colored'
+                onClick={() => onOpen(true)}
             >
                 <MdDelete size="2em"/>
                 {t("delete-profile")}
@@ -37,6 +38,7 @@ Sidebar.propTypes = {
     openStartPage: PropTypes.func.isRequired,
     openSidebar: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
+    onOpen: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
