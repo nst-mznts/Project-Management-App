@@ -9,10 +9,35 @@
 }
 
 .boards-page-content {
-    width: 100%;
+    @extend %width100;
     padding: 40px 0;
     @include flex(column, flex-start, center);
     row-gap: 30px;
     position: relative;
     height: 100%;
+}
+
+.boards-wrapper {
+    @extend %width100;
+    @include flex(column, center, center);
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.board {
+    width: 380px;
+    height: 60px;
+    background-color: $color-primary;
+    padding: 12px 10px;
+    @extend %pointer;
+    @extend %border-radius;
+    @include flex(row, space-between, center);
+    color: $color-light;
+    @extend %font-primary;
+    @include font(normal, 400, $font-size-standart);
+}
+
+.boards-buttons-wrapper {
+    @include flex(row, space-between, center);
+    column-gap: 8px;
 }

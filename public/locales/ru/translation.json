@@ -26,5 +26,6 @@
     "delete-profile": "Удалить профиль",
     "delete-confirmation": "Вы действительно хотите удалить свой профиль?",
     "delete-button": "Удалить",
-    "cancel-button": "Отменить"
+    "cancel-button": "Отменить",
+    "add-new-board": "Новая доска"
 }

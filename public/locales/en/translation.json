@@ -26,5 +26,6 @@
     "delete-profile": "Delete profile",
     "delete-confirmation": "Do you really want to delete your profile?",
     "delete-button": "Delete",
-    "cancel-button": "Cancel"
+    "cancel-button": "Cancel",
+    "add-new-board": "New board"
 }

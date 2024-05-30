@@ -32,6 +32,7 @@
     height: 40px;
     padding: 12px 10px;
     @extend %pointer;
+    @extend %border-radius;
 }
 
 .colored {
