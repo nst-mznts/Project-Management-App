@@ -28,6 +28,11 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
         }
         const newBoards = [...boards, newBoard];
         setBoards(newBoards);
+    };
+
+    const completelyDeleteBoard = (id) => {
+        const newBoards = boards.filter((board) => board.id !== id);
+        setBoards(newBoards);
     }
 
     return (
@@ -47,7 +52,7 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
                                 <button className='button round-button additional-colored'>
                                     <MdEdit size="2em"/>
                                 </button>
-                                <button className='button round-button additional-colored'>
+                                <button className='button round-button additional-colored' onClick={() => completelyDeleteBoard(board.id)}>
                                     <MdDelete size="2em"/>
                                 </button>
                             </div>
