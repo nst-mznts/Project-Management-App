@@ -7,6 +7,7 @@ import { MdDelete } from "react-icons/md";
 import Sidebar from '../Sidebar/Sidebar';
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import EditForm from '../EditForm/EditForm';
 import ModalWindow from '../ModalWindow/ModalWindow';
 
 let listOfTasks = [
@@ -18,16 +19,25 @@ let listOfTasks = [
 function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
     const [boards, setBoards] = useState(listOfTasks);
     const [isModalWindowOpened, setIsModalWindowOpened] = useState(false);
+    const [closing, setClosing] = useState(false);
+    const [openedBoard, setOpenedBoard] = useState({});
     const { t } = useTranslation();
 
-    const addNewBoard = () => {
+    const addNewBoard = ({title}) => {
         const newBoard = {
           id: nanoid(),
-          title: t("add-new-board"),
-          tasks: []
+          title: title,
+          tasks: [],
         }
         const newBoards = [...boards, newBoard];
         setBoards(newBoards);
+        closeEditForm();
+    };
+
+    const openEditForm = (board = {}) => {
+        setClosing(true);
+        setOpenedBoard(board);
+        console.log('boards: ', boards);
     };
 
     const completelyDeleteBoard = (id) => {
@@ -35,21 +45,37 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
         setBoards(newBoards);
     }
 
+    const closeEditForm = () => {
+        setClosing(false);
+        setOpenedBoard({});
+    }
+
+    const updateBoards = (newBoard) => {
+        console.log('newBoard: ', newBoard);
+        setBoards(boards.map(board => board.id === newBoard.id ? {...board, title: newBoard.title} : board));
+    }
+
+    const handleSaveNote = (newBoard) => {
+        openedBoard.id ? updateBoards({...newBoard, id: openedBoard.id}) : addNewBoard(newBoard);
+        setClosing(false);
+    }
+
     return (
         <main className="boards-page">
             <div className="boards-page-content">
                 <div className='start-button'>
-                    <button className='button rectangular-button colored' onClick={addNewBoard}>
+                    <button className='button rectangular-button colored' onClick={openEditForm}>
                         <MdAdd size="2em"/>
                         {t("add-board-button")}
                     </button>
                 </div>
                 <div className="boards-wrapper">
+                {closing && <EditForm openedBoard={openedBoard} onCancel={closeEditForm} onSave={handleSaveNote} />}
                     {boards.map(board => {
                         return (<div key={board.id} className="board">
                             {board.title}
                             <div className="boards-buttons-wrapper">
-                                <button className='button round-button additional-colored'>
+                                <button className='button round-button additional-colored' onClick={() => openEditForm(board)}>
                                     <MdEdit size="2em"/>
                                 </button>
                                 <button className='button round-button additional-colored' onClick={() => completelyDeleteBoard(board.id)}>
