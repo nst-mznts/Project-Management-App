@@ -29,5 +29,7 @@
     "cancel-button": "Cancel",
     "add-new-board": "New board",
     "new-board-title": "Board title",
-    "save-button": "Save"
+    "save-button": "Save",
+    "back-button": "Back",
+    "add-column-button": "Add column"
 }

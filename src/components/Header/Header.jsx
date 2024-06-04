@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import Logo from '../Logo/Logo';
 import SymbolToggle from '../SymbolToggle/SymbolToggle';
 
-function Header({ screenType, openStartPage, openLoginPage, openSignupPage, openSidebar }) {
+function Header({ screenType, openStartPage, openLoginPage, openSignupPage, onOpen }) {
   const [language, setLanguage] = useState(false);
   const { t, i18n } = useTranslation();
 
@@ -24,13 +24,13 @@ function Header({ screenType, openStartPage, openLoginPage, openSignupPage, open
           className='button rectangular-button colored'
           onClick={screenType === SCREEN_TYPES.BOARDS_PAGE ? openStartPage : openLoginPage}
         >
-          {screenType === SCREEN_TYPES.BOARDS_PAGE ? t("logout") : t("login")}
+          {screenType === SCREEN_TYPES.BOARDS_PAGE || screenType === SCREEN_TYPES.BOARD_TASKS ? t("logout") : t("login")}
         </button>
         <button
           className='button rectangular-button bordered'
-          onClick={screenType === SCREEN_TYPES.BOARDS_PAGE ? openSidebar : openSignupPage}
+          onClick={(screenType === SCREEN_TYPES.BOARDS_PAGE || screenType === SCREEN_TYPES.BOARD_TASKS) ? onOpen : openSignupPage}
         >
-          {screenType === SCREEN_TYPES.BOARDS_PAGE ? t("edit-profile") : t("signup")}
+          {screenType === SCREEN_TYPES.BOARDS_PAGE || screenType === SCREEN_TYPES.BOARD_TASKS ? t("edit-profile") : t("signup")}
         </button>
       </div>
     </header>
@@ -42,7 +42,7 @@ Header.propTypes = {
   openStartPage: PropTypes.func.isRequired,
   openLoginPage: PropTypes.func.isRequired,
   openSignupPage: PropTypes.func.isRequired,
-  openSidebar: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default Header;

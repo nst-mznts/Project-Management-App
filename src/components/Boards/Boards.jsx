@@ -1,26 +1,28 @@
 import './Boards.scss';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 import { MdAdd } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import Sidebar from '../Sidebar/Sidebar';
-import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import EditForm from '../EditForm/EditForm';
 import ModalWindow from '../ModalWindow/ModalWindow';
 
-let listOfTasks = [
-    {id: 1, title: 'first board', tasks: [{id: 1, title: 'title 1'}, {id: 2, title: 'title 2'}]},
-    {id: 2, title: 'second board', tasks: [{id: 3, title: 'title 3'}]},
-    {id: 3, title: 'third board', tasks: []},
-];
-
-function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
-    const [boards, setBoards] = useState(listOfTasks);
+function Boards({
+    boards,
+    setBoards,
+    openedBoard,
+    setOpenedBoard,
+    isSidebarOpen,
+    onClose,
+    openStartPage,
+    userName,
+    openBoardTasksPage
+}) {
     const [isModalWindowOpened, setIsModalWindowOpened] = useState(false);
     const [closing, setClosing] = useState(false);
-    const [openedBoard, setOpenedBoard] = useState({});
     const { t } = useTranslation();
 
     const addNewBoard = ({title}) => {
@@ -72,8 +74,8 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
                 <div className="boards-wrapper">
                 {closing && <EditForm openedBoard={openedBoard} onCancel={closeEditForm} onSave={handleSaveNote} />}
                     {boards.map(board => {
-                        return (<div key={board.id} className="board">
-                            {board.title}
+                        return (<div key={board.id} className="board" >
+                            <h3 className='board-title' onClick={() => openBoardTasksPage(board)}>{board.title}</h3>
                             <div className="boards-buttons-wrapper">
                                 <button className='button round-button additional-colored' onClick={() => openEditForm(board)}>
                                     <MdEdit size="2em"/>
@@ -96,7 +98,7 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
                 {isSidebarOpen && (
                     <Sidebar
                         openStartPage={openStartPage}
-                        openSidebar={openSidebar}
+                        onClose={onClose}
                         userName={userName}
                         onOpen={setIsModalWindowOpened}
                     />
@@ -107,10 +109,29 @@ function Boards({ isSidebarOpen, openSidebar, openStartPage, userName }) {
 }
   
 Boards.propTypes = {
+    boards: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        tasks: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number,
+            title: PropTypes.string,
+        })),
+    })).isRequired,
+    setBoards: PropTypes.func.isRequired,
+    openedBoard: PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        tasks: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number,
+            title: PropTypes.string,
+        })),
+    }).isRequired,
+    setOpenedBoard: PropTypes.func.isRequired,
     isSidebarOpen: PropTypes.bool.isRequired,
-    openSidebar: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
     openStartPage: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
+    openBoardTasksPage: PropTypes.func.isRequired,
 };
   
 export default Boards;

@@ -45,6 +45,14 @@ function EditForm({ openedBoard, onCancel, onSave }) {
 }
 
 EditForm.propTypes = {
+    openedBoard: PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        tasks: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number,
+            title: PropTypes.string,
+        })),
+    }).isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
 };

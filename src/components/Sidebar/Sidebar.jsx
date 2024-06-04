@@ -5,14 +5,14 @@ import { MdLogout } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
-function Sidebar({ openStartPage, openSidebar, userName, onOpen }) {
+function Sidebar({ openStartPage, onClose, userName, onOpen }) {
     const { t } = useTranslation();
 
     return (
         <div className="sidenav">
             <div className="sidenav-header">
                 <h2>{`${t("title-profile")}, ${userName}!`}</h2>
-                <button className='button round-button additional-colored' onClick={openSidebar}>
+                <button className='button round-button additional-colored' onClick={onClose}>
                     <MdClose size="2em"/>
                 </button>
             </div>
@@ -36,7 +36,7 @@ function Sidebar({ openStartPage, openSidebar, userName, onOpen }) {
 
 Sidebar.propTypes = {
     openStartPage: PropTypes.func.isRequired,
-    openSidebar: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
     onOpen: PropTypes.func.isRequired,
 };

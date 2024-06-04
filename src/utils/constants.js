@@ -3,6 +3,7 @@ export const SCREEN_TYPES = {
   LOGIN_PAGE: 'LOGIN_PAGE',
   SIGNUP_PAGE: 'SIGNUP_PAGE',
   BOARDS_PAGE: 'BOARDS_PAGE',
+  BOARD_TASKS: 'BOARD_TASKS',
 };
 
 export const SIGNUP_FORM_INPUTS = [
@@ -45,4 +46,10 @@ export const LOGIN_FORM_INPUTS = [
     type: "password",
     minLength: 8
   },
+];
+
+export let listOfTasks = [
+  {id: 1, title: 'first board', tasks: [{id: 1, title: 'title 1'}, {id: 2, title: 'title 2'}]},
+  {id: 2, title: 'second board', tasks: [{id: 3, title: 'title 3'}]},
+  {id: 3, title: 'third board', tasks: []},
 ];

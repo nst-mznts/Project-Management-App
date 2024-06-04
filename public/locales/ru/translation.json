@@ -29,5 +29,7 @@
     "cancel-button": "Отменить",
     "add-new-board": "Новая доска",
     "new-board-title": "Заголовок доски",
-    "save-button": "Сохранить"
+    "save-button": "Сохранить",
+    "back-button": "Назад",
+    "add-column-button": "Новый столбец"
 }

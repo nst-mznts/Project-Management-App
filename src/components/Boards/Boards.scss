@@ -2,7 +2,6 @@
 @import '../../sass/abstract/mixins';
 @import '../../sass/abstract/placeholders';
 @import '../../sass/buttons';
-@import '../Login/Login.scss';
 
 .boards-page {
     @include flex(row, center, flex-start);
@@ -35,6 +34,10 @@
     color: $color-light;
     @extend %font-primary;
     @include font(normal, 400, $font-size-standart);
+}
+
+.board-title {
+    @extend %width100;
 }
 
 .boards-buttons-wrapper {

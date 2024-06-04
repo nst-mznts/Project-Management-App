@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { SCREEN_TYPES } from './constants';
+import PropTypes from 'prop-types';
 
-export default function useScreenType() {
+export default function useScreenType({ setOpenedBoard }) {
   const [screenType, setScreenType] = useState(SCREEN_TYPES.START_PAGE);
 
   const openStartPage = () => {
@@ -20,11 +21,21 @@ export default function useScreenType() {
     setScreenType(SCREEN_TYPES.BOARDS_PAGE);
   };
 
+  const openBoardTasksPage = (board = {}) => {
+    setOpenedBoard(board);
+    setScreenType(SCREEN_TYPES.BOARD_TASKS);
+  };
+
   return {
     screenType,
     openStartPage,
     openLoginPage,
     openSignupPage,
     openBoardsPage,
+    openBoardTasksPage,
   };
 }
+
+useScreenType.propTypes = {
+  setOpenedBoard: PropTypes.func.isRequired,
+};

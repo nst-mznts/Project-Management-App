@@ -1,0 +1,21 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.board-tasks-button-wrapper {
+    @extend %width100;
+    @include flex(row, space-between, center);
+    column-gap: 10px;
+}
+
+.board-tasks-title {
+    color: $color-dark;
+    @extend %font-primary;
+    @include font(normal, 400, 2.5rem);
+    margin: 0 10px;
+}
+
+.board-tasks-buttons {
+    width: 160px;
+}
