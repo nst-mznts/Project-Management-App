@@ -24,12 +24,13 @@
     "title-profile": "Привет",
     "edit-profile": "Профиль",
     "delete-profile": "Удалить профиль",
-    "delete-confirmation": "Вы действительно хотите удалить свой профиль?",
+    "delete-profile-confirmation": "Вы действительно хотите удалить свой профиль?",
     "delete-button": "Удалить",
     "cancel-button": "Отменить",
     "add-new-board": "Новая доска",
     "new-board-title": "Заголовок доски",
     "save-button": "Сохранить",
     "back-button": "Назад",
-    "add-column-button": "Новый столбец"
+    "add-column-button": "Новый столбец",
+    "delete-board-confirmation": "Вы действительно хотите удалить эту доску?"
 }

@@ -2,17 +2,17 @@ import './App.scss';
 import { SCREEN_TYPES } from '../../utils/constants';
 import { useState } from 'react';
 import useScreenType from '../../utils/useScreenType';
-import { listOfTasks } from '../../utils/constants'
 import Header from '../Header/Header';
 import Start from '../Start/Start';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import Signup from '../Signup/Signup';
-import Boards from '../Boards/Boards';
+import Content from '../Content/Content';
 import BoardTasks from '../BoardTasks/BoardTasks';
+import Sidebar from '../Sidebar/Sidebar';
+import useBoardsState from '../../utils/useBoardsState';
 
 function App() {
-  const [boards, setBoards] = useState(listOfTasks);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState('');
   const [openedBoard, setOpenedBoard] = useState({});
@@ -24,6 +24,29 @@ function App() {
     openBoardsPage,
     openBoardTasksPage
   } = useScreenType({setOpenedBoard});
+  const [isModalWindowOpened, setIsModalWindowOpened] = useState(false);
+  const [currentItem, setCurrentItem] = useState('');
+  const openModalWindow = (board={}, action) => {
+    console.log(action);
+    setCurrentItem(action);
+    setOpenedBoard(board);
+    memoriseBoardIdForDeletion(board.id);
+    setIsModalWindowOpened(true);
+  };
+
+  const closeModalWindow = () => {
+    setIsModalWindowOpened(false);
+    setOpenedBoard({});
+    setCurrentItem('');
+    memoriseBoardIdForDeletion(null);
+  };
+
+  const {
+    boards,
+    completelyDeleteBoard,
+    handleSaveNote,
+    memoriseBoardIdForDeletion
+  } = useBoardsState({openedBoard, closeModalWindow});
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -35,6 +58,12 @@ function App() {
 
   const getUserName = (name) => {
     setUserName(name);
+  };
+
+  const deleteProfile = () => {
+    closeModalWindow();
+    closeSidebar();
+    openStartPage();
   }
 
   return (
@@ -60,20 +89,29 @@ function App() {
         <Signup openLoginPage={openLoginPage}  openBoardsPage={openBoardsPage}/>
       )}
       {screenType === SCREEN_TYPES.BOARDS_PAGE && (
-        <Boards
+        <Content
           boards={boards}
-          setBoards={setBoards}
           openedBoard={openedBoard}
-          setOpenedBoard={setOpenedBoard}
-          isSidebarOpen={isSidebarOpen}
-          onClose={closeSidebar}
-          openStartPage={openStartPage}
-          userName={userName}
           openBoardTasksPage={openBoardTasksPage}
+          onDelete={completelyDeleteBoard}
+          onSave={handleSaveNote}
+          openModalWindow={openModalWindow}
+          isModalWindowOpened={isModalWindowOpened}
+          closeModalWindow={closeModalWindow}
+          deleteProfile={deleteProfile}
+          currentItem={currentItem}
         />
       )}
       {screenType === SCREEN_TYPES.BOARD_TASKS && (
         <BoardTasks openBoardsPage={openBoardsPage} openedBoard={openedBoard}/>
+      )}
+      {isSidebarOpen && (
+        <Sidebar
+          openStartPage={openStartPage}
+          onClose={closeSidebar}
+          userName={userName}
+          onOpen={openModalWindow}
+        />
       )}
       <Footer/>
     </>
