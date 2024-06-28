@@ -35,12 +35,9 @@ function Board ({ board, openBoardTasksPage, onEdit, onDelete }) {
 
 Board.propTypes = {
     board: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
-        tasks: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
-            title: PropTypes.string,
-        })),
+        columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     openBoardTasksPage: PropTypes.func.isRequired,
     onEdit: PropTypes.func.isRequired,

@@ -27,7 +27,6 @@ function App() {
   const [isModalWindowOpened, setIsModalWindowOpened] = useState(false);
   const [currentItem, setCurrentItem] = useState('');
   const openModalWindow = (board={}, action) => {
-    console.log(action);
     setCurrentItem(action);
     setOpenedBoard(board);
     memoriseBoardIdForDeletion(board.id);
@@ -62,6 +61,11 @@ function App() {
 
   const deleteProfile = () => {
     closeModalWindow();
+    closeSidebar();
+    openStartPage();
+  };
+
+  const logOutAndCloseSidebar = () => {
     closeSidebar();
     openStartPage();
   }
@@ -103,11 +107,11 @@ function App() {
         />
       )}
       {screenType === SCREEN_TYPES.BOARD_TASKS && (
-        <BoardTasks openBoardsPage={openBoardsPage} openedBoard={openedBoard}/>
+        <BoardTasks boards ={boards} openBoardsPage={openBoardsPage} openedBoard={openedBoard}/>
       )}
       {isSidebarOpen && (
         <Sidebar
-          openStartPage={openStartPage}
+          openStartPage={logOutAndCloseSidebar}
           onClose={closeSidebar}
           userName={userName}
           onOpen={openModalWindow}

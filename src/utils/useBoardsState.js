@@ -11,10 +11,15 @@ export default function useBoardsState({ openedBoard, closeModalWindow }) {
         const newBoard = {
           id: nanoid(),
           title: title,
-          tasks: [],
+          columnIds: [],
         }
-        const newBoards = [...boards, newBoard];
-        setBoards(newBoards);
+        setBoards({
+        ...boards,
+        boards: {
+            ...boards.boards,
+            [newBoard.id]: newBoard,
+        },
+        });
     };
 
     const memoriseBoardIdForDeletion = (id) => {
@@ -22,18 +27,30 @@ export default function useBoardsState({ openedBoard, closeModalWindow }) {
     };
 
     const completelyDeleteBoard = () => {
-        const newBoards = boards.filter((board) => board.id !== boardIdForDeletion);
-        setBoards(newBoards);
+        setBoards(prevBoards => {
+            const newBoards = { ...prevBoards };
+            delete newBoards.boards[boardIdForDeletion];
+            return newBoards;
+        });
         setBoardIdForDeletion('');
         closeModalWindow();
-        // close the modal window
     };
-    
+
     const updateBoards = (newBoard) => {
-        console.log('newBoard: ', newBoard);
-        setBoards(boards.map(board => board.id === newBoard.id ? {...board, title: newBoard.title} : board));
+        setBoards(prevBoards => {
+            return {
+                ...prevBoards,
+                boards: {
+                    ...prevBoards.boards,
+                    [newBoard.id]: {
+                        ...prevBoards.boards[newBoard.id],
+                        title: newBoard.title,
+                    },
+                },
+            };
+        });
     };
-    
+
     const handleSaveNote = (newBoard) => {
         openedBoard.id ? updateBoards({...newBoard, id: openedBoard.id}) : addNewBoard(newBoard);
         closeModalWindow();
@@ -50,12 +67,9 @@ export default function useBoardsState({ openedBoard, closeModalWindow }) {
 
 useBoardsState.propTypes = {
     openedBoard: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
-        tasks: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
-            title: PropTypes.string,
-        })),
+        columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     closeModalWindow: PropTypes.func.isRequired,
 };

@@ -19,7 +19,6 @@ function Boards({
 }) {
 
     const { t } = useTranslation();
-
     return (
         <>
             <main className="boards-page">
@@ -34,7 +33,7 @@ function Boards({
                         </button>
                     </div>
                     <div className="boards-wrapper">
-                        {boards.map(board => {
+                        {Object.values(boards.boards).map(board => {
                             return (
                                 <Board
                                     key={board.id}
@@ -63,21 +62,26 @@ function Boards({
 }
   
 Boards.propTypes = {
-    boards: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number,
-        title: PropTypes.string,
-        tasks: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
+    boards: PropTypes.shape({
+        boards: PropTypes.shape({
+            id: PropTypes.string,
             title: PropTypes.string,
-        })),
-    })).isRequired,
+            columnIds: PropTypes.arrayOf(PropTypes.string),
+        }),
+        columns: PropTypes.shape({
+            id: PropTypes.string,
+            title: PropTypes.string,
+            noteIds: PropTypes.arrayOf(PropTypes.string),
+        }),
+        notes: PropTypes.shape({
+            id: PropTypes.string,
+            content: PropTypes.string,
+        }),
+    }).isRequired,
     openedBoard: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
-        tasks: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
-            title: PropTypes.string,
-        })),
+        columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     openBoardTasksPage: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,

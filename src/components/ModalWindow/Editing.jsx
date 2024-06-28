@@ -41,12 +41,9 @@ function Editing({ openedBoard, onCancel, onSave }) {
 
 Editing.propTypes = {
     openedBoard: PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.string,
         title: PropTypes.string,
-        tasks: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.number,
-            title: PropTypes.string,
-        })),
+        columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
