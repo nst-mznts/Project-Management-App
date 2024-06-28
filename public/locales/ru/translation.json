@@ -32,5 +32,6 @@
     "save-button": "Сохранить",
     "back-button": "Назад",
     "add-column-button": "Новый столбец",
-    "delete-board-confirmation": "Вы действительно хотите удалить эту доску?"
+    "delete-board-confirmation": "Вы действительно хотите удалить эту доску?",
+    "add-task-button": "Новая задача"
 }

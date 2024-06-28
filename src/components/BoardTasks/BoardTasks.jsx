@@ -1,5 +1,7 @@
 import './BoardTasks.scss';
 import PropTypes from 'prop-types';
+import { MdAdd } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
 function BoardTasks({ boards, openBoardsPage, openedBoard }) {
@@ -32,11 +34,40 @@ function BoardTasks({ boards, openBoardsPage, openedBoard }) {
                     {openedBoard.columnIds.map(column => {
                         return (
                             <div className='column bordered' key={column}>
-                                <div className='column-title'>{boards.columns[column].title}</div>
+                                <div className='column-title'>
+                                    {boards.columns[column].title}
+                                    <button
+                                        className='button round-button bordered'
+                                        id='delete-board'
+                                    >
+                                        <MdDelete size="2em"/>
+                                    </button>
+                                </div>
+                                <div className='board-tasks-buttons'>
+                                    <button 
+                                        type="button"
+                                        className="button rectangular-button additional-colored"
+                                    >
+                                        <MdAdd size="2em"/>
+                                        {t("add-task-button")}
+                                    </button>
+                                </div>
                                 <div className='note-wrapper'>
-                                    {boards.columns[column].noteIds.map(noteId => (
-                                        <div className='note bordered' key={noteId}>{boards.notes[noteId].content}</div>
-                                    ))}
+                                    {boards.columns[column].noteIds.map(noteId => {
+                                        return (
+                                            <div className='note bordered' key={noteId}>
+                                                {boards.notes[noteId].content}
+                                                <div className='note-footer'>
+                                                    <button
+                                                        className='button round-button bordered'
+                                                        id='delete-board'
+                                                    >
+                                                        <MdDelete size="2em"/>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
                             </div>
                         )

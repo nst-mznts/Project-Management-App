@@ -32,5 +32,6 @@
     "save-button": "Save",
     "back-button": "Back",
     "add-column-button": "Add column",
-    "delete-board-confirmation": "Do you really want to delete this board?"
+    "delete-board-confirmation": "Do you really want to delete this board?",
+    "add-task-button": "Add task"
 }
