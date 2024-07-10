@@ -2,6 +2,7 @@
 @import '../../sass/abstract/mixins';
 @import '../../sass/abstract/placeholders';
 @import '../../sass/buttons';
+@import '../Board/Board.scss';
 
 .board-tasks-button-wrapper {
     @extend %width100;

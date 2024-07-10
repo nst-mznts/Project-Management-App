@@ -2,6 +2,7 @@ import './BoardTasks.scss';
 import PropTypes from 'prop-types';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import { MdAdd } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
@@ -9,8 +10,6 @@ function BoardTasks({
     boards,
     openBoardsPage,
     openedBoard,
-    addNewColumn,
-    deleteColumn,
     openModalWindow,
     isModalWindowOpened,
     closeModalWindow,
@@ -19,7 +18,7 @@ function BoardTasks({
     initialTitle,
 }) {
     const { t } = useTranslation();
-    console.log('boards', boards);
+
     return (
         <>
             <main className="boards-page">
@@ -51,13 +50,21 @@ function BoardTasks({
                                 <div className='column bordered' key={column}>
                                     <div className='column-title'>
                                         {boards.columns[column].title}
-                                        <button
-                                            className='button round-button bordered'
-                                            id='delete-board'
-                                            onClick={() => openModalWindow("deleteColumn")}
-                                        >
-                                            <MdDelete size="2em"/>
-                                        </button>
+                                        <div className="boards-buttons-wrapper">
+                                            <button
+                                                className='button round-button bordered'
+                                                onClick={() => openModalWindow(openedBoard, "renameColumn", boards.columns[column].title, boards.columns[column].id)}
+                                            >
+                                                <MdEdit size="2em"/>
+                                            </button>
+                                            <button
+                                                className='button round-button bordered'
+                                                id='delete-board'
+                                                onClick={() => openModalWindow(openedBoard, "deleteColumn", '', boards.columns[column].id)}
+                                            >
+                                                <MdDelete size="2em"/>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div className='board-tasks-buttons'>
                                         <button 
@@ -127,8 +134,6 @@ BoardTasks.propTypes = {
         title: PropTypes.string,
         columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    addNewColumn: PropTypes.func.isRequired,
-    deleteColumn: PropTypes.func.isRequired,
     openModalWindow: PropTypes.func.isRequired,
     isModalWindowOpened: PropTypes.bool.isRequired,
     closeModalWindow: PropTypes.func.isRequired,

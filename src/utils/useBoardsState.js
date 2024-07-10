@@ -5,6 +5,7 @@ import { listOfTasks } from './constants';
 
 export default function useBoardsState({ openedBoard }) {
     const [boards, setBoards] = useState(listOfTasks);
+    const [currentItemId, setCurrentItemId] = useState('');
 
     const addNewBoard = ({title}) => {
         const newBoard = {
@@ -24,7 +25,7 @@ export default function useBoardsState({ openedBoard }) {
         setBoards(updatedBoards);
     };
 
-    const addNewColumn = (boardId, title) => {
+    const addNewColumn = (boardId, {title}) => {
         const newColumn = {
             id: nanoid(),
             title: title,
@@ -50,20 +51,19 @@ export default function useBoardsState({ openedBoard }) {
     };
 
     const completelyDeleteBoard = () => {
-        console.log('openedBoard.id', openedBoard.id);
         const updatedBoards = {...boards};
         delete updatedBoards.boards[openedBoard.id];
         setBoards(updatedBoards);
     };
 
-    const deleteColumn = (boardId, columnId) => {
-        const updatedColumnIds = boards.boards[boardId].columnIds.filter((column) => column !== columnId);
+    const completelyDeleteColumn = () => {
+        const updatedColumnIds = boards.boards[openedBoard.id].columnIds.filter((column) => column !== currentItemId);
         const updatedBoards = {
             ...boards,
             boards: {
                 ...boards.boards,
-                [boardId]: {
-                    ...boards.boards[boardId],
+                [openedBoard.id]: {
+                    ...boards.boards[openedBoard.id],
                     columnIds: updatedColumnIds,
                 },
             },
@@ -87,6 +87,26 @@ export default function useBoardsState({ openedBoard }) {
         });
     };
 
+    const updateColumns = (newColumn) => {
+        setBoards(prevBoards => {
+            return {
+                ...prevBoards,
+                columns: {
+                    ...prevBoards.columns,
+                    [newColumn.id]: {
+                        ...prevBoards.columns[newColumn.id],
+                        title: newColumn.title,
+                    }
+                },
+                
+            };
+        });
+    };
+
+    const handleSaveColumns = (newColumn) => {
+        currentItemId ? updateColumns({...newColumn, id: currentItemId}) : addNewColumn (openedBoard.id, newColumn);
+    };
+
     const handleSaveBoard = (newBoard) => {
         openedBoard.id ? updateBoards({...newBoard, id: openedBoard.id}) : addNewBoard(newBoard);
     };
@@ -97,7 +117,9 @@ export default function useBoardsState({ openedBoard }) {
         handleSaveBoard,
         completelyDeleteBoard,
         addNewColumn,
-        deleteColumn,
+        completelyDeleteColumn,
+        setCurrentItemId,
+        handleSaveColumns,
     };
 }
 

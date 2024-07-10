@@ -16,14 +16,14 @@ function Board ({ board, openBoardTasksPage, onEdit, onDelete }) {
         <div className="boards-buttons-wrapper">
             <button
                 className='button round-button additional-colored'
-                onClick={() => onEdit(board, 'edit')}
+                onClick={onEdit}
             >
                 <MdEdit size="2em"/>
             </button>
             <button
                 className='button round-button additional-colored'
                 id='delete-board'
-                onClick={() => onDelete(board, 'delete')}
+                onClick={onDelete}
             >
                 <MdDelete size="2em"/>
             </button>

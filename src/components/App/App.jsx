@@ -32,18 +32,22 @@ function App() {
     completelyDeleteBoard,
     handleSaveBoard,
     addNewColumn,
-    deleteColumn,
+    completelyDeleteColumn,
+    setCurrentItemId,
+    handleSaveColumns,
   } = useBoardsState({openedBoard});
 
-  const openModal = (board={}, actionType, initialTitle = '') => {
+  const openModal = (board={}, actionType, initialTitle = '', currentId = '') => {
     setOpenedBoard(board);
     setActionType(actionType);
     setInitialTitle(initialTitle);
+    setCurrentItemId(currentId);
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    setCurrentItemId('');
   };
 
   const confirmActionForBoards = (title, actionType) => {
@@ -67,8 +71,22 @@ function App() {
     closeModal();
   };
 
-  const confirmActionCreatingNewColumn = (title) => {
-    addNewColumn(openedBoard.id, title);
+  const confirmActionCreatingNewColumn = (title, actionType) => {
+    switch (actionType) {
+      case 'addColumn':
+        console.log('addColumn');
+        handleSaveColumns({title: title});
+        break;
+      case 'renameColumn':
+        handleSaveColumns({title: title});
+        console.log(title);
+        break;
+      case 'deleteColumn':
+        deleteColumn();
+        break;
+      default:
+        break;
+    }
     closeModal();
   }
 
@@ -97,6 +115,11 @@ function App() {
 
   const deleteBoard = () => {
     completelyDeleteBoard();
+    closeModal();
+  }
+
+  const deleteColumn = () => {
+    completelyDeleteColumn();
     closeModal();
   }
 
@@ -139,8 +162,6 @@ function App() {
           boards ={boards}
           openBoardsPage={openBoardsPage}
           openedBoard={openedBoard}
-          addNewColumn={addNewColumn}
-          deleteColumn={deleteColumn}
           openModalWindow={openModal}
           isModalWindowOpened={isModalOpen}
           closeModalWindow={closeModal}
