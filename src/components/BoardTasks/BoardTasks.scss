@@ -24,6 +24,8 @@
     @extend %width100;
     @include flex(row, flex-start, center);
     column-gap: 20px;
+    overflow: auto;
+    flex-wrap: nowrap;
 }
 
 .column {
@@ -35,7 +37,7 @@
 }
 
 .column-title {
-    @extend %width100;
+    width: 300px;
     height: 60px;
     @include flex(row, space-between, center);
     padding: 0 10px;

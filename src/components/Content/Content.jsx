@@ -7,18 +7,16 @@ import ModalWindow from '../ModalWindow/ModalWindow';
 
 function Boards({
     boards,
-    openedBoard,
     openBoardTasksPage,
-    onDelete,
-    onSave,
     openModalWindow,
     isModalWindowOpened,
     closeModalWindow,
-    deleteProfile,
-    currentItem,
+    onConfirm,
+    actionType,
+    initialTitle,
 }) {
-
     const { t } = useTranslation();
+
     return (
         <>
             <main className="boards-page">
@@ -26,7 +24,7 @@ function Boards({
                     <div className='start-button'>
                         <button
                             className='button rectangular-button colored'
-                            onClick={() => openModalWindow({}, 'edit')}
+                            onClick={() => openModalWindow({}, "createBoard")}
                         >
                             <MdAdd size="2em"/>
                             {t("add-board-button")}
@@ -39,8 +37,8 @@ function Boards({
                                     key={board.id}
                                     board={board}
                                     openBoardTasksPage={openBoardTasksPage}
-                                    onEdit={openModalWindow}
-                                    onDelete={openModalWindow}
+                                    onEdit={() => openModalWindow(board, "renameBoard", board.title)}
+                                    onDelete={() => openModalWindow(board, "deleteBoard")}
                                 />
                             )
                         })}
@@ -49,12 +47,11 @@ function Boards({
             </main>
             {isModalWindowOpened && (
                 <ModalWindow
-                    openedBoard={openedBoard}
-                    onCancel={closeModalWindow}
-                    onDelete={onDelete}
-                    deleteProfile={deleteProfile}
-                    onSave={onSave}
-                    currentItem={currentItem}
+                    isOpen={isModalWindowOpened}
+                    actionType={actionType}
+                    onClose={closeModalWindow}
+                    onConfirm={onConfirm}
+                    initialTitle={initialTitle}
                 />
             )}
         </>
@@ -78,19 +75,13 @@ Boards.propTypes = {
             content: PropTypes.string,
         }),
     }).isRequired,
-    openedBoard: PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-        columnIds: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
     openBoardTasksPage: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
     openModalWindow: PropTypes.func.isRequired,
     isModalWindowOpened: PropTypes.bool.isRequired,
     closeModalWindow: PropTypes.func.isRequired,
-    deleteProfile: PropTypes.func.isRequired,
-    currentItem: PropTypes.string.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    actionType: PropTypes.string.isRequired,
+    initialTitle: PropTypes.string.isRequired,
 };
   
 export default Boards;

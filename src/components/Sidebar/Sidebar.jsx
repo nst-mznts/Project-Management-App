@@ -25,7 +25,7 @@ function Sidebar({ openStartPage, onClose, userName, onOpen }) {
             </div>
             <div
                 className='profile-links additional-colored'
-                onClick={() => onOpen({}, 'profile')}
+                onClick={() => onOpen({}, 'deleteProfile')}
             >
                 <MdDelete size="2em"/>
                 {t("delete-profile")}

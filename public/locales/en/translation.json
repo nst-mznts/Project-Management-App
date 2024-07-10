@@ -27,11 +27,17 @@
     "delete-profile-confirmation": "Do you really want to delete your profile?",
     "delete-button": "Delete",
     "cancel-button": "Cancel",
+    "confirm-button": "Confirm",
     "add-new-board": "New board",
     "new-board-title": "Board title",
     "save-button": "Save",
     "back-button": "Back",
     "add-column-button": "Add column",
     "delete-board-confirmation": "Do you really want to delete this board?",
-    "add-task-button": "Add task"
+    "add-task-button": "Add task",
+    "new-column-title": "New column",
+    "delete-column-confirmation": "Do you really want to delete this column?",
+    "new-task-title": "New task",
+    "delete-task-confirmation": "Do you really want to delete this task?",
+    "new-title": "Title"
 }

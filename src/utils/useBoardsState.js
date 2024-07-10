@@ -3,37 +3,73 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { listOfTasks } from './constants';
 
-export default function useBoardsState({ openedBoard, closeModalWindow }) {
+export default function useBoardsState({ openedBoard }) {
     const [boards, setBoards] = useState(listOfTasks);
-    const [boardIdForDeletion, setBoardIdForDeletion] = useState(null);
 
     const addNewBoard = ({title}) => {
         const newBoard = {
-          id: nanoid(),
-          title: title,
-          columnIds: [],
+            id: nanoid(),
+            title: title,
+            columnIds: [],
         }
-        setBoards({
-        ...boards,
-        boards: {
-            ...boards.boards,
-            [newBoard.id]: newBoard,
-        },
-        });
+
+        const updatedBoards = {
+            ...boards,
+            boards: {
+                ...boards.boards,
+                [newBoard.id]: newBoard,
+            },
+        };
+
+        setBoards(updatedBoards);
     };
 
-    const memoriseBoardIdForDeletion = (id) => {
-        setBoardIdForDeletion(id);
+    const addNewColumn = (boardId, title) => {
+        const newColumn = {
+            id: nanoid(),
+            title: title,
+            noteIds: [],
+        };
+
+        const updatedBoards = {
+            ...boards,
+            boards: {
+                ...boards.boards,
+                [boardId]: {
+                    ...boards.boards[boardId],
+                    columnIds: [...boards.boards[boardId].columnIds, newColumn.id],
+                },
+            },
+            columns: {
+                ...boards.columns,
+                [newColumn.id]: newColumn,
+            },
+        };
+
+        setBoards(updatedBoards);
     };
 
     const completelyDeleteBoard = () => {
-        setBoards(prevBoards => {
-            const newBoards = { ...prevBoards };
-            delete newBoards.boards[boardIdForDeletion];
-            return newBoards;
-        });
-        setBoardIdForDeletion('');
-        closeModalWindow();
+        console.log('openedBoard.id', openedBoard.id);
+        const updatedBoards = {...boards};
+        delete updatedBoards.boards[openedBoard.id];
+        setBoards(updatedBoards);
+    };
+
+    const deleteColumn = (boardId, columnId) => {
+        const updatedColumnIds = boards.boards[boardId].columnIds.filter((column) => column !== columnId);
+        const updatedBoards = {
+            ...boards,
+            boards: {
+                ...boards.boards,
+                [boardId]: {
+                    ...boards.boards[boardId],
+                    columnIds: updatedColumnIds,
+                },
+            },
+        };
+
+        setBoards(updatedBoards);
     };
 
     const updateBoards = (newBoard) => {
@@ -51,17 +87,17 @@ export default function useBoardsState({ openedBoard, closeModalWindow }) {
         });
     };
 
-    const handleSaveNote = (newBoard) => {
+    const handleSaveBoard = (newBoard) => {
         openedBoard.id ? updateBoards({...newBoard, id: openedBoard.id}) : addNewBoard(newBoard);
-        closeModalWindow();
     };
 
     return {
         boards,
         completelyDeleteBoard,
-        handleSaveNote,
-        memoriseBoardIdForDeletion,
+        handleSaveBoard,
         completelyDeleteBoard,
+        addNewColumn,
+        deleteColumn,
     };
 }
 
@@ -71,5 +107,4 @@ useBoardsState.propTypes = {
         title: PropTypes.string,
         columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
-    closeModalWindow: PropTypes.func.isRequired,
 };

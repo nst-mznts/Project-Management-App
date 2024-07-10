@@ -1,81 +1,106 @@
 import './BoardTasks.scss';
 import PropTypes from 'prop-types';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import { MdAdd } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
-function BoardTasks({ boards, openBoardsPage, openedBoard }) {
+function BoardTasks({
+    boards,
+    openBoardsPage,
+    openedBoard,
+    addNewColumn,
+    deleteColumn,
+    openModalWindow,
+    isModalWindowOpened,
+    closeModalWindow,
+    onConfirm,
+    actionType,
+    initialTitle,
+}) {
     const { t } = useTranslation();
-
+    console.log('boards', boards);
     return (
-        <main className="boards-page">
-            <div className="boards-page-content">
-                <div className='board-tasks-button-wrapper'>
-                    <div className='board-tasks-buttons'>
-                        <button
-                            type="button"
-                            className="button rectangular-button bordered"
-                            onClick={openBoardsPage}
-                        >
-                            {t("back-button")}
-                        </button>
+        <>
+            <main className="boards-page">
+                <div className="boards-page-content">
+                    <div className='board-tasks-button-wrapper'>
+                        <div className='board-tasks-buttons'>
+                            <button
+                                type="button"
+                                className="button rectangular-button bordered"
+                                onClick={openBoardsPage}
+                            >
+                                {t("back-button")}
+                            </button>
+                        </div>
+                        <h3 className='board-tasks-title'>{openedBoard.title}</h3>
+                        <div className='board-tasks-buttons'>
+                            <button 
+                                type="button"
+                                className="button rectangular-button colored"
+                                onClick={() => openModalWindow(openedBoard, "addColumn")}
+                            >
+                                {t("add-column-button")}
+                            </button>
+                        </div>
                     </div>
-                    <h3 className='board-tasks-title'>{openedBoard.title}</h3>
-                    <div className='board-tasks-buttons'>
-                        <button 
-                            type="button"
-                            className="button rectangular-button colored"
-                        >
-                            {t("add-column-button")}
-                        </button>
-                    </div>
-                </div>
-                <div className='column-wrapper'>
-                    {openedBoard.columnIds.map(column => {
-                        return (
-                            <div className='column bordered' key={column}>
-                                <div className='column-title'>
-                                    {boards.columns[column].title}
-                                    <button
-                                        className='button round-button bordered'
-                                        id='delete-board'
-                                    >
-                                        <MdDelete size="2em"/>
-                                    </button>
-                                </div>
-                                <div className='board-tasks-buttons'>
-                                    <button 
-                                        type="button"
-                                        className="button rectangular-button additional-colored"
-                                    >
-                                        <MdAdd size="2em"/>
-                                        {t("add-task-button")}
-                                    </button>
-                                </div>
-                                <div className='note-wrapper'>
-                                    {boards.columns[column].noteIds.map(noteId => {
-                                        return (
-                                            <div className='note bordered' key={noteId}>
-                                                {boards.notes[noteId].content}
-                                                <div className='note-footer'>
-                                                    <button
-                                                        className='button round-button bordered'
-                                                        id='delete-board'
-                                                    >
-                                                        <MdDelete size="2em"/>
-                                                    </button>
+                    <div className='column-wrapper'>
+                        {openedBoard.columnIds.map(column => {
+                            return (
+                                <div className='column bordered' key={column}>
+                                    <div className='column-title'>
+                                        {boards.columns[column].title}
+                                        <button
+                                            className='button round-button bordered'
+                                            id='delete-board'
+                                            onClick={() => openModalWindow("deleteColumn")}
+                                        >
+                                            <MdDelete size="2em"/>
+                                        </button>
+                                    </div>
+                                    <div className='board-tasks-buttons'>
+                                        <button 
+                                            type="button"
+                                            className="button rectangular-button additional-colored"
+                                        >
+                                            <MdAdd size="2em"/>
+                                            {t("add-task-button")}
+                                        </button>
+                                    </div>
+                                    <div className='note-wrapper'>
+                                        {boards.columns[column].noteIds.map(noteId => {
+                                            return (
+                                                <div className='note bordered' key={noteId}>
+                                                    {boards.notes[noteId].content}
+                                                    <div className='note-footer'>
+                                                        <button
+                                                            className='button round-button bordered'
+                                                            id='delete-board'
+                                                        >
+                                                            <MdDelete size="2em"/>
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })}
+                                            )
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            )
+                        })}
+                    </div>
                 </div>
-                
-            </div>
-        </main>
+            </main>
+            {isModalWindowOpened && (
+                <ModalWindow
+                    isOpen={isModalWindowOpened}
+                    actionType={actionType}
+                    onClose={closeModalWindow}
+                    onConfirm={onConfirm}
+                    initialTitle={initialTitle}
+                />
+            )}
+        </>
     );
 }
 
@@ -102,6 +127,14 @@ BoardTasks.propTypes = {
         title: PropTypes.string,
         columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
+    addNewColumn: PropTypes.func.isRequired,
+    deleteColumn: PropTypes.func.isRequired,
+    openModalWindow: PropTypes.func.isRequired,
+    isModalWindowOpened: PropTypes.bool.isRequired,
+    closeModalWindow: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func.isRequired,
+    actionType: PropTypes.string.isRequired,
+    initialTitle: PropTypes.string.isRequired,
 };
 
 export default BoardTasks;

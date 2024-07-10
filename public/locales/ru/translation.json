@@ -27,11 +27,17 @@
     "delete-profile-confirmation": "Вы действительно хотите удалить свой профиль?",
     "delete-button": "Удалить",
     "cancel-button": "Отменить",
+    "confirm-button": "Подтвердить",
     "add-new-board": "Новая доска",
     "new-board-title": "Заголовок доски",
     "save-button": "Сохранить",
     "back-button": "Назад",
     "add-column-button": "Новый столбец",
     "delete-board-confirmation": "Вы действительно хотите удалить эту доску?",
-    "add-task-button": "Новая задача"
+    "add-task-button": "Новая задача",
+    "new-column-title": "Новый столбец",
+    "delete-column-confirmation": "Вы действительно хотите удалить этот столбец?",
+    "new-task-title": "Новая задача",
+    "delete-task-confirmation": "Вы действительно хотите удалить эту задачу?",
+    "new-title": "Заголовок"
 }
