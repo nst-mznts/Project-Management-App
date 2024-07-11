@@ -27,15 +27,6 @@ function App() {
     openBoardsPage,
     openBoardTasksPage
   } = useScreenType({setOpenedBoard});
-  const {
-    boards,
-    completelyDeleteBoard,
-    handleSaveBoard,
-    addNewColumn,
-    completelyDeleteColumn,
-    setCurrentItemId,
-    handleSaveColumns,
-  } = useBoardsState({openedBoard});
 
   const openModal = (board={}, actionType, initialTitle = '', currentId = '') => {
     setOpenedBoard(board);
@@ -50,45 +41,19 @@ function App() {
     setCurrentItemId('');
   };
 
-  const confirmActionForBoards = (title, actionType) => {
-    console.log('actionType', actionType);
-    switch (actionType) {
-      case 'createBoard':
-        handleSaveBoard({title: title});
-        break;
-      case 'renameBoard':
-        handleSaveBoard({title: title});
-        break;
-      case 'deleteBoard':
-        deleteBoard();
-        break;
-      case 'deleteProfile':
-        deleteProfile();
-        break;
-      default:
-        break;
-    }
+  const deleteProfile = () => {
     closeModal();
+    closeSidebar();
+    openStartPage();
   };
 
-  const confirmActionCreatingNewColumn = (title, actionType) => {
-    switch (actionType) {
-      case 'addColumn':
-        console.log('addColumn');
-        handleSaveColumns({title: title});
-        break;
-      case 'renameColumn':
-        handleSaveColumns({title: title});
-        console.log(title);
-        break;
-      case 'deleteColumn':
-        deleteColumn();
-        break;
-      default:
-        break;
-    }
-    closeModal();
-  }
+  const {
+    boards,
+    setCurrentItemId,
+    confirmActionForBoards,
+    confirmActionForColumn,
+    addNewNote,
+  } = useBoardsState({openedBoard, closeModal, deleteProfile, setOpenedBoard});
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -102,26 +67,10 @@ function App() {
     setUserName(name);
   };
 
-  const deleteProfile = () => {
-    closeModal();
-    closeSidebar();
-    openStartPage();
-  };
-
   const logOutAndCloseSidebar = () => {
     closeSidebar();
     openStartPage();
-  }
-
-  const deleteBoard = () => {
-    completelyDeleteBoard();
-    closeModal();
-  }
-
-  const deleteColumn = () => {
-    completelyDeleteColumn();
-    closeModal();
-  }
+  };
 
   return (
     <>
@@ -165,9 +114,10 @@ function App() {
           openModalWindow={openModal}
           isModalWindowOpened={isModalOpen}
           closeModalWindow={closeModal}
-          onConfirm={confirmActionCreatingNewColumn}
+          onConfirm={confirmActionForColumn}
           actionType={actionType}
           initialTitle={initialTitle}
+          addNewNote={addNewNote}
         />
       )}
       {isSidebarOpen && (

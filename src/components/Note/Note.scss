@@ -1,0 +1,18 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+@import '../Board/Board.scss';
+
+.note {
+    width: 280px;
+    height: 100px;
+    @extend %border-radius;
+    padding: 10px;
+    @include flex(column, space-between, flex-start);
+}
+
+.note-footer {
+    @extend %width100;
+    @include flex(row, flex-end, center);
+}

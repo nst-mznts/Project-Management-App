@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { listOfTasks } from './constants';
 
-export default function useBoardsState({ openedBoard }) {
+export default function useBoardsState({ openedBoard, closeModal, deleteProfile, setOpenedBoard }) {
     const [boards, setBoards] = useState(listOfTasks);
     const [currentItemId, setCurrentItemId] = useState('');
 
@@ -48,6 +48,38 @@ export default function useBoardsState({ openedBoard }) {
         };
 
         setBoards(updatedBoards);
+
+        const updatedOpenedBoard = {
+            ...openedBoard,
+            columnIds: [...openedBoard.columnIds, newColumn.id],
+        }
+        setOpenedBoard(updatedOpenedBoard);
+    };
+
+    const addNewNote = (columnId, {content}) => {
+        const newNote = {
+            id: nanoid(),
+            content: content,
+        };
+
+        const updatedBoards = {
+            ...boards,
+            columns: {
+                ...boards.columns,
+                [columnId]: {
+                    ...boards.columns[columnId],
+                    noteIds: [...boards.columns[columnId].noteIds, newNote.id],
+                },
+            },
+            notes: {
+                ...boards.notes,
+                [newNote.id]: newNote,
+            },
+
+        };
+
+        setBoards(updatedBoards);
+
     };
 
     const completelyDeleteBoard = () => {
@@ -70,6 +102,12 @@ export default function useBoardsState({ openedBoard }) {
         };
 
         setBoards(updatedBoards);
+
+        const updatedOpenedBoard = {
+            ...openedBoard,
+            columnIds: updatedColumnIds,
+        }
+        setOpenedBoard(updatedOpenedBoard);
     };
 
     const updateBoards = (newBoard) => {
@@ -104,22 +142,74 @@ export default function useBoardsState({ openedBoard }) {
     };
 
     const handleSaveColumns = (newColumn) => {
-        currentItemId ? updateColumns({...newColumn, id: currentItemId}) : addNewColumn (openedBoard.id, newColumn);
+        currentItemId ? 
+            updateColumns({...newColumn, id: currentItemId}) :
+            addNewColumn (openedBoard.id, newColumn);
     };
 
     const handleSaveBoard = (newBoard) => {
-        openedBoard.id ? updateBoards({...newBoard, id: openedBoard.id}) : addNewBoard(newBoard);
+        openedBoard.id ?
+            updateBoards({...newBoard, id: openedBoard.id}) :
+            addNewBoard(newBoard);
+    };
+
+    const confirmActionForBoards = (title, actionType) => {
+        console.log('actionType', actionType);
+        switch (actionType) {
+            case 'createBoard':
+                handleSaveBoard({title: title});
+                break;
+            case 'renameBoard':
+                handleSaveBoard({title: title});
+                break;
+            case 'deleteBoard':
+                deleteBoard();
+                break;
+            case 'deleteProfile':
+                deleteProfile();
+                break;
+            default:
+                break;
+        }
+        closeModal();
+    };
+
+    const deleteBoard = () => {
+        completelyDeleteBoard();
+        closeModal();
+    };
+
+    const confirmActionForColumn = (title, actionType) => {
+        switch (actionType) {
+            case 'addColumn':
+                console.log('addColumn');
+                handleSaveColumns({title: title});
+                break;
+            case 'renameColumn':
+                handleSaveColumns({title: title});
+                console.log(title);
+                break;
+            case 'deleteColumn':
+                deleteColumn();
+                break;
+            default:
+                break;
+        }
+        closeModal();
+    };
+
+    const deleteColumn = () => {
+        completelyDeleteColumn();
+        closeModal();
     };
 
     return {
         boards,
         completelyDeleteBoard,
-        handleSaveBoard,
-        completelyDeleteBoard,
-        addNewColumn,
-        completelyDeleteColumn,
         setCurrentItemId,
-        handleSaveColumns,
+        confirmActionForBoards,
+        confirmActionForColumn,
+        addNewNote,
     };
 }
 
@@ -129,4 +219,7 @@ useBoardsState.propTypes = {
         title: PropTypes.string,
         columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
+    closeModal: PropTypes.func.isRequired,
+    deleteProfile: PropTypes.func.isRequired,
+    setOpenedBoard: PropTypes.func.isRequired,
 };

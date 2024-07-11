@@ -1,9 +1,7 @@
 import './BoardTasks.scss';
 import PropTypes from 'prop-types';
 import ModalWindow from '../ModalWindow/ModalWindow';
-import { MdAdd } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import Column from '../Column/Column';
 import { useTranslation } from 'react-i18next';
 
 function BoardTasks({
@@ -16,6 +14,7 @@ function BoardTasks({
     onConfirm,
     actionType,
     initialTitle,
+    addNewNote,
 }) {
     const { t } = useTranslation();
 
@@ -45,54 +44,16 @@ function BoardTasks({
                         </div>
                     </div>
                     <div className='column-wrapper'>
-                        {openedBoard.columnIds.map(column => {
-                            return (
-                                <div className='column bordered' key={column}>
-                                    <div className='column-title'>
-                                        {boards.columns[column].title}
-                                        <div className="boards-buttons-wrapper">
-                                            <button
-                                                className='button round-button bordered'
-                                                onClick={() => openModalWindow(openedBoard, "renameColumn", boards.columns[column].title, boards.columns[column].id)}
-                                            >
-                                                <MdEdit size="2em"/>
-                                            </button>
-                                            <button
-                                                className='button round-button bordered'
-                                                id='delete-board'
-                                                onClick={() => openModalWindow(openedBoard, "deleteColumn", '', boards.columns[column].id)}
-                                            >
-                                                <MdDelete size="2em"/>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className='board-tasks-buttons'>
-                                        <button 
-                                            type="button"
-                                            className="button rectangular-button additional-colored"
-                                        >
-                                            <MdAdd size="2em"/>
-                                            {t("add-task-button")}
-                                        </button>
-                                    </div>
-                                    <div className='note-wrapper'>
-                                        {boards.columns[column].noteIds.map(noteId => {
-                                            return (
-                                                <div className='note bordered' key={noteId}>
-                                                    {boards.notes[noteId].content}
-                                                    <div className='note-footer'>
-                                                        <button
-                                                            className='button round-button bordered'
-                                                            id='delete-board'
-                                                        >
-                                                            <MdDelete size="2em"/>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                </div>
+                        {openedBoard.columnIds.map(columnId => {
+                            return(
+                                <Column
+                                    key={columnId}
+                                    boards={boards}
+                                    columnId={columnId}
+                                    openedBoard={openedBoard}
+                                    openModalWindow={openModalWindow}
+                                    addNewNote={addNewNote}
+                                />
                             )
                         })}
                     </div>
