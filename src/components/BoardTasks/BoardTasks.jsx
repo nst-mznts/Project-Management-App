@@ -15,6 +15,7 @@ function BoardTasks({
     actionType,
     initialTitle,
     addNewNote,
+    updateOrderNoteIds,
 }) {
     const { t } = useTranslation();
 
@@ -53,6 +54,7 @@ function BoardTasks({
                                     openedBoard={openedBoard}
                                     openModalWindow={openModalWindow}
                                     addNewNote={addNewNote}
+                                    updateOrderNoteIds={updateOrderNoteIds}
                                 />
                             )
                         })}
@@ -101,6 +103,8 @@ BoardTasks.propTypes = {
     onConfirm: PropTypes.func.isRequired,
     actionType: PropTypes.string.isRequired,
     initialTitle: PropTypes.string.isRequired,
+    addNewNote: PropTypes.func.isRequired,
+    updateOrderNoteIds: PropTypes.func.isRequired,
 };
 
 export default BoardTasks;

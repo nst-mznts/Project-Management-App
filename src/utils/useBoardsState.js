@@ -203,6 +203,21 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
         closeModal();
     };
 
+    const updateOrderNoteIds = (columnId, newOrder) => {
+        const updatedBoards = {
+            ...boards,
+            columns: {
+                ...boards.columns,
+                [columnId]: {
+                    ...boards.columns[columnId],
+                    noteIds: newOrder,
+                },
+            }
+
+        };
+        setBoards(updatedBoards);
+    }
+
     return {
         boards,
         completelyDeleteBoard,
@@ -210,6 +225,7 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
         confirmActionForBoards,
         confirmActionForColumn,
         addNewNote,
+        updateOrderNoteIds,
     };
 }
 

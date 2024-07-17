@@ -1,11 +1,12 @@
 import './Note.scss';
 import PropTypes from 'prop-types';
+import { Reorder } from 'framer-motion';
 import { MdDelete } from "react-icons/md";
 
 
 function Note ({ boards, noteId }) {
   return (
-    <div className='note bordered'>
+    <Reorder.Item as='div' value={noteId} className='note bordered' >
         {boards.notes[noteId].content}
         <div className='note-footer'>
             <button
@@ -15,7 +16,7 @@ function Note ({ boards, noteId }) {
                 <MdDelete size="2em"/>
             </button>
         </div>
-    </div>
+    </Reorder.Item>
   );
 }
 

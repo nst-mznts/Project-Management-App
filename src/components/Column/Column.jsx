@@ -1,5 +1,6 @@
 import './Column.scss';
 import PropTypes from 'prop-types';
+import { Reorder } from 'framer-motion';
 import Note from '../Note/Note';
 import { MdAdd } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
@@ -7,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import { useTranslation } from 'react-i18next';
 
 
-function Column ({ boards, columnId, openedBoard, openModalWindow, addNewNote }) {
+function Column ({ boards, columnId, openedBoard, openModalWindow, addNewNote, updateOrderNoteIds }) {
     const { t } = useTranslation();
 
     return (
@@ -48,7 +49,13 @@ function Column ({ boards, columnId, openedBoard, openModalWindow, addNewNote })
                     {t("add-task-button")}
                 </button>
             </div>
-            <div className='note-wrapper'>
+            <Reorder.Group
+                as='div'
+                axis='y'
+                values={boards.columns[columnId].noteIds}
+                onReorder={(newOrder) => updateOrderNoteIds(columnId, newOrder)}
+                className='note-wrapper'
+            >
                 {boards.columns[columnId].noteIds.map(noteId => {
                     return (
                         <Note
@@ -58,7 +65,7 @@ function Column ({ boards, columnId, openedBoard, openModalWindow, addNewNote })
                         />
                     )
                 })}
-            </div>
+            </Reorder.Group>
         </div>
     );
 }
@@ -87,6 +94,8 @@ Column.propTypes = {
         columnIds: PropTypes.arrayOf(PropTypes.string),
     }).isRequired,
     openModalWindow: PropTypes.func.isRequired,
+    addNewNote: PropTypes.func.isRequired,
+    updateOrderNoteIds: PropTypes.func.isRequired,
 };
 
 export default Column;

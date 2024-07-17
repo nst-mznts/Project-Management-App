@@ -53,6 +53,7 @@ function App() {
     confirmActionForBoards,
     confirmActionForColumn,
     addNewNote,
+    updateOrderNoteIds,
   } = useBoardsState({openedBoard, closeModal, deleteProfile, setOpenedBoard});
 
   const openSidebar = () => {
@@ -118,6 +119,7 @@ function App() {
           actionType={actionType}
           initialTitle={initialTitle}
           addNewNote={addNewNote}
+          updateOrderNoteIds={updateOrderNoteIds}
         />
       )}
       {isSidebarOpen && (
