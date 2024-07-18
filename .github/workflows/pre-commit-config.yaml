@@ -50,5 +50,6 @@ jobs:
         run: npm init @eslint/config@latest
 
       - name: Run pre-commit
-        run: | export PATH=./node_modules/.bin:$PATH
+        run: | 
+          export PATH=./node_modules/.bin:$PATH
           poetry run pre-commit run --all-files --config .ci/.pre-commit-config.yaml 
