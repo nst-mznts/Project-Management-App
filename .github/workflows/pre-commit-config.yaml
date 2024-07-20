@@ -18,7 +18,7 @@ jobs:
   pre-commit:
     runs-on: self-hosted
     container:
-      image: 'ghcr.io/lek-x/ubuntu_npm_lint:v1'
+      image: ghcr.io/lek-x/ubuntu_npm_lint:v1
       credentials:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -52,4 +52,4 @@ jobs:
       - name: Run pre-commit
         run: |
           export PATH=./node_modules/.bin:$PATH
-          poetry run pre-commit run --all-files
+          poetry run pre-commit run --all-files --config .ci/.pre-commit-config.yaml
