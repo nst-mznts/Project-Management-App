@@ -52,8 +52,12 @@ jobs:
     runs-on: [self-hosted]
     environment: ${{ inputs.job_environment }}
     steps:
+      - name: Stop old docker dev container
+        run: docker stop app_dev
+        if: ${{ inputs.job_environment == 'dev' }}
+
       - name: Run docker dev
-        run: docker run -p 5173:5173 -d ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} dev -- --port 5173 --host
+        run: docker run --name app_dev -p 5173:5173 -d ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} dev -- --port 5173 --host
         if: ${{ inputs.job_environment == 'dev' }}
 
       - name: Run docker prod
