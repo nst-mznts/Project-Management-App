@@ -24,7 +24,8 @@ repos:
           - --fix=lf
       - id: pretty-format-json
         args:
-          - --autofix
+          - "--autofix"
+          - "--no-sort-keys"
       - id: requirements-txt-fixer
       - id: trailing-whitespace
 
