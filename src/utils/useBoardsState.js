@@ -187,7 +187,6 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
                 break;
             case 'renameColumn':
                 handleSaveColumns({title: title});
-                console.log(title);
                 break;
             case 'deleteColumn':
                 deleteColumn();

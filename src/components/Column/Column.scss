@@ -6,7 +6,6 @@
 
 .column {
     width: 300px;
-    // height: 500px;
     @extend %border-radius;
     @include flex(column, flex-start, center);
     row-gap: 10px;
@@ -29,16 +28,4 @@
     @include flex(column, flex-start, center);
     row-gap: 10px;
     padding: 10px;
-    // overflow: auto;
-    // flex-wrap: nowrap;
-}
-
-::-webkit-scrollbar {
-    width: 2px;
-    background: $color-light;
-}
-
-::-webkit-scrollbar-thumb {
-    background: $color-primary;
-    border-radius: 15px;
 }

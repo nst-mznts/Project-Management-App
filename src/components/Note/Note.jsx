@@ -15,7 +15,7 @@ function Note ({ boards, noteId, index }) {
                     {...provided.dragHandleProps}
                     className='note bordered'
                 >
-                    {boards.notes[noteId].content}
+                    <div className='note-content'>{boards.notes[noteId].content}</div>
                     <div className='note-footer'>
                         <button
                             className='button round-button bordered'

@@ -25,6 +25,15 @@
     @extend %width100;
     @include flex(row, flex-start, flex-start);
     column-gap: 20px;
+    padding-bottom: 10px;
     overflow: auto;
     flex-wrap: nowrap;
+    &::-webkit-scrollbar {
+        height: 4px;
+        background: $color-light;
+    };
+    &::-webkit-scrollbar-thumb {
+        background: $color-primary;
+        border-radius: 15px;
+    }
 }

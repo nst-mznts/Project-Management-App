@@ -36,3 +36,13 @@ a {
 header, main, footer {
     width: 1160px;
 }
+
+::-webkit-scrollbar {
+    width: 4px;
+    background: $color-light;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 15px;
+}
