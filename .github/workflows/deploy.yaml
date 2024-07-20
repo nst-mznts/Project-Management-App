@@ -39,7 +39,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: "{{defaultContext}}:docker"
           tags: ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }}
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.DOCKER_PASSWORD }}
