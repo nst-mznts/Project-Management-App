@@ -53,7 +53,7 @@ jobs:
     environment: ${{ inputs.job_environment }}
     steps:
       - name: Stop old docker dev container
-        run: docker stop app_dev
+        run: docker stop app_dev && docker container rm app_dev
         if: ${{ inputs.job_environment == 'dev' }}
 
       - name: Run docker dev
