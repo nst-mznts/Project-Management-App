@@ -52,7 +52,6 @@ function App() {
     setCurrentItemId,
     confirmActionForBoards,
     confirmActionForColumn,
-    addNewNote,
     updateOrderNoteIds,
   } = useBoardsState({openedBoard, closeModal, deleteProfile, setOpenedBoard});
 
@@ -118,7 +117,6 @@ function App() {
           onConfirm={confirmActionForColumn}
           actionType={actionType}
           initialTitle={initialTitle}
-          addNewNote={addNewNote}
           updateOrderNoteIds={updateOrderNoteIds}
         />
       )}

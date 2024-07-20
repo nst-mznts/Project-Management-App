@@ -1,22 +1,33 @@
 import './Note.scss';
 import PropTypes from 'prop-types';
-import { Reorder } from 'framer-motion';
+import { Draggable } from 'react-beautiful-dnd';
 import { MdDelete } from "react-icons/md";
 
 
-function Note ({ boards, noteId }) {
+function Note ({ boards, noteId, index }) {
   return (
-    <Reorder.Item as='div' value={noteId} className='note bordered' >
-        {boards.notes[noteId].content}
-        <div className='note-footer'>
-            <button
-                className='button round-button bordered'
-                id='delete-board'
-            >
-                <MdDelete size="2em"/>
-            </button>
-        </div>
-    </Reorder.Item>
+    <Draggable draggableId={noteId} index={index}>
+        {(provided, snapshot) => {
+            return (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className='note bordered'
+                >
+                    {boards.notes[noteId].content}
+                    <div className='note-footer'>
+                        <button
+                            className='button round-button bordered'
+                            id='delete-board'
+                        >
+                            <MdDelete size="2em"/>
+                        </button>
+                    </div>
+                </div>
+            )
+        }}
+    </Draggable>
   );
 }
 

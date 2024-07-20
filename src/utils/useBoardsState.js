@@ -192,6 +192,9 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
             case 'deleteColumn':
                 deleteColumn();
                 break;
+            case 'addTask':
+                addNewNote(currentItemId, {content: title});
+                break;
             default:
                 break;
         }
@@ -203,20 +206,47 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
         closeModal();
     };
 
-    const updateOrderNoteIds = (columnId, newOrder) => {
-        const updatedBoards = {
-            ...boards,
-            columns: {
-                ...boards.columns,
-                [columnId]: {
-                    ...boards.columns[columnId],
-                    noteIds: newOrder,
+    const updateOrderNoteIds = (result) => {
+        if (!result.destination) return;
+        const { source, destination } = result;
+        if (source.droppableId !== destination.droppableId) {
+            const sourceColumn = boards.columns[source.droppableId];
+            const destinationColumn = boards.columns[destination.droppableId];
+            const sourceItems = [...sourceColumn.noteIds];
+            const destinationItems = [...destinationColumn.noteIds];
+            const [removed] = sourceItems.splice(source.index, 1);
+            destinationItems.splice(destination.index, 0, removed);
+            setBoards({
+                ...boards,
+                columns: {
+                    ...boards.columns,
+                    [source.droppableId]: {
+                        ...sourceColumn,
+                        noteIds: sourceItems,
+                    },
+                    [destination.droppableId]: {
+                        ...destinationColumn,
+                        noteIds: destinationItems,
+                    }
                 },
-            }
-
-        };
-        setBoards(updatedBoards);
-    }
+            });
+        } else {
+            const column = boards.columns[source.droppableId];
+            const copiedItems = [...column.noteIds];
+            const [removed] = copiedItems.splice(source.index, 1);
+            copiedItems.splice(destination.index, 0, removed);
+            setBoards({
+                ...boards,
+                columns: {
+                    ...boards.columns,
+                    [source.droppableId]: {
+                        ...column,
+                        noteIds: copiedItems,
+                    }
+                },
+            });
+        }
+    };
 
     return {
         boards,
@@ -224,7 +254,6 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
         setCurrentItemId,
         confirmActionForBoards,
         confirmActionForColumn,
-        addNewNote,
         updateOrderNoteIds,
     };
 }

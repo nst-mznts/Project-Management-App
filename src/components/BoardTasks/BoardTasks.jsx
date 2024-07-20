@@ -1,5 +1,6 @@
 import './BoardTasks.scss';
 import PropTypes from 'prop-types';
+import { DragDropContext } from 'react-beautiful-dnd';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import Column from '../Column/Column';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +15,6 @@ function BoardTasks({
     onConfirm,
     actionType,
     initialTitle,
-    addNewNote,
     updateOrderNoteIds,
 }) {
     const { t } = useTranslation();
@@ -45,19 +45,19 @@ function BoardTasks({
                         </div>
                     </div>
                     <div className='column-wrapper'>
-                        {openedBoard.columnIds.map(columnId => {
-                            return(
-                                <Column
-                                    key={columnId}
-                                    boards={boards}
-                                    columnId={columnId}
-                                    openedBoard={openedBoard}
-                                    openModalWindow={openModalWindow}
-                                    addNewNote={addNewNote}
-                                    updateOrderNoteIds={updateOrderNoteIds}
-                                />
-                            )
-                        })}
+                        <DragDropContext onDragEnd={(result) => updateOrderNoteIds(result)}>
+                            {openedBoard.columnIds.map(columnId => {
+                                return(
+                                    <Column
+                                        key={columnId}
+                                        boards={boards}
+                                        columnId={columnId}
+                                        openedBoard={openedBoard}
+                                        openModalWindow={openModalWindow}
+                                    />
+                                )
+                            })}
+                        </DragDropContext>
                     </div>
                 </div>
             </main>
@@ -103,7 +103,6 @@ BoardTasks.propTypes = {
     onConfirm: PropTypes.func.isRequired,
     actionType: PropTypes.string.isRequired,
     initialTitle: PropTypes.string.isRequired,
-    addNewNote: PropTypes.func.isRequired,
     updateOrderNoteIds: PropTypes.func.isRequired,
 };
 

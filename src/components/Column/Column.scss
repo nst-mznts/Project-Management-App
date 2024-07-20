@@ -6,7 +6,7 @@
 
 .column {
     width: 300px;
-    height: 500px;
+    // height: 500px;
     @extend %border-radius;
     @include flex(column, flex-start, center);
     row-gap: 10px;
@@ -28,9 +28,9 @@
     height: 80%;
     @include flex(column, flex-start, center);
     row-gap: 10px;
-    padding: 8px;
-    overflow: auto;
-    flex-wrap: nowrap;
+    padding: 10px;
+    // overflow: auto;
+    // flex-wrap: nowrap;
 }
 
 ::-webkit-scrollbar {

@@ -23,7 +23,7 @@
 
 .column-wrapper {
     @extend %width100;
-    @include flex(row, flex-start, center);
+    @include flex(row, flex-start, flex-start);
     column-gap: 20px;
     overflow: auto;
     flex-wrap: nowrap;

@@ -50,33 +50,33 @@ export const LOGIN_FORM_INPUTS = [
 
 export let listOfTasks = {
   boards: {
-    'board-1': {
-      id: 'board-1',
+    'board1': {
+      id: 'board1',
       title: 'first board 1',
-      columnIds: ['column-1', 'column-2'],
+      columnIds: ['column1', 'column2'],
     },
-    'board-2': {
-      id: 'board-2',
+    'board2': {
+      id: 'board2',
       title: 'second board 46436',
-      columnIds: ['column-2'],
+      columnIds: ['column2'],
     },
   },
   columns: {
-    'column-1': {
-      id: 'column-1',
+    'column1': {
+      id: 'column1',
       title: 'To do',
-      noteIds: ['note-1', 'note-2'],
+      noteIds: ['note1', 'note2'],
     },
-    'column-2': {
-      id: 'column-2',
+    'column2': {
+      id: 'column2',
       title: 'In progress',
-      noteIds: ['note-3'],
+      noteIds: ['note3'],
     },
   },
   notes: {
-    'note-1': { id: 'note-1', content: 'Заметка 1' },
-    'note-2': { id: 'note-2', content: 'Заметка 2' },
-    'note-3': { id: 'note-3', content: 'Заметка 3' },
-    'note-4': { id: 'note-4', content: 'Заметка 4' },
+    'note1': { id: 'note1', content: 'Заметка 1' },
+    'note2': { id: 'note2', content: 'Заметка 2' },
+    'note3': { id: 'note3', content: 'Заметка 3' },
+    'note4': { id: 'note4', content: 'Заметка 4' },
   },
 };
