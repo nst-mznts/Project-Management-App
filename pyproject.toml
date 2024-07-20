@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "project-management-app"
+version = "0.1.0"
+description = "Project Management application"
+authors = ["Anastasiia Mezentseva <a.mezentseva@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pre-commit = "^3.7.1"
+eslintbear = "^0.10.0"
+npm = "^0.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

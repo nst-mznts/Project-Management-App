@@ -1,0 +1,55 @@
+---
+default_language_version:
+  python: python3
+
+repos:
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: v4.6.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-xml
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args:
+          - --allow-missing-credentials
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: files/(issue|motd)
+      - id: mixed-line-ending
+        args:
+          - --fix=lf
+      - id: pretty-format-json
+        args:
+          - --autofix
+      - id: requirements-txt-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: ['-c=.ci/yamllint']
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.7.0
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages:
+          - push
+
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v9.7.0
+    hooks:
+    -   id: eslint
+        additional_dependencies:
+          - eslint@8.57.0
+          - eslint-config-google
+          - eslint-loader
+          - eslint-plugin-react
+          - babel-eslint
+          - eslint-config-prettier
