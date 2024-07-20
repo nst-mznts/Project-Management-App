@@ -45,9 +45,9 @@ jobs:
 
       - name: Install the project dependencies
         run: poetry install --no-root
-      
+
       - name: Intsall npm dependecies
-        run: npm init @eslint/config@latest
+        run: npm i
 
       - name: Run pre-commit
         run: |
