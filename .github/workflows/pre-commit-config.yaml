@@ -42,7 +42,6 @@ jobs:
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
-          npm cache clean
 
       - name: Install the project dependencies
         run: |
