@@ -56,7 +56,7 @@ jobs:
       - name: Run docker dev
         run: docker run ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} dev
         if: ${{ inputs.job_environment == dev }}
-      
+
       - name: Run docker prod
         run: docker run ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} build
         if: ${{ inputs.job_environment == prod }}

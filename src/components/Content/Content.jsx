@@ -57,7 +57,7 @@ function Boards({
         </>
     );
 }
-  
+
 Boards.propTypes = {
     boards: PropTypes.shape({
         boards: PropTypes.shape({
@@ -83,5 +83,5 @@ Boards.propTypes = {
     actionType: PropTypes.string.isRequired,
     initialTitle: PropTypes.string.isRequired,
 };
-  
+
 export default Boards;

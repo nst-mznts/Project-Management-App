@@ -136,13 +136,13 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
                         title: newColumn.title,
                     }
                 },
-                
+
             };
         });
     };
 
     const handleSaveColumns = (newColumn) => {
-        currentItemId ? 
+        currentItemId ?
             updateColumns({...newColumn, id: currentItemId}) :
             addNewColumn (openedBoard.id, newColumn);
     };

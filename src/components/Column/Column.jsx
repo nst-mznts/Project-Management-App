@@ -40,7 +40,7 @@ function Column ({ boards, columnId, openedBoard, openModalWindow }) {
                 </div>
             </div>
             <div className='board-tasks-buttons'>
-                <button 
+                <button
                     type="button"
                     className="button rectangular-button additional-colored"
                     onClick={() => openModalWindow(openedBoard, "addTask", '', columnId)}

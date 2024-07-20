@@ -35,7 +35,7 @@ function BoardTasks({
                         </div>
                         <h3 className='board-tasks-title'>{openedBoard.title}</h3>
                         <div className='board-tasks-buttons'>
-                            <button 
+                            <button
                                 type="button"
                                 className="button rectangular-button colored"
                                 onClick={() => openModalWindow(openedBoard, "addColumn")}

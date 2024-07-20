@@ -10,6 +10,7 @@ python = "^3.9"
 pre-commit = "^3.7.1"
 eslintbear = "^0.10.0"
 npm = "^0.1.1"
+commitizen = "^3.28.0"
 
 
 [build-system]

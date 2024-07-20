@@ -6,17 +6,17 @@ import './ModalWindow.scss';
 function ModalWindow ({ isOpen, actionType, onClose, onConfirm, initialTitle = '' }) {
     const [title, setTitle] = useState('');
     const { t } = useTranslation();
-  
+
     useEffect(() => {
         if (isOpen) {
             setTitle(initialTitle);
         }
     }, [isOpen, initialTitle]);
-  
+
     if (!isOpen) return null;
 
     let modalContent = '';
-  
+
     switch (actionType) {
         case 'addColumn':
             modalContent = t("new-column-title");
@@ -51,12 +51,12 @@ function ModalWindow ({ isOpen, actionType, onClose, onConfirm, initialTitle = '
         default:
             break;
     }
-  
+
     const handleConfirm = () => {
         onConfirm(title, actionType);
         setTitle('');
     };
-  
+
     return (
       <div className="popup__bg">
         <div className="popup bordered">
@@ -65,9 +65,9 @@ function ModalWindow ({ isOpen, actionType, onClose, onConfirm, initialTitle = '
                 {(actionType !== 'deleteBoard' && actionType !== 'deleteColumn' && actionType !== 'deleteTask' && actionType !== 'deleteProfile') && (
                     <input
                         className="form-input"
-                        type="text" 
-                        value={title} 
-                        onChange={(e) => setTitle(e.target.value)} 
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                         placeholder={t("new-title")}
                     />
                 )}
@@ -100,5 +100,5 @@ ModalWindow.propTypes = {
     onConfirm: PropTypes.func.isRequired,
     initialTitleactionType: PropTypes.string,
 };
-  
+
 export default ModalWindow;
