@@ -46,7 +46,7 @@ jobs:
       - name: Install the project dependencies
         run: |
           poetry install --no-root
-          pre-commit clean
+          poetry run pre-commit clean
 
       - name: Intsall npm dependecies
         run: npm install
