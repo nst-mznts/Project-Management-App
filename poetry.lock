@@ -338,29 +338,6 @@ files = [
 ]
 
 [[package]]
-name = "npm"
-version = "0.1.1"
-description = "Python bindings and utils for npm."
-optional = false
-python-versions = "*"
-files = [
-    {file = "npm-0.1.1.tar.gz", hash = "sha256:84aefc83a3486d034c4c14f8bcd4b746b95b529289b0d042c268f6201c3034e9"},
-]
-
-[package.dependencies]
-optional-django = "0.1.0"
-
-[[package]]
-name = "optional-django"
-version = "0.1.0"
-description = "Utils for apps to provide optional support for django applications"
-optional = false
-python-versions = "*"
-files = [
-    {file = "optional-django-0.1.0.tar.gz", hash = "sha256:77d6b9fb74bda30583e1af4683a39e0af725cea6003252bba75838f4939326c5"},
-]
-
-[[package]]
 name = "packaging"
 version = "24.1"
 description = "Core utilities for Python packages"
@@ -567,4 +544,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "519c253d2fc240cd8b6900af7d343d733e0c434a200695ee6343a0bf0f353e5f"
+content-hash = "ff0d5643210d17b3a2f3cf672bd1cee36c1136fd2a54e3fbb6bba42c8aa397a6"
