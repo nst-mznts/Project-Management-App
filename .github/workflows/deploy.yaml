@@ -18,6 +18,8 @@ on:
         description: 'Remove all docker images and voluems'
         required: false
         default: false
+env:
+  NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
 
 jobs:
   Build_docker_image:
@@ -39,27 +41,78 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }}
+          context: "{{defaultContext}}:Dockerfile_${{ inputs.job_environment }}"
+          tags: ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.DOCKER_PASSWORD }}
 
       - name: Check image by Anchore
         run: |
-          grype  ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }}
+          grype  ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
 
-  Start_docker:
+  Render_template:
     needs: [Build_docker_image]
-    runs-on: [self-hosted]
-    environment: ${{ inputs.job_environment }}
+    runs-on:
+     - self-hosted
     steps:
-      - name: Stop old docker dev container
-        run: docker stop app_dev && docker container rm app_dev
-        if: ${{ inputs.job_environment == 'dev' }}
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
 
-      - name: Run docker dev
-        run: docker run --name app_dev -p 5173:5173 -d ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} dev -- --port 5173 --host
-        if: ${{ inputs.job_environment == 'dev' }}
+      - name: Terraform Init
+        id: init
+        run: terraform init
 
-      - name: Run docker prod
-        run: docker run ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/pm_app:${{ github.run_number }} build
-        if: ${{ inputs.job_environment == 'prod' }}
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        env:
+          TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          TF_VAR_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          TF_VAR_IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+          TF_VAR_REPO: ${{ vars.REPO }}
+          TF_VAR_VERSION: ${{ github.run_number }}
+          TF_VAR_JOB_ENV: ${{ inputs.job_environment }}
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        env:
+          TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          TF_VAR_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          TF_VAR_IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+          TF_VAR_REPO: ${{ vars.REPO }}
+          TF_VAR_VERSION: ${{ github.run_number }}
+          TF_VAR_JOB_ENV: ${{ inputs.job_environment }}
+
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          TF_VAR_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          TF_VAR_IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+          TF_VAR_REPO: ${{ vars.REPO }}
+          TF_VAR_VERSION: ${{ github.run_number }}
+          TF_VAR_JOB_ENV: ${{ inputs.job_environment }}
+
+  Run_nomad:
+    needs: [Render_template]
+    runs-on:
+     - self-hosted
+    steps:
+      - name: Nomad_validate
+        run: nomad job validate pm_nomad_${{ inputs.job_environment }}.nomad
+
+      - name: Nomad_Plan
+        id: nomad_plan
+        run: |
+          nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | tee /dev/stderr | grep 'Job Modify Index:' | awk -F': ' '{ print $2 }'
+
+      - name: Save_job_index
+        run: |
+          echo "index1=$(nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | grep 'Job Modify Index:' | awk -F': ' '{ print $2 }')" >> $GITHUB_ENV
+
+      - name: Nomad_run
+        id: nomad_run
+        run: nomad job run -check-index "${{ env.index1 }}" pm_nomad_${{ inputs.job_environment }}.nomad

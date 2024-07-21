@@ -1,0 +1,6 @@
+export TF_VAR_DOCKER_USERNAME=1
+export TF_VAR_DOCKER_PASSWORD=1
+export TF_VAR_IMAGE_NAME=pm_app
+export TF_VAR_REPO=ghcr.io
+export TF_VAR_VERSION=6
+export TF_VAR_JOB_ENV=dev
