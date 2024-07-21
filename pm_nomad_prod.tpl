@@ -9,7 +9,7 @@ job "pm-app-${JOB_ENV}" {
   group "pm-appgr-${JOB_ENV}" {
     network {
       port "nginx" {
-	      to = 80
+	      static = 80
 	    }
     }
 
