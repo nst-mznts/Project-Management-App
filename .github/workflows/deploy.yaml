@@ -99,6 +99,7 @@ jobs:
 
   Run_nomad:
     needs: [Render_template]
+    environment: ${{ inputs.job_environment }}
     runs-on: self-hosted
     steps:
       - name: Nomad_validate
@@ -111,8 +112,8 @@ jobs:
 
       - name: Save_job_index
         run: |
-          echo "index1=$(nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | grep 'Job Modify Index:' \
-          | awk -F': ' '{ print $2 }' >> $GITHUB_ENV
+          index1=$(nomad job plan -no-color bot.nomad | grep 'Job Modify Index:' \
+          | awk -F': ' '{ print $2 }')" >> $GITHUB_ENV
 
       - name: Nomad_run
         id: nomad_run
