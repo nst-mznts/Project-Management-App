@@ -112,7 +112,7 @@ jobs:
 
       - name: Save_job_index
         run: |
-          index1=$(nomad job plan -no-color bot.nomad | grep 'Job Modify Index:' \
+          echo "index1=$(nomad job plan -no-color bot.nomad | grep 'Job Modify Index:' \
           | awk -F': ' '{ print $2 }')" >> $GITHUB_ENV
 
       - name: Nomad_run
