@@ -8,7 +8,7 @@ job "pm-app-${JOB_ENV}" {
 
   group "pm-appgr-${JOB_ENV}" {
     network {
-      port "pm_app" {
+      port "pm_app_${JOB_ENV}" {
 	      static = 8080
 	    }
     }
@@ -27,7 +27,7 @@ job "pm-app-${JOB_ENV}" {
         canary = 0
     }
 
-    task "pm_app" {
+    task "pm_app_${JOB_ENV}" {
       driver = "docker"
       logs {
         max_files     = 2
@@ -35,7 +35,7 @@ job "pm-app-${JOB_ENV}" {
       }
       config {
         image = "${REPO}/${DOCKER_USERNAME}/pm_app_${JOB_ENV}:${VERSION}"
-        ports = ["pm_app"]
+        ports = ["pm_app_${JOB_ENV}"]
         auth {
           username = "${DOCKER_USERNAME}"
           password = "${DOCKER_PASSWORD}"
