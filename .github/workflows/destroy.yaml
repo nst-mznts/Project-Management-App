@@ -14,7 +14,7 @@ on:
           - dev
 
       purge_job:
-        type: bool
+        type: boolean
         description: 'Totally remove job and container'
         required: false
         default: false
