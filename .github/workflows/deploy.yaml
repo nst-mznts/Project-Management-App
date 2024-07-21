@@ -53,6 +53,7 @@ jobs:
 
   Render_template:
     needs: [Build_docker_image]
+    environment: ${{ inputs.job_environment }}
     runs-on: self-hosted
     steps:
       - name: Terraform fmt
