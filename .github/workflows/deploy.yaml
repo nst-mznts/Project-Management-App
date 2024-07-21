@@ -42,18 +42,18 @@ jobs:
         with:
           push: true
           context: "{{defaultContext}}:Dockerfile_${{ inputs.job_environment }}"
+          # yamllint disable-line rule:line-length
           tags: ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
           secrets: |
             GIT_AUTH_TOKEN=${{ secrets.DOCKER_PASSWORD }}
 
       - name: Check image by Anchore
-        run: |
-          grype  ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
+        # yamllint disable-line rule:line-length
+        run: grype  ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
 
   Render_template:
     needs: [Build_docker_image]
-    runs-on:
-     - self-hosted
+    runs-on: self-hosted
     steps:
       - name: Terraform fmt
         id: fmt
@@ -98,20 +98,20 @@ jobs:
 
   Run_nomad:
     needs: [Render_template]
-    runs-on:
-     - self-hosted
+    runs-on: self-hosted
     steps:
       - name: Nomad_validate
         run: nomad job validate pm_nomad_${{ inputs.job_environment }}.nomad
 
       - name: Nomad_Plan
-        id: nomad_plan
         run: |
-          nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | tee /dev/stderr | grep 'Job Modify Index:' | awk -F': ' '{ print $2 }'
+          nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | tee /dev/stderr \
+          | grep 'Job Modify Index:' | awk -F': ' '{ print $2 }'
 
       - name: Save_job_index
         run: |
-          echo "index1=$(nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | grep 'Job Modify Index:' | awk -F': ' '{ print $2 }')" >> $GITHUB_ENV
+          echo "index1=$(nomad job plan -no-color pm_nomad_${{ inputs.job_environment }}.nomad | grep 'Job Modify Index:' \
+          | awk -F': ' '{ print $2 }' >> $GITHUB_ENV
 
       - name: Nomad_run
         id: nomad_run

@@ -26,7 +26,7 @@ job "pm-app-${JOB_ENV}" {
         auto_revert = true
         canary = 0
     }
-    
+
     task "pm_app" {
       driver = "docker"
       logs {

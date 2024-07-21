@@ -2,7 +2,7 @@ FROM node:22-alpine3.19 AS app
 RUN mkdir -p /opt/mgt_app
 WORKDIR /opt/mgt_app
 COPY index.html package-lock.json package.json vite.config.js ./
-COPY public ./public 
+COPY public ./public
 COPY src/ ./src
 RUN npm install \
     && npm run build
