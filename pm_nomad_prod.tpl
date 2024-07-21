@@ -43,7 +43,7 @@ job "pm-app-${JOB_ENV}" {
       }
       resources {
         cpu    = 350
-        memory = 350
+        memory = 550
         }
       }
   }
