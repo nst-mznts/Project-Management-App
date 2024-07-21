@@ -9,7 +9,7 @@ job "pm-app-${JOB_ENV}" {
   group "pm-appgr-${JOB_ENV}" {
     network {
       port "pm_app" {
-	      static = 5173
+	      static = 8080
 	    }
     }
 
