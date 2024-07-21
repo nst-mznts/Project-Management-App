@@ -41,7 +41,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          context: "{{defaultContext}}:./Dockerfile_${{ inputs.job_environment }}"
+          dockerfile: Dockerfile_${{ inputs.job_environment }}"
           # yamllint disable-line rule:line-length
           tags: ${{ vars.REPO }}/${{ secrets.DOCKER_USERNAME }}/${{ vars.IMAGE_NAME }}_${{ inputs.job_environment }}:${{ github.run_number }}
           secrets: |
