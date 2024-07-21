@@ -1,0 +1,35 @@
+---
+name: Destroy
+# yamllint disable-line rule:truthy
+on:
+  workflow_dispatch:
+    inputs:
+      job_environment:
+        type: choice
+        description: 'Job environment prod or dev'
+        required: true
+        default: 'dev'
+        options:
+          - prod
+          - dev
+
+      purge_job:
+        type: bool
+        description: 'Totally remove job and container'
+        required: false
+        default: false
+
+env:
+  NOMAD_TOKEN: ${{ secrets.NOMAD_TOKEN }}
+
+jobs:
+  Run_nomad:
+    environment: ${{ inputs.job_environment }}
+    runs-on: self-hosted
+    steps:
+      - name: Nomad stop job
+        run: nomad job stop pm-app-${{ inputs.job_environment }}
+
+      - name: Nomad stop and purge job
+        run: nomad job stop -purge pm-app-${{ inputs.job_environment }}
+        if: "${{ purge_job == true }}"
