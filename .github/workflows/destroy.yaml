@@ -32,4 +32,4 @@ jobs:
 
       - name: Nomad stop and purge job
         run: nomad job stop -purge pm-app-${{ inputs.job_environment }}
-        if: "${{ purge_job == true }}"
+        if: "${{ inputs.purge_job == true }}"
