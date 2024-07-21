@@ -6,4 +6,4 @@ COPY public ./public
 COPY src/ ./src
 RUN npm install
 EXPOSE 5173
-ENTRYPOINT ["npm","run","--", "--port 5173"]
+ENTRYPOINT ["npm","run", "dev","--", "--port 5173"]
