@@ -6,7 +6,6 @@
 
 .note {
     width: 280px;
-    height: 140px;
     @extend %border-radius;
     padding: 8px;
     @include flex(column, space-between, flex-start);
@@ -20,9 +19,6 @@
     @include font(normal, 400, $font-size-standart);
     overflow: hidden;
     white-space: pre-wrap;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
 }
 
 .note-footer {

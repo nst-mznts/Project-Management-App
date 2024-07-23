@@ -3,167 +3,85 @@ import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { listOfTasks } from './constants';
 
-export default function useBoardsState({ openedBoard, closeModal, deleteProfile, setOpenedBoard }) {
+export default function useBoardsState({ deleteProfile }) {
     const [boards, setBoards] = useState(listOfTasks);
+    const [openedBoard, setOpenedBoard] = useState({});
     const [currentItemId, setCurrentItemId] = useState('');
 
-    const addNewBoard = ({title}) => {
-        const newBoard = {
-            id: nanoid(),
-            title: title,
-            columnIds: [],
+    const addNewItem = (type, parentId, newItem) => {
+        const id = nanoid();
+        const updatedBoards = {
+            ...boards,
+            [type]: {
+                ...boards[type],
+                [id]: { ...newItem, id },
+            },
+        };
+    
+        if (type === 'columns') {
+            updatedBoards.boards[parentId].columnIds.push(id);
+        } else if (type === 'notes') {
+            updatedBoards.columns[parentId].noteIds.push(id);
         }
-
-        const updatedBoards = {
-            ...boards,
-            boards: {
-                ...boards.boards,
-                [newBoard.id]: newBoard,
-            },
-        };
-
+    
         setBoards(updatedBoards);
     };
 
-    const addNewColumn = (boardId, {title}) => {
-        const newColumn = {
-            id: nanoid(),
-            title: title,
-            noteIds: [],
-        };
-
-        const updatedBoards = {
-            ...boards,
-            boards: {
-                ...boards.boards,
-                [boardId]: {
-                    ...boards.boards[boardId],
-                    columnIds: [...boards.boards[boardId].columnIds, newColumn.id],
-                },
+    const updateItem = (type, updatedItem) => {
+        setBoards(prevBoards => ({
+            ...prevBoards,
+            [type]: {
+                ...prevBoards[type],
+                [updatedItem.id]: { ...prevBoards[type][updatedItem.id], ...updatedItem },
             },
-            columns: {
-                ...boards.columns,
-                [newColumn.id]: newColumn,
-            },
-        };
+        }));
+    };
 
-        setBoards(updatedBoards);
-
-        const updatedOpenedBoard = {
-            ...openedBoard,
-            columnIds: [...openedBoard.columnIds, newColumn.id],
+    const deleteItem = (type, itemId, parentId) => {
+        const updatedBoards = { ...boards };
+        delete updatedBoards[type][itemId];
+    
+        if (type === 'columns') {
+            updatedBoards.boards[parentId].columnIds = updatedBoards.boards[parentId].columnIds.filter(id => id !== itemId);
+            setOpenedBoard({
+                ...openedBoard,
+                columnIds: updatedBoards.boards[parentId].columnIds,
+            });
+        } else if (type === 'notes') {
+            updatedBoards.columns[parentId].noteIds = updatedBoards.columns[parentId].noteIds.filter(id => id !== itemId);
         }
-        setOpenedBoard(updatedOpenedBoard);
-    };
-
-    const addNewNote = (columnId, {content}) => {
-        const newNote = {
-            id: nanoid(),
-            content: content,
-        };
-
-        const updatedBoards = {
-            ...boards,
-            columns: {
-                ...boards.columns,
-                [columnId]: {
-                    ...boards.columns[columnId],
-                    noteIds: [...boards.columns[columnId].noteIds, newNote.id],
-                },
-            },
-            notes: {
-                ...boards.notes,
-                [newNote.id]: newNote,
-            },
-
-        };
-
-        setBoards(updatedBoards);
-
-    };
-
-    const completelyDeleteBoard = () => {
-        const updatedBoards = {...boards};
-        delete updatedBoards.boards[openedBoard.id];
+    
         setBoards(updatedBoards);
     };
 
-    const completelyDeleteColumn = () => {
-        const updatedColumnIds = boards.boards[openedBoard.id].columnIds.filter((column) => column !== currentItemId);
-        const updatedBoards = {
-            ...boards,
-            boards: {
-                ...boards.boards,
-                [openedBoard.id]: {
-                    ...boards.boards[openedBoard.id],
-                    columnIds: updatedColumnIds,
-                },
-            },
-        };
-
-        setBoards(updatedBoards);
-
-        const updatedOpenedBoard = {
-            ...openedBoard,
-            columnIds: updatedColumnIds,
-        }
-        setOpenedBoard(updatedOpenedBoard);
-    };
-
-    const updateBoards = (newBoard) => {
-        setBoards(prevBoards => {
-            return {
-                ...prevBoards,
-                boards: {
-                    ...prevBoards.boards,
-                    [newBoard.id]: {
-                        ...prevBoards.boards[newBoard.id],
-                        title: newBoard.title,
-                    },
-                },
-            };
-        });
-    };
-
-    const updateColumns = (newColumn) => {
-        setBoards(prevBoards => {
-            return {
-                ...prevBoards,
-                columns: {
-                    ...prevBoards.columns,
-                    [newColumn.id]: {
-                        ...prevBoards.columns[newColumn.id],
-                        title: newColumn.title,
-                    }
-                },
-
-            };
-        });
-    };
-
-    const handleSaveColumns = (newColumn) => {
-        currentItemId ?
-            updateColumns({...newColumn, id: currentItemId}) :
-            addNewColumn (openedBoard.id, newColumn);
-    };
-
-    const handleSaveBoard = (newBoard) => {
-        openedBoard.id ?
-            updateBoards({...newBoard, id: openedBoard.id}) :
-            addNewBoard(newBoard);
-    };
-
-    const confirmActionForBoards = (title, actionType) => {
-        console.log('actionType', actionType);
+    const confirmAction = (title, actionType) => {
         switch (actionType) {
+            case 'addColumn':
+                addNewItem('columns', openedBoard.id, { title: title, noteIds: [] });
+                break;
+            case 'renameColumn':
+                updateItem('columns', {...{title: title}, id: currentItemId});
+                break;
+            case 'addTask':
+                addNewItem('notes', currentItemId, { content: title });
+                break;
+            case 'renameTask':
+                updateItem('notes', {...{content: title}, id: currentItemId});
+                break;
             case 'createBoard':
-                handleSaveBoard({title: title});
+                addNewItem('boards', null, { title, columnIds: [] });
                 break;
             case 'renameBoard':
-                handleSaveBoard({title: title});
+                updateItem('boards', {...{title: title}, id: openedBoard.id});
                 break;
             case 'deleteBoard':
-                deleteBoard();
+                deleteItem('boards', openedBoard.id, null);
+                break;
+            case 'deleteColumn':
+                deleteItem('columns', currentItemId, openedBoard.id);
+                break;
+            case 'deleteTask':
+                deleteItem('notes', currentItemId, findColumnByNoteId(currentItemId).id);
                 break;
             case 'deleteProfile':
                 deleteProfile();
@@ -171,77 +89,46 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
             default:
                 break;
         }
-        closeModal();
     };
 
-    const deleteBoard = () => {
-        completelyDeleteBoard();
-        closeModal();
-    };
-
-    const confirmActionForColumn = (title, actionType) => {
-        switch (actionType) {
-            case 'addColumn':
-                console.log('addColumn');
-                handleSaveColumns({title: title});
-                break;
-            case 'renameColumn':
-                handleSaveColumns({title: title});
-                break;
-            case 'deleteColumn':
-                deleteColumn();
-                break;
-            case 'addTask':
-                addNewNote(currentItemId, {content: title});
-                break;
-            default:
-                break;
+    const findColumnByNoteId = (noteId) => {
+        for (const columnId in boards.columns) {
+            if (boards.columns[columnId].noteIds.includes(noteId)) {
+                return boards.columns[columnId];
+            }
         }
-        closeModal();
-    };
-
-    const deleteColumn = () => {
-        completelyDeleteColumn();
-        closeModal();
+        return null;
     };
 
     const updateOrderNoteIds = (result) => {
         if (!result.destination) return;
         const { source, destination } = result;
+    
+        const sourceColumn = boards.columns[source.droppableId];
+        const destinationColumn = boards.columns[destination.droppableId];
+    
+        const sourceItems = Array.from(sourceColumn.noteIds);
+        const destinationItems = Array.from(destinationColumn.noteIds);
+    
+        const [removed] = sourceItems.splice(source.index, 1);
+    
         if (source.droppableId !== destination.droppableId) {
-            const sourceColumn = boards.columns[source.droppableId];
-            const destinationColumn = boards.columns[destination.droppableId];
-            const sourceItems = [...sourceColumn.noteIds];
-            const destinationItems = [...destinationColumn.noteIds];
-            const [removed] = sourceItems.splice(source.index, 1);
             destinationItems.splice(destination.index, 0, removed);
             setBoards({
                 ...boards,
                 columns: {
-                    ...boards.columns,
-                    [source.droppableId]: {
-                        ...sourceColumn,
-                        noteIds: sourceItems,
-                    },
-                    [destination.droppableId]: {
-                        ...destinationColumn,
-                        noteIds: destinationItems,
-                    }
+                ...boards.columns,
+                [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
+                [destination.droppableId]: { ...destinationColumn, noteIds: destinationItems },
                 },
             });
         } else {
-            const column = boards.columns[source.droppableId];
-            const copiedItems = [...column.noteIds];
-            const [removed] = copiedItems.splice(source.index, 1);
-            copiedItems.splice(destination.index, 0, removed);
+            sourceItems.splice(destination.index, 0, removed);
             setBoards({
                 ...boards,
                 columns: {
-                    ...boards.columns,
-                    [source.droppableId]: {
-                        ...column,
-                        noteIds: copiedItems,
-                    }
+                ...boards.columns,
+                [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
                 },
             });
         }
@@ -249,21 +136,14 @@ export default function useBoardsState({ openedBoard, closeModal, deleteProfile,
 
     return {
         boards,
-        completelyDeleteBoard,
         setCurrentItemId,
-        confirmActionForBoards,
-        confirmActionForColumn,
         updateOrderNoteIds,
+        confirmAction,
+        openedBoard,
+        setOpenedBoard,
     };
 }
 
 useBoardsState.propTypes = {
-    openedBoard: PropTypes.shape({
-        id: PropTypes.string,
-        title: PropTypes.string,
-        columnIds: PropTypes.arrayOf(PropTypes.string),
-    }).isRequired,
-    closeModal: PropTypes.func.isRequired,
     deleteProfile: PropTypes.func.isRequired,
-    setOpenedBoard: PropTypes.func.isRequired,
 };

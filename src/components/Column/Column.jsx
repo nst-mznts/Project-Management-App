@@ -22,7 +22,7 @@ function Column ({ boards, columnId, openedBoard, openModalWindow }) {
                             openedBoard,
                             "renameColumn",
                             boards.columns[columnId].title,
-                            boards.columns[columnId].id)}
+                            columnId)}
                     >
                         <MdEdit size="2em"/>
                     </button>
@@ -33,7 +33,7 @@ function Column ({ boards, columnId, openedBoard, openModalWindow }) {
                             openedBoard,
                             "deleteColumn",
                             '',
-                            boards.columns[columnId].id)}
+                            columnId)}
                     >
                         <MdDelete size="2em"/>
                     </button>
@@ -64,6 +64,8 @@ function Column ({ boards, columnId, openedBoard, openModalWindow }) {
                                         boards={boards}
                                         noteId={noteId}
                                         index={index}
+                                        openedBoard={openedBoard}
+                                        openModalWindow={openModalWindow}
                                     />
                                 )
                             })}

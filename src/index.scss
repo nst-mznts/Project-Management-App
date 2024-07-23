@@ -46,3 +46,13 @@ header, main, footer {
     background: $color-primary;
     border-radius: 15px;
 }
+
+::-webkit-scrollbar {
+    height: 4px;
+    background: $color-light;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 15px;
+}

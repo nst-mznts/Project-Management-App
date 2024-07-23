@@ -15,10 +15,25 @@ import useBoardsState from '../../utils/useBoardsState';
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [userName, setUserName] = useState('');
-  const [openedBoard, setOpenedBoard] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
   const [actionType, setActionType] = useState('');
   const [initialTitle, setInitialTitle] = useState('');
+
+  const deleteProfile = () => {
+    closeModal();
+    closeSidebar();
+    openStartPage();
+  };
+
+  const {
+    boards,
+    setCurrentItemId,
+    updateOrderNoteIds,
+    confirmAction,
+    openedBoard,
+    setOpenedBoard
+  } = useBoardsState({deleteProfile});
+  
   const {
     screenType,
     openStartPage,
@@ -41,20 +56,6 @@ function App() {
     setCurrentItemId('');
   };
 
-  const deleteProfile = () => {
-    closeModal();
-    closeSidebar();
-    openStartPage();
-  };
-
-  const {
-    boards,
-    setCurrentItemId,
-    confirmActionForBoards,
-    confirmActionForColumn,
-    updateOrderNoteIds,
-  } = useBoardsState({openedBoard, closeModal, deleteProfile, setOpenedBoard});
-
   const openSidebar = () => {
     setIsSidebarOpen(true);
   };
@@ -71,6 +72,11 @@ function App() {
     closeSidebar();
     openStartPage();
   };
+
+  const confirmActionInModalWindow = (title, actionType) => {
+    confirmAction(title, actionType);
+    closeModal();
+  }
 
   return (
     <>
@@ -101,7 +107,7 @@ function App() {
           openModalWindow={openModal}
           isModalWindowOpened={isModalOpen}
           closeModalWindow={closeModal}
-          onConfirm={confirmActionForBoards}
+          onConfirm={confirmActionInModalWindow}
           actionType={actionType}
           initialTitle={initialTitle}
         />
@@ -114,7 +120,7 @@ function App() {
           openModalWindow={openModal}
           isModalWindowOpened={isModalOpen}
           closeModalWindow={closeModal}
-          onConfirm={confirmActionForColumn}
+          onConfirm={confirmActionInModalWindow}
           actionType={actionType}
           initialTitle={initialTitle}
           updateOrderNoteIds={updateOrderNoteIds}
