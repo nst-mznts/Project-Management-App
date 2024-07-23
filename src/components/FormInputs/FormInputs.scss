@@ -40,6 +40,7 @@
     width: 100%;
 	padding: 10px;
 	margin: 20px 0;
+	@extend %font-primary;
 	@include font(normal, 400, 1.6rem);
 	border-bottom: 1px solid $color-additional;
 	outline: none;

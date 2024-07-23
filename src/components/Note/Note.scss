@@ -19,6 +19,7 @@
     @include font(normal, 400, $font-size-standart);
     overflow: hidden;
     white-space: pre-wrap;
+    word-break: break-all;
 }
 
 .note-footer {

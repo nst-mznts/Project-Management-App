@@ -31,10 +31,10 @@ function ModalWindow ({ isOpen, actionType, onClose, onConfirm, initialTitle = '
             modalContent = t("new-board-title");
             break;
         case 'renameColumn':
-            modalContent = t("new-column-title");
+            modalContent = t("column-title");
             break;
         case 'renameTask':
-            modalContent = t("new-task-title");
+            modalContent = t("task-title");
             break;
         case 'deleteBoard':
             modalContent = t("delete-board-confirmation");
@@ -62,13 +62,22 @@ function ModalWindow ({ isOpen, actionType, onClose, onConfirm, initialTitle = '
         <div className="popup bordered">
             <div className="popup-content">
                 <h4 className="title">{modalContent}</h4>
-                {(actionType !== 'deleteBoard' && actionType !== 'deleteColumn' && actionType !== 'deleteTask' && actionType !== 'deleteProfile') && (
+                {(actionType === 'renameTask' || actionType === 'addTask') && (
+                    <textarea
+                        className="popup-textarea"
+                        type="text"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        placeholder={t("textarea-placeholder")}
+                    ></textarea>
+                )}
+                {(actionType === 'addColumn' || actionType === 'createBoard' || actionType === 'renameBoard' || actionType === 'renameColumn') && (
                     <input
                         className="form-input"
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder={t("new-title")}
+                        placeholder={t("input-placeholder")}
                     />
                 )}
                 <div className="buttons-wrapper">
@@ -98,7 +107,7 @@ ModalWindow.propTypes = {
     actionType: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
-    initialTitleactionType: PropTypes.string,
+    initialTitle: PropTypes.string,
 };
 
 export default ModalWindow;

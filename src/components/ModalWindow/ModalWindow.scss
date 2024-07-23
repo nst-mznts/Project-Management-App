@@ -28,7 +28,7 @@
 
 .popup__bg {
     @extend %width100;
-    height: 100%;
+    height: 100vw;
     @include flex(column, flex-start, center);
     background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(4px);
@@ -56,4 +56,31 @@
     @include flex(column, center, center);
     row-gap: 20px;
     text-align: center;
+}
+
+.popup-textarea {
+    overflow: auto;
+    word-break: break-all;
+    white-space: break-spaces;
+    border: none;
+    @extend %width100;
+    min-height: 200px;
+	padding: 10px;
+	margin: 20px 0;
+	@extend %font-primary;
+	@include font(normal, 400, 1.6rem);
+	border-bottom: 1px solid $color-additional;
+	outline: none;
+	&:focus, &:not(:placeholder-shown) {
+		border-bottom: 2px solid $color-primary;
+  	};
+	&:focus ~ label, &:not(:placeholder-shown) ~ label {
+		padding: 0;
+		color: $color-dark;
+		transform: translateY(20px) scale(0.8);
+	};
+    &::-webkit-resizer {
+        border: none;
+        background: transparent;
+    }
 }
