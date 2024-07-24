@@ -1,6 +1,6 @@
 import './BoardTasks.scss';
 import PropTypes from 'prop-types';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import ModalWindow from '../ModalWindow/ModalWindow';
 import Column from '../Column/Column';
 import { useTranslation } from 'react-i18next';
@@ -44,21 +44,31 @@ function BoardTasks({
                             </button>
                         </div>
                     </div>
-                    <div className='column-wrapper'>
-                        <DragDropContext onDragEnd={(result) => updateOrderNoteIds(result)}>
-                            {openedBoard.columnIds.map(columnId => {
-                                return(
-                                    <Column
-                                        key={columnId}
-                                        boards={boards}
-                                        columnId={columnId}
-                                        openedBoard={openedBoard}
-                                        openModalWindow={openModalWindow}
-                                    />
-                                )
-                            })}
-                        </DragDropContext>
-                    </div>
+                    <DragDropContext onDragEnd={(result) => updateOrderNoteIds(result)}>
+                        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+                            {provided => (
+                                <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className='column-wrapper'
+                                >
+                                    {openedBoard.columnIds.map((columnId, index) => {
+                                        return(
+                                            <Column
+                                                key={columnId}
+                                                boards={boards}
+                                                columnId={columnId}
+                                                openedBoard={openedBoard}
+                                                openModalWindow={openModalWindow}
+                                                index={index}
+                                            />
+                                        )
+                                    })}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 </div>
             </main>
             {isModalWindowOpened && (

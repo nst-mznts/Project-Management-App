@@ -102,35 +102,58 @@ export default function useBoardsState({ deleteProfile }) {
 
     const updateOrderNoteIds = (result) => {
         if (!result.destination) return;
-        const { source, destination } = result;
-    
-        const sourceColumn = boards.columns[source.droppableId];
-        const destinationColumn = boards.columns[destination.droppableId];
-    
-        const sourceItems = Array.from(sourceColumn.noteIds);
-        const destinationItems = Array.from(destinationColumn.noteIds);
-    
-        const [removed] = sourceItems.splice(source.index, 1);
-    
-        if (source.droppableId !== destination.droppableId) {
-            destinationItems.splice(destination.index, 0, removed);
-            setBoards({
+        const { source, destination, draggableId, type } = result;
+
+        if (type === 'column') {
+            const newColumnOrder = Array.from(boards.boards[openedBoard.id].columnIds);
+            newColumnOrder.splice(source.index, 1);
+            newColumnOrder.splice(destination.index, 0, draggableId);
+            const updatedBoards = {
                 ...boards,
-                columns: {
-                ...boards.columns,
-                [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
-                [destination.droppableId]: { ...destinationColumn, noteIds: destinationItems },
-                },
+                boards: {
+                    ...boards.boards,
+                    [openedBoard.id]: {
+                        ...boards.boards[openedBoard.id],
+                        columnIds: newColumnOrder,
+                    },
+                }
+            };
+            setBoards(updatedBoards);
+            setOpenedBoard({
+                ...openedBoard,
+                columnIds: newColumnOrder,
             });
-        } else {
-            sourceItems.splice(destination.index, 0, removed);
-            setBoards({
-                ...boards,
-                columns: {
-                ...boards.columns,
-                [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
-                },
-            });
+            return;
+        } else if (type === 'task') {
+            const sourceColumn = boards.columns[source.droppableId];
+            const destinationColumn = boards.columns[destination.droppableId];
+        
+            const sourceItems = Array.from(sourceColumn.noteIds);
+            const destinationItems = Array.from(destinationColumn.noteIds);
+        
+            const [removed] = sourceItems.splice(source.index, 1);
+        
+            if (source.droppableId !== destination.droppableId) {
+                destinationItems.splice(destination.index, 0, removed);
+                setBoards({
+                    ...boards,
+                    columns: {
+                    ...boards.columns,
+                    [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
+                    [destination.droppableId]: { ...destinationColumn, noteIds: destinationItems },
+                    },
+                });
+            } else {
+                sourceItems.splice(destination.index, 0, removed);
+                setBoards({
+                    ...boards,
+                    columns: {
+                    ...boards.columns,
+                    [source.droppableId]: { ...sourceColumn, noteIds: sourceItems },
+                    },
+                });
+            }
+
         }
     };
 

@@ -58,7 +58,7 @@ export let listOfTasks = {
     'board2': {
       id: 'board2',
       title: 'second board 46436',
-      columnIds: ['column2'],
+      columnIds: ['column3'],
     },
   },
   columns: {
@@ -71,6 +71,11 @@ export let listOfTasks = {
       id: 'column2',
       title: 'In progress',
       noteIds: ['note3'],
+    },
+    'column3': {
+      id: 'column3',
+      title: 'Done',
+      noteIds: ['note4'],
     },
   },
   notes: {

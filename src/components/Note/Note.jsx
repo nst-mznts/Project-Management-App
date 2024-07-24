@@ -68,6 +68,7 @@ Note.propTypes = {
         }),
     }).isRequired,
     noteId: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
     openedBoard: PropTypes.shape({
         id: PropTypes.string,
         title: PropTypes.string,
