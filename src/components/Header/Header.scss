@@ -1,0 +1,14 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.header {
+    @include flex(row, space-between, center);
+}
+
+.buttons-wrapper {
+    @include flex(row, flex-end, center);
+    column-gap: 6px;
+    width: 250px;
+}

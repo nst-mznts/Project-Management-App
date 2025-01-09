@@ -1,0 +1,23 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+
+footer {
+    @include flex(row, space-between, center);
+    padding-top: 10px;
+}
+
+.git-profile {
+    @include flex(row, space-between, center);
+    & a {
+        color: $color-dark;
+    }
+}
+
+.git-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('git-icon.svg');
+    margin-right: 10px;
+    display: block;
+}

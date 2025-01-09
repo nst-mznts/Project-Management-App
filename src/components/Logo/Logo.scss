@@ -1,0 +1,19 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+
+.logo {
+    @include flex(row, center, center);
+    column-gap: 4px;
+    height: 40px;
+}
+
+.logo-header {
+    @extend %font-for-logo;
+    @include font(normal, 600, 2.6rem);
+    color: $color-header;
+}
+
+.logo-icon {
+    color: $color-secondary;
+}
