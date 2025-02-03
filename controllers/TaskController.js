@@ -5,8 +5,9 @@ export const getAllTasks = async (req, res) => {
     try {
         const tasks = await TaskModel.find({ board: boardId }).populate('column').sort({ order: 1 });
         res.json(tasks);
-    } catch (error) {
-        console.error('Ошибка при получении заметок:', error);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Failed to get tasks' });
     }
 };
 
@@ -25,9 +26,7 @@ export const createTask = async (req, res) => {
         res.json(savedTAsk);
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            message: 'Не удалось создать задачу',
-        });
+        res.status(500).json({ message: 'Failed to create task' });
     };
 };
 
@@ -42,14 +41,10 @@ export const updateTask = async (req, res) => {
                 title: req.body.title,
             },
         );
-        res.json({
-            success: true,
-        });
+        res.json({ success: true });
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            message: 'Не удалось обновить задачу',
-        });
+        res.status(500).json({ message: 'Failed to update task' });
     }
 };
 
@@ -57,50 +52,33 @@ export const removeTask = async (req, res) => {
     try {
         const { taskId } = req.params;
         const deletedTask = await TaskModel.findOneAndDelete({ _id: taskId });
-        if (!deletedTask) {
-            return res.status(404).json({
-                success: false,
-                message: 'Задача не найдена',
-            });
-        }
-        res.json({
-            success: true,
-        });
+        if (!deletedTask) return res.status(404).json({ message: 'Task not found' });
+        res.json({ success: true });
     } catch (err) {
         console.log(err);
-        res.status(500).json({
-            message: 'Задача не найдена',
-        });
+        res.status(500).json({ message: 'Task not found' });
     }
 };
 
 export const updateTaskOrder = async (req, res) => {
     const tasks = req.body;
-    if (!Array.isArray(tasks)) {
-        return res.status(400).json({ message: 'Invalid data format, expected an array' });
-    }
+    if (!Array.isArray(tasks)) return res.status(400).json({ message: 'Invalid data format, expected an array' });
     try {
         const updateResults = await Promise.all(
             tasks.map(async (task) => {
-
                 const updatedTask = await TaskModel.findByIdAndUpdate(
                     task._id,
                     { column: task.column },
                     { order: task.order },
                     { new: true }
                 );
-                console.log('updatedTask', updatedTask);
-
-                if (!updatedTask) {
-                    console.warn(`Task not found: ${task._id}`);
-                }
+                if (!updatedTask) console.warn(`Task not found: ${task._id}`);
                 return updatedTask;
             })
         );
-        console.log('Sending response');
         res.json({ message: 'Task order updated successfully', updatedTasks: updateResults });
     } catch (err) {
-        console.error('Error updating tasks:', err);
+        console.log(err);
         res.status(500).json({ message: 'Failed to update task order' });
     }
 };
