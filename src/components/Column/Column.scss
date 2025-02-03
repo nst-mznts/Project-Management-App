@@ -1,0 +1,30 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.column {
+    width: 300px;
+    @extend %border-radius;
+    @include flex(column, flex-start, center);
+    row-gap: 10px;
+}
+
+.column-title {
+    width: 300px;
+    height: 60px;
+    @include flex(row, space-between, center);
+    padding: 0 10px;
+    background-color: $color-secondary;
+    @include font(normal, $font-weight-middle, $font-size-standart);
+    color: $color-header;
+    border-radius: 10px 10px 0 0;
+}
+
+.task-wrapper {
+    width: 300px;
+    height: 80%;
+    @include flex(column, flex-start, center);
+    row-gap: 10px;
+    padding: 10px;
+}

@@ -1,0 +1,62 @@
+@import './sass/abstract/constants';
+@import './sass/abstract/mixins';
+@import './sass/abstract/placeholders';
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+}
+
+body {
+    @extend %font-primary;
+    @include font(normal, 400, 1.6rem);
+    color: $color-dark;
+    background-color: $color-background;
+}
+
+#root {
+    margin: 0 auto;
+    max-width: 1200px;
+    height: 100vh;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 60px 1fr 40px;
+    align-content: space-between;
+}
+
+a {
+  text-decoration: none;
+}
+
+header, main, footer {
+    width: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background: $color-light;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar {
+    height: 4px;
+    background: $color-light;
+}
+
+::-webkit-scrollbar-thumb {
+    background: $color-primary;
+    border-radius: 15px;
+}
+
+.width100 {
+    @extend %width100;
+}

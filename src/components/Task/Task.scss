@@ -1,0 +1,27 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.task {
+    width: 280px;
+    @extend %border-radius;
+    padding: 8px;
+    @include flex(column, space-between, flex-start);
+    row-gap: 8px;
+}
+
+.task-content {
+    @extend %width100;
+    color: $color-dark;
+    @extend %font-primary;
+    @include font(normal, 400, $font-size-standart);
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.task-footer {
+    @extend %width100;
+    @include flex(row, flex-end, center);
+}

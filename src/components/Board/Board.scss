@@ -1,0 +1,45 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.board {
+    width: 380px;
+    height: 60px;
+    background-color: $color-primary;
+    padding: 12px 10px;
+    @extend %pointer;
+    @extend %border-radius;
+    @include flex(row, space-between, center);
+}
+
+.board-title {
+    @extend %width100;
+    text-decoration: none;
+    color: $color-light;
+    @extend %font-primary;
+    @include font(normal, 400, $font-size-standart);
+}
+
+.boards-buttons-wrapper {
+    @include flex(row, space-between, center);
+    column-gap: 8px;
+}
+
+.board-skeleton {
+    width: 380px;
+    height: 60px;
+    background-color: $color-additional-dark;
+    padding: 12px 10px;
+    @extend %border-radius;
+    @include flex(row, space-between, center);
+}
+
+.board-title-skeleton {
+    @extend %width100;
+    height: 20px;
+}
+
+.skeleton {
+    background-color: $color-light;
+}

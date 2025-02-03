@@ -1,0 +1,90 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.login-page {
+	background-color: $color-background;
+}
+
+.login-content {
+    @include flex(column, center, center);
+	row-gap: 40px;
+    padding: 40px 0;
+}
+
+.login-form {
+	@include flex(column, space-between, center);
+	@extend %border-radius;
+    width: 400px;
+    padding: 30px;
+    background-color: $color-light;
+}
+
+.login-header {
+    @extend %font-primary;
+    @include font(normal, 600, 2.6rem);
+    color: $color-header;
+}
+
+.form-subtitle {
+    @include flex(row, space-between, center);
+	column-gap: 8px;
+	margin-bottom: 10px;
+}
+
+.form-link {
+    color: $color-primary;
+    @extend %pointer;
+}
+
+.input-wrapper {
+	@include flex(row, center, flex-start);
+	flex-direction: column-reverse;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.form-input {
+	border: none;
+    width: 100%;
+	padding: 10px;
+	margin: 20px 0;
+	@extend %font-primary;
+	@include font(normal, 400, 1.6rem);
+	border-bottom: 1px solid $color-additional;
+	outline: none;
+	&:focus, &:not(:placeholder-shown) {
+		border-bottom: 2px solid $color-primary;
+  	};
+	&:focus ~ label, &:not(:placeholder-shown) ~ label {
+		padding: 0;
+		color: $color-dark;
+		transform: translateY(20px) scale(0.8);
+	};
+}
+
+.input-label {
+	@include font(normal, 400, 1.6rem);
+	padding-left: 10px;
+	color: $color-additional;
+	transform: translateY(30px);
+	transform-origin: left top;
+	cursor: text;
+	transition: all 0.3s ease;
+}
+
+.message-invalid-wrapper {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.message-invalid {
+	color: $color-error;
+	@include font(normal, 400, 1.4rem);
+}
+
+.login-button {
+    width: 160px;
+    margin-top: 20px;
+}

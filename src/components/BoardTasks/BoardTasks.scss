@@ -1,0 +1,47 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+@import '../Board/Board.scss';
+
+.board-tasks-button-wrapper {
+    @extend %width100;
+    @include flex(row, space-between, center);
+    column-gap: 10px;
+}
+
+.board-tasks-title {
+    color: $color-dark;
+    @extend %font-primary;
+    @include font(normal, 400, 2.5rem);
+    margin: 0 10px;
+}
+
+.board-tasks-title-skeleton {
+    width: 60%;
+    height: 40px;
+    background-color: $color-additional-dark;
+    @extend %border-radius;
+}
+
+.board-tasks-buttons {
+    width: 160px;
+}
+
+.column-wrapper {
+    // @extend %width100;
+    width: 1160px;
+    @include flex(row, flex-start, flex-start);
+    column-gap: 20px;
+    padding-bottom: 10px;
+    overflow: auto;
+    flex-wrap: nowrap;
+    &::-webkit-scrollbar {
+        height: 4px;
+        background: $color-light;
+    };
+    &::-webkit-scrollbar-thumb {
+        background: $color-primary;
+        border-radius: 15px;
+    }
+}

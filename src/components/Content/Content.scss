@@ -1,0 +1,24 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.boards-page {
+    @include flex(row, center, flex-start);
+}
+
+.boards-page-content {
+    @extend %width100;
+    padding: 40px 0;
+    @include flex(column, flex-start, center);
+    row-gap: 30px;
+    position: relative;
+    height: 100%;
+}
+
+.boards-wrapper {
+    @extend %width100;
+    @include flex(column, center, center);
+    gap: 10px;
+    flex-wrap: wrap;
+}

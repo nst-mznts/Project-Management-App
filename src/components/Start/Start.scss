@@ -1,0 +1,22 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.start-page {
+    @include flex(row, space-between, center);
+    column-gap: 6px;
+}
+
+.start-page-content {
+    @include flex(column, center, flex-start);
+    row-gap: 16px;
+}
+
+.start-button {
+    width: 160px;
+}
+
+.start-page-image {
+    width: 600px;
+}
