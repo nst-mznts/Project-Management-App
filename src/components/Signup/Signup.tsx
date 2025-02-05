@@ -22,7 +22,7 @@ const Signup:FC = () => {
     const onSubmit = async (values: SignupFormValues) => {
         const data = await dispatch(fetchRegister(values));
         if (!data.payload) {
-            setErrorMessage('Не удалось зарегистрироваться!');
+            setErrorMessage('signup-page-error');
             return;
         }
       
@@ -35,7 +35,6 @@ const Signup:FC = () => {
         <AuthForm
             isSignup={true}
             formContent={signupPageFormContent}
-            defaultValues={{name: 'Roman', email: 'roman@gmail.com', password: '12345678'}}
             onSubmit={onSubmit}
             errorMessage={errorMessage}
         />

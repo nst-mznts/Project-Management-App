@@ -19,7 +19,6 @@ interface SignupFormValues extends BaseFormValues {
 interface AuthFormProps {
     isSignup: boolean;
     formContent: typeof constant.loginPageFormContent | typeof constant.signupPageFormContent;
-    defaultValues: BaseFormValues | SignupFormValues;
     onSubmit: (values: BaseFormValues | SignupFormValues) =>  Promise<void>;
     errorMessage: string;
 }
@@ -34,7 +33,6 @@ interface AuthFormInput {
 const AuthForm:FC<AuthFormProps> = ({
     isSignup,
     formContent,
-    defaultValues,
     onSubmit,
     errorMessage,
 }) => {
@@ -48,7 +46,6 @@ const AuthForm:FC<AuthFormProps> = ({
         formState: { errors, isValid },
         handleSubmit,
     } = useForm({
-        defaultValues: defaultValues as SignupFormValues | BaseFormValues,
         mode: 'onChange',
     });
 
@@ -80,13 +77,22 @@ const AuthForm:FC<AuthFormProps> = ({
                                 </div>
                                 <input
                                     id={input.id}
-                                    {...register(input.id, {
-                                        required: t(`login-page-${input.id}-empty`),
-                                        minLength: {
-                                            value: input.minLength,
-                                            message: t(`login-page-${input.id}-error`),
-                                        }
-                                    })}
+                                    {...(input.id === 'email'
+                                        ? register(input.id, {
+                                            required: t(`login-page-${input.id}-empty`),
+                                            pattern: {
+                                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                                message: t('login-page-email-error'),
+                                            },
+                                        })
+                                        : register(input.id, {
+                                            required: t(`login-page-${input.id}-empty`),
+                                            minLength: {
+                                                value: input.minLength,
+                                                message: t(`login-page-${input.id}-error`),
+                                            },
+                                        })
+                                    )}
                                     className="form-input"
                                     type={input.type}
                                     placeholder=" "
@@ -103,10 +109,9 @@ const AuthForm:FC<AuthFormProps> = ({
                         >
                             { isSignup ? t(constant.signupPageFormContent.button) : t(constant.loginPageFormContent.button)}
                         </button>
-                        
                     </div>
                     <div className='message-invalid-wrapper'>
-                        {errorMessage && <p className='message-invalid'>{errorMessage}</p>}
+                        {errorMessage && <p className='message-invalid'>{t(errorMessage)}</p>}
                     </div>
                 </form>
             </section>

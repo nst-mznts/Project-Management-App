@@ -17,7 +17,7 @@ const Login:FC = () => {
     const onSubmit = async (values: BaseFormValues) => {
         const data = await dispatch(fetchAuth(values));
         if (!data.payload) {
-            setErrorMessage('Не удалось авторизоваться! Неверный логин или пароль.');
+            setErrorMessage('login-page-error');
             return;
         }
       
@@ -30,7 +30,6 @@ const Login:FC = () => {
         <AuthForm
         isSignup={false}
         formContent={loginPageFormContent}
-        defaultValues={{email: 'nastya@gmail.com', password: '12345678'}}
         onSubmit={onSubmit}
         errorMessage={errorMessage}
         />
