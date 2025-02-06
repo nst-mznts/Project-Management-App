@@ -13,6 +13,7 @@ const router = express.Router();
 router.post('/auth/login', UserController.login);
 router.post('/auth/signup', UserController.signup);
 router.get('/auth/me', checkAuth, UserController.getMe);
+router.delete('/:userId', UserController.deleteUser);
 
 // Board Routes
 router.route('/boards')

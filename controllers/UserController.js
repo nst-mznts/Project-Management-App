@@ -66,3 +66,14 @@ export const getMe = async (req, res) => {
         res.status(500).json({ message: 'No access' });
     }
 };
+
+export const deleteUser = async(req, res) => {
+    const { userId } = req.params;
+    try {
+        await UserModel.findByIdAndDelete(userId);
+        res.status(200).json({ message: "The user and all his data are deleted" });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "Error while deleting a user" });
+    }
+};
