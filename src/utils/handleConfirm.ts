@@ -7,6 +7,7 @@ interface createHandleConfirmProps {
     addTask?: (title: string, columnId: string) => Promise<void>;
     editTask?: (title: string) => Promise<void>;
     removeTask?: () => void;
+    deleteProfile?: () => void;
     closeModal: () => void;
 }
 
@@ -17,6 +18,7 @@ export const createHandleConfirm = ({
     addTask,
     editTask,
     removeTask,
+    deleteProfile,
     closeModal,
 }: createHandleConfirmProps) => {
 
@@ -42,6 +44,9 @@ export const createHandleConfirm = ({
                 break;
             case ActionType.DeleteTask:
                 if (removeTask) removeTask();
+                break;
+            case ActionType.DeleteProfile:
+                if (deleteProfile) deleteProfile();
                 break;
             default:
                 break;

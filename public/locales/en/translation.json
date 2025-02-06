@@ -11,6 +11,8 @@
   "delete-column-confirmation": "Do you really want to delete this column?",
   "delete-profile": "Delete profile",
   "delete-profile-confirmation": "Do you really want to delete your profile?",
+  "delete-profile-message": "Your profile has been successfully deleted",
+  "delete-profile-error": "There was an error deleting your profile! Please try again.",
   "delete-task-confirmation": "Do you really want to delete this task?",
   "edit-profile": "Profile",
   "login": "Log in",

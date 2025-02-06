@@ -16,6 +16,19 @@ export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
     return data;
 });
 
+export const deleteUser = createAsyncThunk(
+    "user/deleteUser",
+    async (userId, { rejectWithValue }) => {
+        try {
+            console.log('deleteUser', userId);
+            const response = await axios.delete(`/${userId}`);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
 const initialState = {
     data: null,
     status: 'loading',
@@ -65,7 +78,18 @@ const authSlice = createSlice({
         builder.addCase(fetchRegister.rejected, (state) => {
             state.status = 'error';
             state.data = null;
-        })
+        }),
+        builder.addCase(deleteUser.pending, (state) => {
+            state.status = "loading";
+        }),
+        builder.addCase(deleteUser.fulfilled, (state) => {
+            state.status = "loaded";
+            state.data = null;
+        }),
+        builder.addCase(deleteUser.rejected, (state) => {
+            state.status = "error";
+            state.data = null;
+        });
     },
 });
 
