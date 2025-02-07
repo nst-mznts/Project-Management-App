@@ -6,9 +6,14 @@ type SymbolToggleProps = {
   secondSymbol: string;
   selectedSymbol: boolean;
   setSelectedSymbol: (value: boolean) => any;
-}
+};
 
-const SymbolToggle:FC<SymbolToggleProps> = ({ firstSymbol, secondSymbol, selectedSymbol, setSelectedSymbol }) => {
+const SymbolToggle: FC<SymbolToggleProps> = ({
+  firstSymbol,
+  secondSymbol,
+  selectedSymbol,
+  setSelectedSymbol,
+}) => {
   return (
     <div
       className={`swith-button ${selectedSymbol ? 'switch-active' : ''}`}
@@ -18,6 +23,6 @@ const SymbolToggle:FC<SymbolToggleProps> = ({ firstSymbol, secondSymbol, selecte
       <div className="swith-item">{secondSymbol}</div>
     </div>
   );
-}
+};
 
 export default SymbolToggle;

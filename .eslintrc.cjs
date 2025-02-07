@@ -8,6 +8,8 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:import/typescript',
+    "react-app",
+    "prettier"
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -26,6 +28,7 @@ module.exports = {
     'react-refresh',
     '@typescript-eslint',
     'import',
+    "prettier"
   ],
   rules: {
     'react/jsx-no-target-blank': 'off',

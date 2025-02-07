@@ -12,7 +12,7 @@ import Signup from '../Signup/Signup';
 import Content from '../Content/Content';
 import BoardTasks from '../BoardTasks/BoardTasks';
 
-const App:FC = () => {
+const App: FC = () => {
   const dispatch = useAppDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -20,22 +20,27 @@ const App:FC = () => {
     dispatch(fetchAuthMe());
   }, []);
 
-  const handleOpenSidebar = () =>  setIsSidebarOpen(true);
-  const handleCloseSidebar = () =>  setIsSidebarOpen(false);
+  const handleOpenSidebar = () => setIsSidebarOpen(true);
+  const handleCloseSidebar = () => setIsSidebarOpen(false);
 
   return (
     <>
       <Header onOpenSidebar={handleOpenSidebar} />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/boards" element={<Content isSidebarOpen={isSidebarOpen} handleCloseSidebar={handleCloseSidebar}/> }/>
+        <Route
+          path="/boards"
+          element={
+            <Content isSidebarOpen={isSidebarOpen} handleCloseSidebar={handleCloseSidebar} />
+          }
+        />
         <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/signup" element={<Signup />} />
         <Route path="/boards/:id" element={<BoardTasks />} />
       </Routes>
       <Footer />
     </>
-  )
-}
+  );
+};
 
 export default App;
