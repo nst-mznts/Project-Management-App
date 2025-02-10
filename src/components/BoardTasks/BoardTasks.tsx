@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchColumns } from '../../redux/slices/columns';
 import { fetchTask } from '../../redux/slices/tasks';
 import { ActionType } from '../../utils/types/ActionType.types';
+import { Board, Column, Task } from '../../utils/types/BasicTypes.types';
 import { createHandleConfirm } from '../../utils/handleConfirm';
 import { createColumn, deleteColumn, updateColumn } from '../../utils/services/columnsService';
 import { createTask, updateTask, deleteTask } from '../../utils/services/taskService';
@@ -16,12 +17,12 @@ import useModalWindow from '../../utils/useModalWindow';
 import ColumnList from './ColumnList';
 
 const BoardTasks: FC = () => {
-  const [currentBoard, setCurrentBoard] = useState();
-  const columns = useAppSelector((state) => state.columns.columns.items);
-  const tasks = useAppSelector((state) => state.tasks.tasks.items);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentBoard, setCurrentBoard] = useState<Board | null>(null);
+  const columns = useAppSelector((state) => state.columns.columns.items) as Column[];
+  const tasks = useAppSelector((state) => state.tasks.tasks.items) as Task[];
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
   const dispatch = useAppDispatch();
   const { isModalOpen, actionType, initialTitle, boardIdForRemoving, openModal, closeModal } =
     useModalWindow();
@@ -33,7 +34,7 @@ const BoardTasks: FC = () => {
     }
 
     axios
-      .get(`/boards/${id}`)
+      .get<Board>(`/boards/${id}`)
       .then((res) => {
         setCurrentBoard(res.data);
         setIsLoading(false);
@@ -47,29 +48,33 @@ const BoardTasks: FC = () => {
   }, [id, dispatch]);
 
   const handleConfirm = createHandleConfirm({
-    onSubmit: async (title) => {
+    onSubmit: async (title: string) => {
+      if (!id) return;
       await createColumn(id, title);
       dispatch(fetchColumns(id));
     },
-    onRemove: async (columnId) => {
+    onRemove: async (columnId: string) => {
+      if (!id) return;
       await deleteColumn(id, columnId);
       dispatch(fetchColumns(id));
     },
-    onEdit: async (columnId, title) => {
+    onEdit: async (columnId: string, title: string) => {
+      if (!id) return;
       await updateColumn(id, columnId, title);
       dispatch(fetchColumns(id));
     },
-    addTask: async (title, columnId) => {
+    addTask: async (title: string, columnId: string) => {
+      if (!id) return;
       await createTask(title, id, columnId);
       dispatch(fetchTask(id));
     },
-    editTask: async (title) => {
-      console.log('boardIdForRemoving', boardIdForRemoving);
+    editTask: async (title: string) => {
+      if (!id) return;
       await updateTask(id, boardIdForRemoving, title);
       dispatch(fetchTask(id));
     },
     removeTask: async () => {
-      console.log('boardIdForRemoving', boardIdForRemoving);
+      if (!id) return;
       await deleteTask(id, boardIdForRemoving);
       dispatch(fetchTask(id));
     },
@@ -89,7 +94,7 @@ const BoardTasks: FC = () => {
             {isLoading ? (
               <div className="board-tasks-title-skeleton"></div>
             ) : (
-              <h3 className="board-tasks-title">{currentBoard.title}</h3>
+              <h3 className="board-tasks-title">{currentBoard?.title}</h3>
             )}
             <div className="board-tasks-buttons">
               <button
@@ -101,7 +106,7 @@ const BoardTasks: FC = () => {
               </button>
             </div>
           </div>
-          <ColumnList columns={columns} onOpen={openModal} boardId={id} tasks={tasks} />
+          <ColumnList columns={columns} onOpen={openModal} boardId={id!} tasks={tasks} />
         </div>
       </main>
       {isModalOpen && (

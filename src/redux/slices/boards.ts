@@ -1,18 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
+import { Board } from '../../utils/types/BasicTypes.types';
 
-export const fetchBoards = createAsyncThunk('boards/fetchBoards', async () => {
+export interface BoardsState {
+  boards: {
+    items: Board[];
+    status: 'loading' | 'loaded' | 'error';
+  };
+}
+
+export const fetchBoards = createAsyncThunk<Board[]>('boards/fetchBoards', async () => {
   const token = localStorage.getItem('token');
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const { data } = await axios.get('/boards', config);
+  const { data } = await axios.get<Board[]>('/boards', config);
   return data;
 });
 
-const initialState = {
+const initialState: BoardsState = {
   boards: {
     items: [],
     status: 'loading',

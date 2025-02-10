@@ -1,35 +1,56 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
+import { RootState } from '../store';
+import { User } from '../../utils/types/BasicTypes.types';
 
-export const fetchAuth = createAsyncThunk('auth/fetchAuth', async (params) => {
-  const { data } = await axios.post('/auth/login', params);
+interface AuthState {
+  data: User | null;
+  status: 'loading' | 'loaded' | 'error';
+}
+
+interface AuthParams {
+  email: string;
+  password: string;
+}
+
+interface RegisterParams {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export const fetchAuth = createAsyncThunk<User, AuthParams>('auth/fetchAuth', async (params) => {
+  const { data } = await axios.post<User>('/auth/login', params);
   return data;
 });
 
-export const fetchRegister = createAsyncThunk('auth/fetchRegister', async (params) => {
-  const { data } = await axios.post('/auth/signup', params);
+export const fetchRegister = createAsyncThunk<User, RegisterParams>(
+  'auth/fetchRegister',
+  async (params) => {
+    const { data } = await axios.post<User>('/auth/signup', params);
+    return data;
+  }
+);
+
+export const fetchAuthMe = createAsyncThunk<User>('auth/fetchAuthMe', async () => {
+  const { data } = await axios.get<User>('/auth/me');
   return data;
 });
 
-export const fetchAuthMe = createAsyncThunk('auth/fetchAuthMe', async () => {
-  const { data } = await axios.get('/auth/me');
-  return data;
-});
-
-export const deleteUser = createAsyncThunk(
+export const deleteUser = createAsyncThunk<void, string>(
   'user/deleteUser',
   async (userId, { rejectWithValue }) => {
     try {
       console.log('deleteUser', userId);
       const response = await axios.delete(`/${userId}`);
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-const initialState = {
+const initialState: AuthState = {
   data: null,
   status: 'loading',
 };
@@ -93,9 +114,9 @@ const authSlice = createSlice({
   },
 });
 
-export const selectIsAuth = (state) => Boolean(state.auth.data);
+export const selectIsAuth = (state: RootState) => Boolean(state.auth.data);
 
-export const userName = (state) => state.auth.data;
+export const userName = (state: RootState): User | null => state.auth.data;
 
 export const authReducer = authSlice.reducer;
 

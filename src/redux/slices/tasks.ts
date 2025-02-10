@@ -1,7 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
+import { Task } from '../../utils/types/BasicTypes.types';
 
-export const fetchTask = createAsyncThunk('boards/fetchTask', async (boardId) => {
+export interface TasksState {
+  tasks: {
+    items: Task[];
+    status: 'loading' | 'loaded' | 'error';
+  };
+}
+
+interface UpdateTaskOrderPayload {
+  boardId: string;
+  tasks: Task[];
+}
+
+export const fetchTask = createAsyncThunk<Task[], string>('boards/fetchTask', async (boardId) => {
   const token = localStorage.getItem('token');
   const config = {
     headers: {
@@ -9,11 +22,11 @@ export const fetchTask = createAsyncThunk('boards/fetchTask', async (boardId) =>
     },
   };
 
-  const { data } = await axios.get(`/boards/${boardId}/tasks`, config);
+  const { data } = await axios.get<Task[]>(`/boards/${boardId}/tasks`, config);
   return data;
 });
 
-export const updateTaskOrder = createAsyncThunk(
+export const updateTaskOrder = createAsyncThunk<Task[], UpdateTaskOrderPayload>(
   'tasks/updateOrder',
   async ({ boardId, tasks }, { rejectWithValue }) => {
     const token = localStorage.getItem('token');
@@ -25,13 +38,13 @@ export const updateTaskOrder = createAsyncThunk(
     try {
       await axios.patch(`/boards/${boardId}/tasks/order`, tasks, config);
       return tasks;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-const initialState = {
+const initialState: TasksState = {
   tasks: {
     items: [],
     status: 'loading',

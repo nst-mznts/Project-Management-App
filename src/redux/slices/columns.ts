@@ -1,30 +1,46 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
+import { Column } from '../../utils/types/BasicTypes.types';
 
-export const fetchColumns = createAsyncThunk('boards/fetchColumns', async (id) => {
-  const token = localStorage.getItem('token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export interface ColumnsState {
+  columns: {
+    items: Column[];
+    status: 'loading' | 'loaded' | 'error';
   };
-  const { data } = await axios.get(`/boards/${id}/columns`, config);
-  return data;
-});
+}
 
-export const updateColumnOrder = createAsyncThunk(
+interface UpdateColumnOrderPayload {
+  boardId: string;
+  columns: Column[];
+}
+
+export const fetchColumns = createAsyncThunk<Column[], string>(
+  'boards/fetchColumns',
+  async (id) => {
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get<Column[]>(`/boards/${id}/columns`, config);
+    return data;
+  }
+);
+
+export const updateColumnOrder = createAsyncThunk<Column[], UpdateColumnOrderPayload>(
   'columns/updateOrder',
   async ({ boardId, columns }, { rejectWithValue }) => {
     try {
       await axios.patch(`/boards/${boardId}/columns/order`, columns);
       return columns;
-    } catch (error) {
+    } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-const initialState = {
+const initialState: ColumnsState = {
   columns: {
     items: [],
     status: 'loading',
