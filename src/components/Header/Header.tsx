@@ -13,7 +13,7 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ onOpenSidebar }) => {
-  const [language, setLanguage] = useState(false);
+  const [language, setLanguage] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const isAuth = useAppSelector(selectIsAuth);
   const dispatch = useAppDispatch();
