@@ -8,16 +8,17 @@ import { MdLogout } from 'react-icons/md';
 import { MdDelete } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { ActionType } from '../../utils/types/ActionType.types';
+import { useModal } from '../../utils/ModalContext';
 
 type SidebarProps = {
   onClose: () => any;
   userName: string;
-  onOpen: (actionType: ActionType, id?: string, initialTitle?: string) => any;
 };
 
-const Sidebar: FC<SidebarProps> = ({ onClose, userName, onOpen }) => {
+const Sidebar: FC<SidebarProps> = ({ onClose, userName }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { openModal } = useModal();
 
   const onClickLogOut = () => {
     onClose();
@@ -43,7 +44,7 @@ const Sidebar: FC<SidebarProps> = ({ onClose, userName, onOpen }) => {
       </Link>
       <div
         className="profile-links additional-colored"
-        onClick={() => onOpen(ActionType.DeleteProfile)}
+        onClick={() => openModal(ActionType.DeleteProfile)}
       >
         <MdDelete size="2em" />
         {t('delete-profile')}

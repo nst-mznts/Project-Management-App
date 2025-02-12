@@ -11,8 +11,6 @@
   "delete-column-confirmation": "Вы действительно хотите удалить этот столбец?",
   "delete-profile": "Удалить профиль",
   "delete-profile-confirmation": "Вы действительно хотите удалить свой профиль?",
-  "delete-profile-message": "Ваш профиль успешно удалён",
-  "delete-profile-error": "Возникла ошибка при удалении профиля! Попробуйте снова.",
   "delete-task-confirmation": "Вы действительно хотите удалить эту задачу?",
   "edit-profile": "Профиль",
   "login": "Войти",

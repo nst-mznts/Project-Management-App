@@ -2,21 +2,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../axios';
 import { RootState } from '../store';
 import { User } from '../../utils/types/BasicTypes.types';
+import { AuthParams, RegisterParams } from '../../utils/types/AuthForm.types';
 
 interface AuthState {
   data: User | null;
   status: 'loading' | 'loaded' | 'error';
-}
-
-interface AuthParams {
-  email: string;
-  password: string;
-}
-
-interface RegisterParams {
-  name: string;
-  email: string;
-  password: string;
 }
 
 export const fetchAuth = createAsyncThunk<User, AuthParams>('auth/fetchAuth', async (params) => {
