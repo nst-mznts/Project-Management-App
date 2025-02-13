@@ -10,7 +10,6 @@ export const signup = async (req, res) => {
         const doc = new UserModel({
             email: req.body.email,
             name: req.body.name,
-            avatarUrl: req.body.avatarUrl,
             passwordHash: hash,
         });
         const user = await doc.save();
@@ -70,8 +69,15 @@ export const getMe = async (req, res) => {
 export const deleteUser = async(req, res) => {
     const { userId } = req.params;
     try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        };
         await UserModel.findByIdAndDelete(userId);
-        res.status(200).json({ message: "The user and all his data are deleted" });
+        res.status(200).json({
+            message: `User with ID ${userId} and associated data deleted successfully`,
+            deletedUserId: userId,
+        });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: "Error while deleting a user" });
