@@ -1,16 +1,17 @@
 import './Login.scss';
 import { FC, useState } from 'react';
+import { SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../redux/hooks';
 import { loginPageFormContent } from '../../utils/constants';
 import { fetchAuth } from '../../redux/slices/auth';
-import { AuthParams } from '../../utils/types/AuthForm.types';
+import { AuthFormValues } from '../../utils/types/AuthForm.types';
 import AuthForm from '../AuthForm/AuthForm';
 
 const Login: FC = () => {
   const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const onSubmit = async (values: AuthParams) => {
+  const onSubmit: SubmitHandler<AuthFormValues> = async (values) => {
     const data = await dispatch(fetchAuth(values));
     if (!data.payload) {
       setErrorMessage('login-page-error');

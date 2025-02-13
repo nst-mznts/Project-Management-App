@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { Navigate, Link } from 'react-router-dom';
 import * as constant from '../../utils/constants';
-import { AuthFormProps, AuthFormInput } from '../../utils/types/AuthForm.types';
+import { AuthFormValues, AuthFormProps, AuthFormInput } from '../../utils/types/AuthForm.types';
 import { selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ const AuthForm: FC<AuthFormProps> = ({ isSignup, formContent, onSubmit, errorMes
     register,
     formState: { errors, isValid },
     handleSubmit,
-  } = useForm({
+  } = useForm<AuthFormValues>({
     mode: 'onChange',
   });
 
@@ -41,10 +41,9 @@ const AuthForm: FC<AuthFormProps> = ({ isSignup, formContent, onSubmit, errorMes
             </Link>
           </div>
           {formInputs.map((input: AuthFormInput) => {
-            const fieldError = errors[input.id];
             return (
               <div className="input-wrapper" key={input.id}>
-                <div>{fieldError && <p className="message-invalid">{fieldError.message}</p>}</div>
+                <div>{errors[input.id] && <p className="message-invalid">{errors[input.id]?.message}</p>}</div>
                 <input
                   id={input.id}
                   {...(input.id === 'email'

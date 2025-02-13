@@ -6,7 +6,7 @@ import { ActionType } from '../../utils/types/ActionType.types';
 interface ModalWindowProps {
   actionType: ActionType;
   onClose: () => void;
-  onConfirm: (title: string, actionType: ActionType) => void;
+  onConfirm: (title: string) => void;
   initialTitle?: string;
 }
 
@@ -42,7 +42,7 @@ const ModalWindow: FC<ModalWindowProps> = ({ actionType, onClose, onConfirm, ini
     actionType === ActionType.RenameColumn;
 
   const handleConfirm = () => {
-    onConfirm(title, actionType);
+    onConfirm(title);
     setTitle('');
   };
 

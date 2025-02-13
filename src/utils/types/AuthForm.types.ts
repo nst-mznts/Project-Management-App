@@ -1,14 +1,9 @@
 import * as constant from '../constants';
+import { SubmitHandler } from 'react-hook-form';
 
-/** Basic form interface */
-export interface AuthParams {
-  email: string;
-  password: string;
-}
-
-/** Registration form interface */
-export interface RegisterParams {
-  name: string;
+/** Unified form interface */
+export interface AuthFormValues {
+  name?: string;
   email: string;
   password: string;
 }
@@ -17,13 +12,13 @@ export interface RegisterParams {
 export interface AuthFormProps {
   isSignup: boolean;
   formContent: typeof constant.loginPageFormContent | typeof constant.signupPageFormContent;
-  onSubmit: (values: AuthParams | RegisterParams) => Promise<void>;
+  onSubmit: SubmitHandler<AuthFormValues>;
   errorMessage: string;
 }
 
 /** Interface for form inputs */
 export interface AuthFormInput {
-  id: keyof AuthParams | keyof RegisterParams;
+  id: keyof AuthFormValues;
   type: string;
   value: string;
   minLength: number;
