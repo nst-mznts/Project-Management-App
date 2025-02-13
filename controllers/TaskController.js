@@ -68,7 +68,10 @@ export const updateTaskOrder = async (req, res) => {
             tasks.map(async (task) => {
                 const updatedTask = await TaskModel.updateOne(
                     { _id: task._id },
-                    { $set: { order: task.order } }
+                    {
+                        order: task.order,
+                        column: task.column
+                    }
                 );
                 if (!updatedTask) console.warn(`Task not found: ${task._id}`);
                 return updatedTask;
