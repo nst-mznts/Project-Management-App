@@ -43,7 +43,11 @@ const AuthForm: FC<AuthFormProps> = ({ isSignup, formContent, onSubmit, errorMes
           {formInputs.map((input: AuthFormInput) => {
             return (
               <div className="input-wrapper" key={input.id}>
-                <div>{errors[input.id] && <p className="message-invalid">{errors[input.id]?.message}</p>}</div>
+                <div>
+                  {errors[input.id] && (
+                    <p className="message-invalid">{errors[input.id]?.message}</p>
+                  )}
+                </div>
                 <input
                   id={input.id}
                   {...(input.id === 'email'

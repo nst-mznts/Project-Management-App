@@ -9,33 +9,48 @@ interface AuthState {
   status: 'loading' | 'loaded' | 'error';
 }
 
-export const fetchAuth = createAsyncThunk<User, AuthFormValues>('auth/fetchAuth', async (params) => {
-  const { data } = await axios.post<User>('/auth/login', params);
-  return data;
-});
+export const fetchAuth = createAsyncThunk<User, AuthFormValues>(
+  'auth/fetchAuth',
+  async (params) => {
+    const response = await axios.post<User>('/auth/login', params);
+    if (!response.data || typeof response.data !== 'object') {
+      throw new Error('Invalid response data');
+    }
+    return response.data;
+  }
+);
 
 export const fetchRegister = createAsyncThunk<User, AuthFormValues>(
   'auth/fetchRegister',
   async (params) => {
-    const { data } = await axios.post<User>('/auth/signup', params);
-    return data;
+    const response = await axios.post<User>('/auth/signup', params);
+    if (!response.data || typeof response.data !== 'object') {
+      throw new Error('Invalid response data');
+    }
+    return response.data;
   }
 );
 
 export const fetchAuthMe = createAsyncThunk<User>('auth/fetchAuthMe', async () => {
-  const { data } = await axios.get<User>('/auth/me');
-  return data;
+  const response = await axios.get<User>('/auth/me');
+  if (!response.data || typeof response.data !== 'object') {
+    throw new Error('Invalid response data');
+  }
+  console.log(response.data);
+  return response.data;
 });
 
 export const deleteUser = createAsyncThunk<void, string>(
   'user/deleteUser',
   async (userId, { rejectWithValue }) => {
     try {
-      console.log('deleteUser', userId);
       const response = await axios.delete(`/${userId}`);
+      if (response.status !== 200) {
+        throw new Error('Failed to delete user');
+      }
       return response.data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data || 'Unexpected error');
     }
   }
 );
@@ -59,8 +74,12 @@ const authSlice = createSlice({
       state.data = null;
     }),
       builder.addCase(fetchAuth.fulfilled, (state, action) => {
-        state.status = 'loaded';
-        state.data = action.payload;
+        if (action.payload) {
+          state.status = 'loaded';
+          state.data = action.payload;
+        } else {
+          state.status = 'error';
+        }
       }),
       builder.addCase(fetchAuth.rejected, (state) => {
         state.status = 'error';
@@ -71,8 +90,12 @@ const authSlice = createSlice({
         state.data = null;
       }),
       builder.addCase(fetchAuthMe.fulfilled, (state, action) => {
-        state.status = 'loaded';
-        state.data = action.payload;
+        if (action.payload) {
+          state.status = 'loaded';
+          state.data = action.payload;
+        } else {
+          state.status = 'error';
+        }
       }),
       builder.addCase(fetchAuthMe.rejected, (state) => {
         state.status = 'error';
@@ -83,8 +106,12 @@ const authSlice = createSlice({
         state.data = null;
       }),
       builder.addCase(fetchRegister.fulfilled, (state, action) => {
-        state.status = 'loaded';
-        state.data = action.payload;
+        if (action.payload) {
+          state.status = 'loaded';
+          state.data = action.payload;
+        } else {
+          state.status = 'error';
+        }
       }),
       builder.addCase(fetchRegister.rejected, (state) => {
         state.status = 'error';
