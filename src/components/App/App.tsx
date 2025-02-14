@@ -6,12 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { fetchAuthMe, userName } from '../../redux/slices/auth';
 import { ModalProvider } from '../../utils/ModalContext';
 import Header from '../Header/Header';
+import Auth from '../Auth/Auth';
 import Start from '../Start/Start';
-import Footer from '../Footer/Footer';
-import Login from '../Auth/Login';
-import Signup from '../Auth/Signup';
 import Content from '../Content/Content';
 import BoardTasks from '../BoardTasks/BoardTasks';
+import Footer from '../Footer/Footer';
 import Sidebar from '../Sidebar/Sidebar';
 
 const App: FC = () => {
@@ -33,8 +32,8 @@ const App: FC = () => {
         <Routes>
           <Route path="/" element={<Start />} />
           <Route path="/boards" element={<Content />} />
-          <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/signup" element={<Signup />} />
+          <Route path="/auth/login" element={<Auth />} />
+          <Route path="/auth/signup" element={<Auth />} />
           <Route path="/boards/:id" element={<BoardTasks />} />
         </Routes>
         <Footer />
