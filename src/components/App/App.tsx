@@ -12,6 +12,8 @@ import Content from '../Content/Content';
 import BoardTasks from '../BoardTasks/BoardTasks';
 import Footer from '../Footer/Footer';
 import Sidebar from '../Sidebar/Sidebar';
+import ProtectedRoute from '../../utils/ProtectedRoute';
+import Page404 from '../Page404/Page404';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -31,10 +33,13 @@ const App: FC = () => {
         <Header onOpenSidebar={handleOpenSidebar} />
         <Routes>
           <Route path="/" element={<Start />} />
-          <Route path="/boards" element={<Content />} />
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/signup" element={<Auth />} />
-          <Route path="/boards/:id" element={<BoardTasks />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/boards" element={<Content />} />
+            <Route path="/boards/:id" element={<BoardTasks />} />
+          </Route>
+          <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
         {isSidebarOpen && <Sidebar onClose={handleCloseSidebar} userName={userData!.name} />}
