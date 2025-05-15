@@ -10,9 +10,11 @@ import SymbolToggle from '../SymbolToggle/SymbolToggle';
 
 interface HeaderProps {
   onOpenSidebar: () => void;
+  onOpenMobileMenu: () => void;
+  isMobileMenuOpen: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ onOpenSidebar }) => {
+const Header: FC<HeaderProps> = ({ onOpenSidebar, onOpenMobileMenu, isMobileMenuOpen }) => {
   const [language, setLanguage] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const isAuth = useAppSelector(selectIsAuth);
@@ -38,7 +40,7 @@ const Header: FC<HeaderProps> = ({ onOpenSidebar }) => {
         setSelectedSymbol={changeLanguage}
       />
       {isAuth ? (
-        <nav className="buttons-wrapper">
+        <nav className="buttons-wrapper hidden">
           <Link to="/" onClick={onClickLogOut}>
             <button className="button rectangular-button colored">{t('logout')}</button>
           </Link>
@@ -47,7 +49,7 @@ const Header: FC<HeaderProps> = ({ onOpenSidebar }) => {
           </button>
         </nav>
       ) : (
-        <nav className="buttons-wrapper">
+        <nav className="buttons-wrapper hidden">
           <Link to="/auth/login">
             <button className="button rectangular-button colored">{t('login')}</button>
           </Link>
@@ -56,6 +58,12 @@ const Header: FC<HeaderProps> = ({ onOpenSidebar }) => {
           </Link>
         </nav>
       )}
+      <div className={isMobileMenuOpen ? "burger burger_active" : "burger"} id="burger" onClick={onOpenMobileMenu}>
+        <span className="burger-line burger-line-first"></span>
+        <span className="burger-line burger-line-second"></span>
+        <span className="burger-line burger-line-third"></span>
+        <span className="burger-line burger-line-fourth"></span>
+      </div>
     </header>
   );
 };

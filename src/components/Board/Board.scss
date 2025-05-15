@@ -43,3 +43,9 @@
 .skeleton {
     background-color: $color-light;
 }
+
+@media (max-width: 767px) {
+    .board {
+        width: 300px;
+    }
+}

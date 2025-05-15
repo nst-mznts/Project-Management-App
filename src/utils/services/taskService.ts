@@ -15,7 +15,7 @@ export const createTask = async (
 export const updateTask = async (boardId: string, taskId: string, title: string): Promise<Task> => {
   const { data } = await axios.patch<Task>(`/boards/${boardId}/tasks/${taskId}`, { title: title });
   return data;
-}; // точно ли возвращает Task, а не success: boolean??
+};
 
 export const deleteTask = async (
   boardId: string,

@@ -18,6 +18,7 @@ import Page404 from '../Page404/Page404';
 const App: FC = () => {
   const dispatch = useAppDispatch();
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const userData = useAppSelector(userName);
 
   useEffect(() => {
@@ -25,12 +26,20 @@ const App: FC = () => {
   }, []);
 
   const handleOpenSidebar = () => setIsSidebarOpen(true);
-  const handleCloseSidebar = () => setIsSidebarOpen(false);
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+    setIsMobileMenuOpen(false);
+  }
+
+  const handleOpenMobileMenu = () => {
+    setIsMobileMenuOpen(true);
+    handleOpenSidebar();
+  }
 
   return (
     <>
       <ModalProvider>
-        <Header onOpenSidebar={handleOpenSidebar} />
+        <Header onOpenSidebar={handleOpenSidebar} onOpenMobileMenu={handleOpenMobileMenu} isMobileMenuOpen={isMobileMenuOpen} />
         <Routes>
           <Route path="/" element={<Start />} />
           <Route path="/auth/login" element={<Auth />} />
@@ -42,7 +51,7 @@ const App: FC = () => {
           <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
-        {isSidebarOpen && <Sidebar onClose={handleCloseSidebar} userName={userData!.name} />}
+        {isSidebarOpen && <Sidebar onClose={handleCloseSidebar} userName={userData?.name || ''}/>}
       </ModalProvider>
     </>
   );
