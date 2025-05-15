@@ -29,17 +29,21 @@ const App: FC = () => {
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
     setIsMobileMenuOpen(false);
-  }
+  };
 
   const handleOpenMobileMenu = () => {
     setIsMobileMenuOpen(true);
     handleOpenSidebar();
-  }
+  };
 
   return (
     <>
       <ModalProvider>
-        <Header onOpenSidebar={handleOpenSidebar} onOpenMobileMenu={handleOpenMobileMenu} isMobileMenuOpen={isMobileMenuOpen} />
+        <Header
+          onOpenSidebar={handleOpenSidebar}
+          onOpenMobileMenu={handleOpenMobileMenu}
+          isMobileMenuOpen={isMobileMenuOpen}
+        />
         <Routes>
           <Route path="/" element={<Start />} />
           <Route path="/auth/login" element={<Auth />} />
@@ -51,7 +55,7 @@ const App: FC = () => {
           <Route path="*" element={<Page404 />} />
         </Routes>
         <Footer />
-        {isSidebarOpen && <Sidebar onClose={handleCloseSidebar} userName={userData?.name || ''}/>}
+        {isSidebarOpen && <Sidebar onClose={handleCloseSidebar} userName={userData?.name || ''} />}
       </ModalProvider>
     </>
   );

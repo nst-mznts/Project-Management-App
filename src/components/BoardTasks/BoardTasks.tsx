@@ -68,7 +68,7 @@ const BoardTasks: FC = () => {
               </button>
             </div>
           </div>
-          <div className='content-wrapper'>
+          <div className="content-wrapper">
             <ColumnList columns={columns} onOpen={openModal} boardId={id!} tasks={tasks} />
           </div>
         </div>

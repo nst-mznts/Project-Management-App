@@ -58,7 +58,11 @@ const Header: FC<HeaderProps> = ({ onOpenSidebar, onOpenMobileMenu, isMobileMenu
           </Link>
         </nav>
       )}
-      <div className={isMobileMenuOpen ? "burger burger_active" : "burger"} id="burger" onClick={onOpenMobileMenu}>
+      <div
+        className={isMobileMenuOpen ? 'burger burger_active' : 'burger'}
+        id="burger"
+        onClick={onOpenMobileMenu}
+      >
         <span className="burger-line burger-line-first"></span>
         <span className="burger-line burger-line-second"></span>
         <span className="burger-line burger-line-third"></span>

@@ -70,10 +70,18 @@ const Sidebar: FC<SidebarProps> = ({ onClose, userName }) => {
         </>
       ) : (
         <>
-          <Link to="/auth/login" className='button rectangular-button colored mobile-menu--button' onClick={handleClickButton}>
+          <Link
+            to="/auth/login"
+            className="button rectangular-button colored mobile-menu--button"
+            onClick={handleClickButton}
+          >
             {t('login')}
           </Link>
-          <Link to="/auth/signup" className='button rectangular-button bordered mobile-menu--button' onClick={handleClickButton}>
+          <Link
+            to="/auth/signup"
+            className="button rectangular-button bordered mobile-menu--button"
+            onClick={handleClickButton}
+          >
             {t('signup')}
           </Link>
         </>
