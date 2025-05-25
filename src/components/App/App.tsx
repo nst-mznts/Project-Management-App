@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { fetchAuthMe, userName } from '../../redux/slices/auth';
+import { fetchAuthMe, userName, selectIsAuth } from '../../redux/slices/auth';
 import { ModalProvider } from '../../utils/ModalContext';
 import Header from '../Header/Header';
 import Auth from '../Auth/Auth';
@@ -20,10 +20,14 @@ const App: FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const userData = useAppSelector(userName);
+  const isAuth = useAppSelector(selectIsAuth);
+  const authStatus = useAppSelector((state) => state.auth.status);
 
   useEffect(() => {
-    dispatch(fetchAuthMe());
-  }, []);
+    if (isAuth && authStatus === 'loading') {
+      dispatch(fetchAuthMe());
+    }
+  }, [dispatch, isAuth, authStatus]);
 
   const handleOpenSidebar = () => setIsSidebarOpen(true);
   const handleCloseSidebar = () => {

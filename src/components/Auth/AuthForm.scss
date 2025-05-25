@@ -39,16 +39,22 @@
 }
 
 .input-wrapper {
-	@include flex(row, center, flex-start);
-	flex-direction: column-reverse;
+	@include flex(column, flex-start, flex-start);
 	width: 100%;
 	margin: 0 auto;
+}
+
+.input-container {
+  @include flex(row, center, flex-start);
+  flex-direction: column-reverse;
+  position: relative;
+  width: 100%;
 }
 
 .form-input {
 	border: none;
     width: 100%;
-	padding: 10px;
+	padding: 10px 40px 10px 10px;
 	margin: 20px 0;
 	@extend %font-primary;
 	@include font(normal, 400, 1.6rem);
@@ -72,6 +78,25 @@
 	transform-origin: left top;
 	cursor: text;
 	transition: all 0.3s ease;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: $color-dark;
+  font-size: 1.6rem;
+  padding: 0;
+  @include flex(row, center, center);
+  &:hover {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
 }
 
 .message-invalid-wrapper {

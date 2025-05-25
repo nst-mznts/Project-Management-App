@@ -1,5 +1,5 @@
 import './AuthForm.scss';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useAppSelector } from '../../redux/hooks';
 import { Navigate, Link } from 'react-router-dom';
 import * as constant from '../../utils/constants';
@@ -7,9 +7,11 @@ import { AuthFormValues, AuthFormProps, AuthFormInput } from '../../utils/types/
 import { selectIsAuth } from '../../redux/slices/auth';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const AuthForm: FC<AuthFormProps> = ({ isSignup, formContent, onSubmit, errorMessage }) => {
   const { t } = useTranslation();
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const isAuth = useAppSelector(selectIsAuth);
   const formInputs = isSignup ? constant.SIGNUP_FORM_INPUTS : constant.LOGIN_FORM_INPUTS;
   const redirectPath = isSignup ? '/auth/login' : '/auth/signup';
@@ -48,30 +50,42 @@ const AuthForm: FC<AuthFormProps> = ({ isSignup, formContent, onSubmit, errorMes
                     <p className="message-invalid">{errors[input.id]?.message}</p>
                   )}
                 </div>
-                <input
-                  id={input.id}
-                  {...(input.id === 'email'
-                    ? register(input.id, {
-                        required: t(`login-page-${input.id}-empty`),
-                        pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                          message: t('login-page-email-error'),
-                        },
-                      })
-                    : register(input.id, {
-                        required: t(`login-page-${input.id}-empty`),
-                        minLength: {
-                          value: input.minLength,
-                          message: t(`login-page-${input.id}-error`),
-                        },
-                      }))}
-                  className="form-input"
-                  type={input.type}
-                  placeholder=" "
-                />
-                <label className="input-label" htmlFor={input.id}>
-                  {t(input.value)}
-                </label>
+                <div className="input-container">
+                  <input
+                    id={input.id}
+                    {...(input.id === 'email'
+                      ? register(input.id, {
+                          required: t(`login-page-${input.id}-empty`),
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                            message: t('login-page-email-error'),
+                          },
+                        })
+                      : register(input.id, {
+                          required: t(`login-page-${input.id}-empty`),
+                          minLength: {
+                            value: input.minLength,
+                            message: t(`login-page-${input.id}-error`),
+                          },
+                        }))}
+                    className="form-input"
+                    type={input.type === 'password' && !isPasswordHidden ? 'text' : input.type}
+                    placeholder=" "
+                  />
+                  <label className="input-label" htmlFor={input.id}>
+                    {t(input.value)}
+                  </label>
+
+                  {input.type === 'password' && (
+                    <button
+                      className="button toggle-password"
+                      type="button"
+                      onClick={() => setIsPasswordHidden(!isPasswordHidden)}
+                    >
+                      {isPasswordHidden ? <FaRegEye /> : <FaRegEyeSlash />}
+                    </button>
+                  )}
+                </div>
               </div>
             );
           })}
