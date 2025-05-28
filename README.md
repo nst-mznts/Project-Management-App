@@ -6,6 +6,12 @@ This is a full-stack Kanban board with user authentication, drag-and-drop functi
 
 ## Screenshots
 
+![project image large screen](https://github.com/nst-mznts/Project-Management-App/blob/frontend/public/Project_Management_App.png)
+
+![project image medium screen](https://github.com/nst-mznts/Project-Management-App/blob/frontend/public/Project_Management_App_medium.png)
+
+![project image small screen](https://github.com/nst-mznts/Project-Management-App/blob/frontend/public/Project_Management_App_small.png)
+
 ## Tech Stack
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
