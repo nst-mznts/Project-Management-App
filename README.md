@@ -14,6 +14,7 @@ This is a full-stack Kanban board with user authentication, drag-and-drop functi
 ![Node.js](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Express.js](https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white)
 ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
 ## Features
 
@@ -33,3 +34,47 @@ Before you can run the project, make sure you have the following installed on yo
 - [npm](https://www.npmjs.com/) (Comes with Node.js)
 
 ## Installation
+
+To set up and run the project, follow these steps:
+
+**1. Clone the Backend Branch**
+
+Clone the backend code and install its dependencies:
+
+   ```bash
+   git clone https://github.com/nst-mznts/Project-Management-App.git -b backend
+   cd backend
+   npm install
+   ```
+
+**2. Clone the Frontend Branch**
+
+   Clone the frontend code and install its dependencies:
+   
+   ```bash
+   git clone https://github.com/nst-mznts/Project-Management-App.git -b frontend
+   cd frontend
+   npm install
+   ```
+
+**3. Run the Backend**
+
+In the backend folder, start the backend server:
+
+   ```bash
+   npm run start
+   ```
+
+   You will see these messages in the console:
+   - `Server is running on port 3004`
+   - `Database connected successfully`
+
+**4. Run the Frontend**
+
+   In the frontend folder, start the frontend:
+   
+   ```bash
+   npm run dev
+   ```
+
+A link will appear in the console: `http://localhost:5173/`. Open it in your browser to use the app.
