@@ -10,8 +10,8 @@ const Start: FC = () => {
   return (
     <main className="start-page">
       <div className="start-page-content">
-        <h2>{t('start-page-title')}</h2>
-        <p>{t('start-page-description')}</p>
+        <h2 className="start-title">{t('start-page-title')}</h2>
+        <p className="start-description">{t('start-page-description')}</p>
         <Link className="start-button" to="/auth/login">
           <button className="button rectangular-button colored width100">
             {t('start-page-button')}

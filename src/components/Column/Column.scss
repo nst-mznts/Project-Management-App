@@ -8,13 +8,14 @@
     @extend %border-radius;
     @include flex(column, flex-start, center);
     row-gap: 10px;
+    flex: 0 0 300px;
 }
 
 .column-title {
-    width: 300px;
+    @extend %width100;
     height: 60px;
     @include flex(row, space-between, center);
-    padding: 0 10px;
+    padding: 10px;
     background-color: $color-secondary;
     @include font(normal, $font-weight-middle, $font-size-standart);
     color: $color-header;
@@ -22,7 +23,7 @@
 }
 
 .task-wrapper {
-    width: 300px;
+    @extend %width100;
     height: 80%;
     @include flex(column, flex-start, center);
     row-gap: 10px;

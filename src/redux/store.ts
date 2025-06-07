@@ -3,6 +3,7 @@ import { boardsReducer } from './slices/boards';
 import { authReducer } from './slices/auth';
 import { columnsReducer } from './slices/columns';
 import { tasksReducer } from './slices/tasks';
+import tempBoardReducer from './slices/tempBoardSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     auth: authReducer,
     columns: columnsReducer,
     tasks: tasksReducer,
+    tempBoard: tempBoardReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -17,3 +17,9 @@
 .logo-icon {
     color: $color-secondary;
 }
+
+@media (max-width: 425px) {
+    .logo-header {
+        display: none;
+    }
+}

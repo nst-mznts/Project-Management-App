@@ -60,3 +60,9 @@ header, main, footer {
 .width100 {
     @extend %width100;
 }
+
+@media (max-width: 767px) {
+    #root {
+        padding: 10px;
+    }
+}

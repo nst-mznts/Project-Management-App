@@ -15,8 +15,41 @@
 
 .start-button {
     width: 160px;
+    @include flex(column, center, center);
 }
 
 .start-page-image {
     width: 600px;
+}
+
+@media (max-width: 767px) {
+    .start-page {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        @include flex(column, flex-start, center);
+        row-gap: 40px;
+    }
+
+    .start-page-content {
+        width: 100%;
+        @include flex(column, center, center);
+        row-gap: 10px;
+        text-align: justify;
+    }
+
+    .start-title {
+        @include font(normal, 600, 2rem);
+    }
+
+    .start-description {
+        width: 80%;
+    }
+
+    .start-page-image {
+        width: 80%;
+    }
+
+    .start-button {
+        width: 80%;
+    }
 }

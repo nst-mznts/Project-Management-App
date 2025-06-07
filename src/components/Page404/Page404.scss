@@ -1,0 +1,25 @@
+@import '../../sass/abstract/constants';
+@import '../../sass/abstract/mixins';
+@import '../../sass/abstract/placeholders';
+@import '../../sass/buttons';
+
+.error-page-content {
+    @include flex(row, center, center);
+}
+
+.error__page {
+    width: 100%;
+    @include flex(column, center, center);
+    gap: 20px;
+    padding-top: 40px;
+}
+  
+.error__page--icon {
+    color: $color-primary;
+}
+
+.title {
+    color: $color-dark;
+    @extend %font-primary;
+    @include font(normal, 400, 2rem);
+}

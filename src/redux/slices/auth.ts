@@ -36,7 +36,6 @@ export const fetchAuthMe = createAsyncThunk<User>('auth/fetchAuthMe', async () =
   if (!response.data || typeof response.data !== 'object') {
     throw new Error('Invalid response data');
   }
-  console.log(response.data);
   return response.data;
 });
 

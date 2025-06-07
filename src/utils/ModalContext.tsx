@@ -42,7 +42,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const closeModal = (): void => setModalOpen(false);
 
   const handleConfirm = async (title: string) => {
-    console.log('handleConfirm', id, currentId, actionType);
     try {
       switch (actionType) {
         case ActionType.AddBoard:

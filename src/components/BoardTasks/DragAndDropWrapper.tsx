@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { updateTaskOrder } from '../../redux/slices/tasks';
 import { updateColumnOrder } from '../../redux/slices/columns';
 import { Column, Task } from '../../utils/types/BasicTypes.types';
+import { setTempColumns, setTempTasks, resetTempState } from '../../redux/slices/tempBoardSlice';
 
 interface DragAndDropWrapperProps {
   columns: Column[];
@@ -14,6 +15,8 @@ interface DragAndDropWrapperProps {
 
 const DragAndDropWrapper: FC<DragAndDropWrapperProps> = ({ columns, tasks, boardId, children }) => {
   const dispatch = useAppDispatch();
+  const tempColumns = useAppSelector((state) => state.tempBoard.columns);
+  const tempTasks = useAppSelector((state) => state.tempBoard.tasks);
 
   const reorderTasks = (tasksList: Task[]) =>
     tasksList.map((task, index) => ({ ...task, order: index }));
@@ -30,11 +33,18 @@ const DragAndDropWrapper: FC<DragAndDropWrapperProps> = ({ columns, tasks, board
   };
 
   const handleColumnDrag = (source: { index: number }, destination: { index: number }): void => {
-    const columnList: Column[] = [...columns];
+    const columnList: Column[] = [...(tempColumns.length ? tempColumns : columns)];
     const [movedColumn] = columnList.splice(source.index, 1);
     columnList.splice(destination.index, 0, movedColumn);
     const updatedColumns = columnList.map((col, i) => ({ ...col, order: i }));
-    dispatch(updateColumnOrder({ boardId, columns: updatedColumns }));
+    dispatch(setTempColumns(updatedColumns));
+
+    dispatch(updateColumnOrder({ boardId, columns: updatedColumns }))
+      .unwrap()
+      .catch((err) => {
+        console.error('Failed to update column order:', err);
+        dispatch(setTempColumns(columns));
+      });
   };
 
   const handleTaskDrag = (
@@ -43,22 +53,27 @@ const DragAndDropWrapper: FC<DragAndDropWrapperProps> = ({ columns, tasks, board
   ): void => {
     const sourceColumnId: string = source.droppableId;
     const destinationColumnId: string = destination.droppableId;
-    const sourceTasks = tasks.filter((task) => task.column._id === sourceColumnId);
+    const sourceTasks = (tempTasks.length ? tempTasks : tasks).filter(
+      (task) => task.column._id === sourceColumnId
+    );
     const [movedTask] = sourceTasks.splice(source.index, 1);
+
+    let updatedTasks = [...(tempTasks.length ? tempTasks : tasks)];
 
     if (sourceColumnId === destinationColumnId) {
       sourceTasks.splice(destination.index, 0, movedTask);
       const reorderedTasks = reorderTasks(sourceTasks);
-      const updatedTasks = tasks.map((task) => {
+      updatedTasks = updatedTasks.map((task) => {
         const foundTask = reorderedTasks.find((reordered) => reordered._id === task._id);
         return foundTask ? { ...task, order: foundTask.order } : task;
       });
-      dispatch(updateTaskOrder({ boardId, tasks: [...updatedTasks] }));
     } else {
-      const destinationTasks = tasks.filter((task) => task.column._id === destinationColumnId);
+      const destinationTasks = (tempTasks.length ? tempTasks : tasks).filter(
+        (task) => task.column._id === destinationColumnId
+      );
       destinationTasks.splice(destination.index, 0, movedTask);
       const reorderedTasks = reorderTasks(destinationTasks);
-      const updatedTasks = tasks.map((task) => {
+      updatedTasks = updatedTasks.map((task) => {
         const foundTask = reorderedTasks.find((reordered) => reordered._id === task._id);
         return foundTask
           ? {
@@ -68,8 +83,16 @@ const DragAndDropWrapper: FC<DragAndDropWrapperProps> = ({ columns, tasks, board
             }
           : task;
       });
-      dispatch(updateTaskOrder({ boardId, tasks: [...updatedTasks] }));
     }
+
+    dispatch(setTempTasks(updatedTasks));
+
+    dispatch(updateTaskOrder({ boardId, tasks: [...updatedTasks] }))
+      .unwrap()
+      .catch((err) => {
+        console.error('Failed to update task order:', err);
+        dispatch(setTempTasks(tasks));
+      });
   };
 
   return (

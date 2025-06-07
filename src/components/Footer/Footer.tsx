@@ -4,7 +4,7 @@ import { FC } from 'react';
 const Footer: FC = () => {
   return (
     <footer>
-      <p>2024</p>
+      <p>2025</p>
       <div className="git-profile">
         <span className="git-icon"></span>
         <a href="https://github.com/nst-mznts" target="blank">
